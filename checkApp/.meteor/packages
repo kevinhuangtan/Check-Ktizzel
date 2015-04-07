@@ -7,5 +7,6 @@
 meteor-platform
 autopublish
 insecure
-mrt:jquery-ui
-bootstrap
+twbs:bootstrap
+iron:router
+accounts-ui

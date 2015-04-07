@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html class="full" lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Check - Home</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="css/style.css" rel="stylesheet">
+    <script>
+            window.onload = function () {
+                var r = Raphael("holder"),
+                    pie = r.piechart(320, 240, 100, [55, 20, 13, 32, 5, 1, 2, 10], { legend: ["%%.%% - Enterprise Users", "IE Users"], legendpos: "west", href: ["http://raphaeljs.com", "http://g.raphaeljs.com"]});
+
+                r.text(320, 100, "Interactive Pie Chart").attr({ font: "20px sans-serif" });
+                pie.hover(function () {
+                    this.sector.stop();
+                    this.sector.scale(1.1, 1.1, this.cx, this.cy);
+
+                    if (this.label) {
+                        this.label[0].stop();
+                        this.label[0].attr({ r: 7.5 });
+                        this.label[1].attr({ "font-weight": 800 });
+                    }
+                }, function () {
+                    this.sector.animate({ transform: 's1 1 ' + this.cx + ' ' + this.cy }, 500, "bounce");
+
+                    if (this.label) {
+                        this.label[0].animate({ r: 5 }, 500, "bounce");
+                        this.label[1].attr({ "font-weight": 400 });
+                    }
+                });
+            };
+        </script>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top white" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img class="logo" alt="Brand" src="img/checklogo.png">
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                </ul>
+                 <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="enter event keyword...">
+                    </div>
+                    <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+                  </form>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+       <br><br><br><br><br><br><br><br><br>
+        <div class="row welcomeDiv">
+            <div class="col-md-12 col-sm-12">
+                <h1>Welcome to Check</h1>
+                <p class = "welcome">All-in-one attendance tracking, analysis and management for the real world.</p>
+                <p>Robert Tung</p>
+                <p>Paul Styslinger</p>
+                <p>Charlie Song</p>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
