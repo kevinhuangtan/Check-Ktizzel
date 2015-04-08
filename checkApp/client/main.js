@@ -4,3 +4,4 @@ Router.map(function() {
 
 
 // Meteor.user().services.facebook.name
+// Geolocation.currentLocation().coords.latitude
