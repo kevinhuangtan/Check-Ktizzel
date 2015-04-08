@@ -1,15 +1,28 @@
 <head>
 	<title>Accounts</title>
+	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3IaCGmNfltsyk5fyATz-icw-D5VFhSYw"></script>
+	<script type="text/javascript">
+      function initialize() {
+        var mapOptions = {
+          center: { lat: -34.397, lng: 150.644},
+          zoom: 7,
+          mapTypeId: google.maps.MapTypeId.HYBRID
+        };
+        
+        var map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
 </head>
 
 <body>
 {{> loginButtons}}
+<div id="map-canvas"></div>
 </body>
 
 <template name = "home">
 <h1>Hi there</h1>
-</template>
 
-<template name = "userInfo">
-<p>{{myCode}}</p>
 </template>
