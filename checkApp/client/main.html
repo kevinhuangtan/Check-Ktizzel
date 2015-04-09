@@ -5,8 +5,8 @@
 
 <body>
 
-	<nav class="navbar navbar-default navbar-fixed-top white" role="navigation">
-		<div class="container">
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -32,22 +32,23 @@
 					</div>
 					<!-- <button type="submit" class="btn btn-default">Submit</button> -->
 				</form>
-				<ul class = "nav navbar-nav">
-					{{> loginButtons}}
-				</ul>
+				<div class="collapse navbar-collapse" id="navigation">
+        			<ul class="nav navbar-nav">
+          				{{> loginButtons}}
+        			</ul>
+      			</div>
 			</div>
 
 			<!-- /.navbar-collapse -->
 		</div>
 		<!-- /.container -->
 	</nav>
-
-
 </body>
 
 <template name = "home">
 	<div class ="container homePage">
 		<div class="container">
+			{{#if currentUser}}
 			<div class="row">
 				<div class = "col-lg-4">
 					<a href="{{pathFor route='viewEvent'}}" class="btn btn-primary btn-lg">View Event</a>
@@ -56,13 +57,15 @@
 					<a href="{{pathFor route='createEvent'}}" class="btn btn-primary btn-lg">Create Event</a>
 				</div>
 			</div>
-			{{#if currentUser}}
 			{{> testingZone}}
+			{{else}}
+			<h2>Please sign in to get started </h2>
 			{{/if}}
 		</div>
 	</div>
 </template>
 
+<!-- View Event Page -->
 <template name = "viewEvent">
 	<div class="container">
 		<br><br>
@@ -77,24 +80,39 @@
 	</div>
 </template>
 
+<!-- Create Event Page -->
 <template name = "createEvent">
 	<div class="container">
 		<br><br>
 		<a href="{{pathFor route='home'}}">Back</a>
+		<header>
+			<h2>Create New Event</h2>
+			<form class="new-event">
+				<input type="text" name="title" placeholder="New Event">
+				<!-- <input type="submit" value="Submit"> -->
+
+				<input type="text" name="title" placeholder="Date">
+				<!-- <input type="submit" value="Submit"> -->
+
+				<input type="text" name="title" placeholder="Location">
+				<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
+			</form>
+		</header>
 	</div>
 </template>
 
 <template name = "testingZone">
-			<ul>
-				<h3>Experimenting with user ids:</h3>
-				{{#each user}}
-				<li>{{_id}}</li>
-				{{/each}}
-			</ul>
-
-			<div id="map-canvas"></div>
-		
-
+	<div class = "testingArea">
+		<h2>Testing Zone</h2>
+		<ul>
+			<h3>Experimenting with user ids:</h3>
+			{{#each user}}
+			<li>{{_id}}</li>
+			{{/each}}
+		</ul>
+		<h3>GPS</h3>
+		<div id="map-canvas"></div>
+	</div>
 </template>
 
 
