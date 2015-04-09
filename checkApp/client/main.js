@@ -3,8 +3,10 @@ Router.map(function() {
 });
 
 Router.route("viewEvent", {path: '/viewEvent'});
+Router.route("createEvent", {path: '/create'});
 
-Template.home.helpers({
+
+Template.testingZone.helpers({
 	'user': function(){
 		return Meteor.users.find().fetch()
 	}
