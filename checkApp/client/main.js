@@ -1,3 +1,5 @@
+checkEvents = new Mongo.Collection('events');
+
 Router.map(function() {
 	this.route("home", {path: '/'});
 });
@@ -24,6 +26,7 @@ Template.testingZone.rendered = function () {
 }
 			
 	
+	// checkEvents.insert({ name: "Bob", date: 03/04/15, time: 22:00})
 
 // Meteor.user().services.facebook.name
 // Geolocation.currentLocation().coords.latitude
