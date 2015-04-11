@@ -4,7 +4,6 @@
 </head>
 
 <body>
-
 	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
@@ -56,6 +55,9 @@
 				<div class = "col-lg-4">
 					<a href="{{pathFor route='createEvent'}}" class="btn btn-primary btn-lg">Create Event</a>
 				</div>
+				<div class = "col-lg-4">
+					<a href="{{pathFor route='checkIn'}}" class="btn btn-primary btn-lg">Check In</a>
+				</div>
 			</div>
 			{{> testingZone}}
 			{{else}}
@@ -76,6 +78,21 @@
      <div id="attendence_rate_line" class="col-md-6"></div> -->
      		<div class="col-md-6"><img src="graph1.png"></div>
      		<div class="col-md-6"><img src="graph2.png"></div>
+ 		</div>
+	</div>
+</template>
+
+<!-- Confirm Checkin  Page -->
+<template name = "checkIn">
+	<div class="container">
+		<br><br>
+		<a href="{{pathFor route='home'}}">Back</a>
+		<div class="row">
+			<h1>Where am I?</h1>
+				<img src="http://maps.googleapis.com/maps/api/staticmap?center={{loc.lat}},{{loc.lng}}&zoom=15&size=600x300&maptype=roadmap&markers=color:blue%7C{{loc.lat}},{{loc.lng}}" />
+			{{#if error}}
+			<p>Error: {{error.message}}</p>
+			{{/if}}
  		</div>
 	</div>
 </template>
@@ -114,8 +131,3 @@
 		<div id="map-canvas"></div>
 	</div>
 </template>
-
-
-
-
-

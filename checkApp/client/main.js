@@ -2,10 +2,21 @@ checkEvents = new Mongo.Collection('events');
 
 Router.map(function() {
 	this.route("home", {path: '/'});
+    this.route("viewEvent", {path: '/viewEvent'});
+    this.route("createEvent", {path: '/createEvent'});
+    this.route("checkIn", {path: '/checkIn'});
 });
 
-Router.route("viewEvent", {path: '/viewEvent'});
-Router.route("createEvent", {path: '/create'});
+
+
+//Map
+Template.checkIn.helpers({
+loc: function () {
+  // return 0, 0 if the location isn't ready
+  return Geolocation.latLng() || { lat: 0, lng: 0 };
+},
+error: Geolocation.error
+});
 
 
 Template.testingZone.helpers({
@@ -96,6 +107,3 @@ var donutchart = c3.generate({
             }
         });
 //------------------------------------------------------------//
-
-
-
