@@ -1,0 +1,43 @@
+<head>
+  <title>Event List</title>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Event List ({{incompleteCount}})</h1>
+
+      <label class="hide-completed">
+        <input type="checkbox" checked="{{hideCompleted}}" />
+        Hide Past Events
+      </label>
+
+      {{> loginButtons}}
+
+      {{#if currentUser}}
+        <form class="new-task">
+          <input type="text" name="text" placeholder="Type to add new event title" />
+          <input type="text" name="location" placeholder="Type to add the location" />
+          <input type="text" name="date" placeholder="Type to add the date" />
+          <button type="submit"> submit </button>
+        </form>
+      {{/if}}
+    </header>
+
+    <ul>
+      {{#each tasks}}
+        {{> task}}
+      {{/each}}
+    </ul>
+  </div>
+</body>
+
+<template name="task">
+  <li class="{{#if checked}}checked{{/if}}">
+    <button class="delete">&times;</button>
+
+    <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+
+    <span class="text"><strong>{{username}}</strong> - {{text}} at {{location}} on {{date}}</span>
+  </li>
+</template>
