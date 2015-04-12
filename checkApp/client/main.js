@@ -5,42 +5,88 @@ Router.map(function() {
     this.route("viewEvent", {path: '/viewEvent'});
     this.route("createEvent", {path: '/createEvent'});
     this.route("checkIn", {path: '/checkIn'});
+    this.route("scrollEvents", {path: '/scrollEvents'});
 });
 
+if (Meteor.isClient) {
+  // This code only runs on the client
+    Template.scrollEvents.helpers({
+        tasks: function () {
+            if (Session.get("hideCompleted")) {
+            // If hide completed is checked, filter tasks
+                return Tasks.find({checked: {$ne: true}}, {sort: {createdAt: -1}});
+            } else {
+            // Otherwise, return all of the tasks
+                return Tasks.find({}, {sort: {createdAt: -1}});
+            }
+        },
+        hideCompleted: function () {
+            return Session.get("hideCompleted");
+        },
+        incompleteCount: function () {
+            return Tasks.find({checked: {$ne: true}}).count();
+        },
+    });
 
+    Template.scrollEvents.events({
+        "submit .new-task": function (event) {
+          // This function is called when the new task form is submitted
 
-//Map
-Template.checkIn.helpers({
-loc: function () {
-  // return 0, 0 if the location isn't ready
-  return Geolocation.latLng() || { lat: 0, lng: 0 };
-},
-error: Geolocation.error
-});
+          var text = event.target.text.value;
 
+          Tasks.insert({
+            text: text,
+            createdAt: new Date() // current time
+          });
 
-Template.testingZone.helpers({
-	'user': function(){
-		return Meteor.users.find().fetch()
-	}
-})
+          // Clear form
+          event.target.text.value = "";
 
-Template.testingZone.rendered = function () {
-	var mapOptions = {
-		center: { lat: -34.397, lng: 150.644},
-		zoom: 9,
-		mapTypeId: google.maps.MapTypeId.HYBRID
-	};
+          // Prevent default form submit
+          return false;
+        },
+        "click .toggle-checked": function () {
+          // Set the checked property to the opposite of its current value
+          Tasks.update(this._id, {$set: {checked: ! this.checked}});
+        },
+        "click .delete": function () {
+          Tasks.remove(this._id);
+        },
+        "change .hide-completed input": function (event) {
+          Session.set("hideCompleted", event.target.checked);
+        }
+      });
 
-	var map = new google.maps.Map(document.getElementById('map-canvas'),
-		mapOptions);
+    //Map
+    Template.checkIn.helpers({
+        loc: function () {
+            // return 0, 0 if the location isn't ready
+            return Geolocation.latLng() || { lat: 0, lng: 0 };
+        },
+        error: Geolocation.error
+    });
+
+    Template.testingZone.helpers({
+        'user': function(){
+            return Meteor.users.find().fetch()
+        }
+    })
+
+    Template.testingZone.rendered = function () {
+        var mapOptions = {
+            center: { lat: -34.397, lng: 150.644},
+            zoom: 9,
+            mapTypeId: google.maps.MapTypeId.HYBRID
+        };
+
+        var map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+    }
+        // checkEvents.insert({ name: "Bob", date: 03/04/15, time: 22:00})
+
+    // Meteor.user().services.facebook.name
+    // Geolocation.currentLocation().coords.latitude
 }
-			
-	
-	// checkEvents.insert({ name: "Bob", date: 03/04/15, time: 22:00})
-
-// Meteor.user().services.facebook.name
-// Geolocation.currentLocation().coords.latitude
 
 
 //c3.js charts code

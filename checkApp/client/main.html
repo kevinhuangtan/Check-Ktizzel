@@ -50,14 +50,17 @@
 		<div class="container">
 			{{#if currentUser}}
 			<div class="row">
-				<div class = "col-lg-4">
+				<div class = "col-lg-3">
 					<a href="{{pathFor route='viewEvent'}}" class="btn btn-primary btn-lg">View Event</a>
 				</div>
-				<div class = "col-lg-4">
+				<div class = "col-lg-3">
 					<a href="{{pathFor route='createEvent'}}" class="btn btn-primary btn-lg">Create Event</a>
 				</div>
-				<div class = "col-lg-4">
+				<div class = "col-lg-3">
 					<a href="{{pathFor route='checkIn'}}" class="btn btn-primary btn-lg">Check In</a>
+				</div>
+				<div class = "col-lg-3">
+					<a href="{{pathFor route='scrollEvents'}}" class="btn btn-primary btn-lg">Scroll Dat Shit</a>
 				</div>
 			</div>
 			{{> testingZone}}
@@ -116,6 +119,32 @@
 				<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
 			</form>
 		</header>
+	</div>
+</template>
+
+<template name = "scrollEvents">
+	<div class="container">
+		<br><br>
+		<header>
+		    <h1>Your Events ({{incompleteCount}})</h1>
+
+		    <label class="hide-completed">
+		      <input type="checkbox" checked="{{hideCompleted}}" />
+		      Hide Completed Events
+		    </label>
+
+			  <!-- add a form below the h1 -->
+			<form class="new-task">
+			  	<div class = "col-lg-4">
+					<a href="{{pathFor route='createEvent'}}" class="btn btn-primary btn-lg">Create Event</a>
+				</div>
+			</form>
+		</header>
+	    <ul>
+	      {{#each event}}
+	        {{> event}}
+	      {{/each}}
+	    </ul>
 	</div>
 </template>
 
