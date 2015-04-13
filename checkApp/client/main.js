@@ -1,4 +1,3 @@
-checkEvents = new Mongo.Collection('events');
 
 Router.map(function() {
 	this.route("home", {path: '/'});
@@ -7,6 +6,11 @@ Router.map(function() {
     this.route("checkIn", {path: '/checkIn'});
     this.route("scrollEvents", {path: '/scrollEvents'});
 });
+
+// checkEvents.insert({
+//     name: "Conference",
+//     date: "March 1st 4:00pm",
+//     location: "Yale CEID"});
 
 if (Meteor.isClient) {
   // This code only runs on the client
@@ -69,6 +73,12 @@ if (Meteor.isClient) {
     Template.testingZone.helpers({
         'user': function(){
             return Meteor.users.find().fetch()
+        }
+    })
+
+     Template.createEvent.helpers({
+        'checkEvent': function(){
+            return checkEvents.find().fetch()
         }
     })
 
