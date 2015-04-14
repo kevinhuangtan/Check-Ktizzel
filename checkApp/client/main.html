@@ -45,47 +45,6 @@
 	</nav>
 </body>
 
-<template name = "home">
-	<div class ="container homePage">
-		<div class="container">
-			{{#if currentUser}}
-			<div class="row">
-				<div class = "col-lg-3">
-					<a href="{{pathFor route='viewEvent'}}" class="btn btn-primary btn-lg">View Event</a>
-				</div>
-				<div class = "col-lg-3">
-					<a href="{{pathFor route='createEvent'}}" class="btn btn-primary btn-lg">Create Event</a>
-				</div>
-				<div class = "col-lg-3">
-					<a href="{{pathFor route='checkIn'}}" class="btn btn-primary btn-lg">Check In</a>
-				</div>
-				<div class = "col-lg-3">
-					<a href="{{pathFor route='scrollEvents'}}" class="btn btn-primary btn-lg">Scroll Dat Shit</a>
-				</div>
-			</div>
-			{{> testingZone}}
-			{{else}}
-			<h2>Please sign in to get started </h2>
-			{{/if}}
-		</div>
-	</div>
-</template>
-
-<!-- View Event Page -->
-<template name = "viewEvent">
-	<div class="container">
-		<br><br>
-		<a href="{{pathFor route='home'}}">Back</a>
-		<div class="row">
-			<!-- C3 currently not working; will need to modify for use with meteor package -->
-     <!--    <div id="ethnicity_donut_chart" class="col-md-6"></div>
-     <div id="attendence_rate_line" class="col-md-6"></div> -->
-     		<div class="col-md-6"><img src="graph1.png"></div>
-     		<div class="col-md-6"><img src="graph2.png"></div>
- 		</div>
-	</div>
-</template>
-
 <!-- Confirm Checkin  Page -->
 <template name = "checkIn">
 	<div class="container">
@@ -98,32 +57,6 @@
 			<p>Error: {{error.message}}</p>
 			{{/if}}
  		</div>
-	</div>
-</template>
-
-<!-- Create Event Page -->
-<template name = "createEvent">
-	<div class="container">
-		<br><br>
-		<a href="{{pathFor route='home'}}">Back</a>
-		<header>
-			<h2>Create New Event</h2>
-			<form class="new-event">
-				<input type="text" name="eventName" placeholder="New Event">
-				<!-- <input type="submit" value="Submit"> -->
-
-				<input type="text" name="eventDate" placeholder="Date">
-				<!-- <input type="submit" value="Submit"> -->
-
-				<input type="text" name="eventLocation" placeholder="Location">
-				<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
-			</form>
-		</header>
-		<ul>
-		{{#each checkEvent}}
-		<li>{{name}}</li>
-		{{/each}}
-		</ul>
 	</div>
 </template>
 
@@ -153,16 +86,4 @@
 	</div>
 </template>
 
-<template name = "testingZone">
-	<div class = "testingArea">
-		<h2>Testing Zone</h2>
-		<ul>
-			<h3>Experimenting with user ids:</h3>
-			{{#each user}}
-			<li>{{_id}}</li>
-			{{/each}}
-		</ul>
-		<h3>GPS</h3>
-		<div id="map-canvas"></div>
-	</div>
-</template>
+

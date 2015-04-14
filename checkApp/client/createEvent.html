@@ -1,0 +1,25 @@
+<!-- Create Event Page -->
+<template name = "createEvent">
+	<div class="container">
+		<br><br>
+		<a href="{{pathFor route='home'}}">Back</a>
+		<header>
+			<h2>Create New Event</h2>
+			<form class="new-event">
+				<input type="text" name="eventName" placeholder="New Event">
+				<!-- <input type="submit" value="Submit"> -->
+
+				<input type="text" name="eventDate" placeholder="Date">
+				<!-- <input type="submit" value="Submit"> -->
+
+				<input type="text" name="eventLocation" placeholder="Location">
+				<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
+			</form>
+		</header>
+		<ul>
+		{{#each checkEvent}}
+		<li>{{name}}</li>
+		{{/each}}
+		</ul>
+	</div>
+</template>
