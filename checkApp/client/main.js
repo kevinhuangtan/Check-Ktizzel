@@ -82,6 +82,20 @@ if (Meteor.isClient) {
         }
     })
 
+    Template.createEvent.events({
+        'submit form': function(event){
+            event.preventDefault();
+            var eventName = event.target.eventName.value;
+            var eventDate = event.target.eventDate.value;
+            var eventLocation = event.target.eventLocation.value;
+            checkEvents.insert({
+            name: eventName,
+            date: eventDate,
+            location: eventLocation
+            });
+        }
+    })
+
     Template.testingZone.rendered = function () {
         var mapOptions = {
             center: { lat: -34.397, lng: 150.644},
