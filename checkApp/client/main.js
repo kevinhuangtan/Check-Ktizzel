@@ -14,52 +14,52 @@ Router.map(function() {
 
 if (Meteor.isClient) {
   // This code only runs on the client
-    Template.scrollEvents.helpers({
-        tasks: function () {
-            if (Session.get("hideCompleted")) {
-            // If hide completed is checked, filter tasks
-                return Tasks.find({checked: {$ne: true}}, {sort: {createdAt: -1}});
-            } else {
-            // Otherwise, return all of the tasks
-                return Tasks.find({}, {sort: {createdAt: -1}});
-            }
-        },
-        hideCompleted: function () {
-            return Session.get("hideCompleted");
-        },
-        incompleteCount: function () {
-            return Tasks.find({checked: {$ne: true}}).count();
-        },
-    });
+    // Template.scrollEvents.helpers({
+    //     tasks: function () {
+    //         if (Session.get("hideCompleted")) {
+    //         // If hide completed is checked, filter tasks
+    //             return Tasks.find({checked: {$ne: true}}, {sort: {createdAt: -1}});
+    //         } else {
+    //         // Otherwise, return all of the tasks
+    //             return Tasks.find({}, {sort: {createdAt: -1}});
+    //         }
+    //     },
+    //     hideCompleted: function () {
+    //         return Session.get("hideCompleted");
+    //     },
+    //     incompleteCount: function () {
+    //         return Tasks.find({checked: {$ne: true}}).count();
+    //     },
+    // });
 
-    Template.scrollEvents.events({
-        "submit .new-task": function (event) {
-          // This function is called when the new task form is submitted
+    // Template.scrollEvents.events({
+    //     "submit .new-task": function (event) {
+    //       // This function is called when the new task form is submitted
 
-          var text = event.target.text.value;
+    //       var text = event.target.text.value;
 
-          Tasks.insert({
-            text: text,
-            createdAt: new Date() // current time
-          });
+    //       Tasks.insert({
+    //         text: text,
+    //         createdAt: new Date() // current time
+    //       });
 
-          // Clear form
-          event.target.text.value = "";
+    //       // Clear form
+    //       event.target.text.value = "";
 
-          // Prevent default form submit
-          return false;
-        },
-        "click .toggle-checked": function () {
-          // Set the checked property to the opposite of its current value
-          Tasks.update(this._id, {$set: {checked: ! this.checked}});
-        },
-        "click .delete": function () {
-          Tasks.remove(this._id);
-        },
-        "change .hide-completed input": function (event) {
-          Session.set("hideCompleted", event.target.checked);
-        }
-      });
+    //       // Prevent default form submit
+    //       return false;
+    //     },
+    //     "click .toggle-checked": function () {
+    //       // Set the checked property to the opposite of its current value
+    //       Tasks.update(this._id, {$set: {checked: ! this.checked}});
+    //     },
+    //     "click .delete": function () {
+    //       Tasks.remove(this._id);
+    //     },
+    //     "change .hide-completed input": function (event) {
+    //       Session.set("hideCompleted", event.target.checked);
+    //     }
+    //   });
 
     //Map
     Template.checkIn.helpers({
@@ -80,6 +80,9 @@ if (Meteor.isClient) {
         'checkEvent': function(){
             return checkEvents.find().fetch()
         }
+        // 'currentUser': function(){
+        //     return Meteor.user();
+        // }
     })
 
     Template.createEvent.events({
@@ -93,6 +96,10 @@ if (Meteor.isClient) {
             date: eventDate,
             location: eventLocation
             });
+            // console.log(Meteor.user.find({ _id: this.userId }, {fields: {testing: 1} } ) );
+            Meteor.users.update({_id:Meteor.user()._id}, { $set: {eventDate: 1} });
+            // Meteor.user().newField = "Testing";
+           
         }
     })
 
@@ -112,6 +119,15 @@ if (Meteor.isClient) {
     // Geolocation.currentLocation().coords.latitude
 }
 
+// if (Meteor.isServer) {
+//     Meteor.users().allow({
+//     'insert': function (userId,doc) {
+//        user and doc checks ,
+//       return true to allow insert 
+//       return true; 
+//     }
+//   });
+// }
 
 //c3.js charts code
 //------------------------------------------------------------//
