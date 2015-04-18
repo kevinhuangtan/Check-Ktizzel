@@ -60,30 +60,5 @@
 	</div>
 </template>
 
-<template name = "scrollEvents">
-	<div class="container">
-		<br><br>
-		<header>
-		    <h1>Your Events ({{incompleteCount}})</h1>
-
-		    <label class="hide-completed">
-		      <input type="checkbox" checked="{{hideCompleted}}" />
-		      Hide Completed Events
-		    </label>
-
-			  <!-- add a form below the h1 -->
-			<form class="new-task">
-			  	<div class = "col-lg-4">
-					<a href="{{pathFor route='createEvent'}}" class="btn btn-primary btn-lg">Create Event</a>
-				</div>
-			</form>
-		</header>
-	    <ul>
-	      {{#each event}}
-	        {{> event}}
-	      {{/each}}
-	    </ul>
-	</div>
-</template>
 
 
