@@ -1,0 +1,23 @@
+
+<template name = "home">
+	<div class ="container homePage">
+		<div class="container mainDiv">
+			{{#if currentUser}}
+			<div class="row">
+				<div class = "col-lg-3">
+					<a href="{{pathFor route='viewEvent'}}" class="btn btn-primary btn-lg">View Event</a>
+				</div>
+				<div class = "col-lg-3">
+					<a href="{{pathFor route='createEvent'}}" class="btn btn-primary btn-lg">Create Event</a>
+				</div>
+				<div class = "col-lg-3">
+					<a href="{{pathFor route='checkIn'}}" class="btn btn-primary btn-lg">Check In</a>
+				</div>
+			</div>
+			{{> testingZone}}
+			{{else}}
+			<h2>Please sign in to get started </h2>
+			{{/if}}
+		</div>
+	</div>
+</template>
