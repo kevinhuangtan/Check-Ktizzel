@@ -100,8 +100,8 @@ if (Meteor.isClient) {
             });
 
             // console.log(Meteor.user.find({ _id: this.userId }, {fields: {testing: 1} } ) );
-            Meteor.users.update({_id:Meteor.user()._id}, { $set: {eventDate: 1} });
-            // Meteor.user().newField = "Testing";
+            // Meteor.users.update({_id:Meteor.user()._id}, { $set: {eventDate: 1} });
+            Meteor.user().newField = "Testing";
            
 
             console.log(checkEvents.find().fetch());
