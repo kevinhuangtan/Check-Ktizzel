@@ -108,7 +108,7 @@ if (Meteor.isClient) {
             // below does not work on client side
             // console.log(checkEvents.find({"location": { $geoWithin : { $center : [ [-74, 40.74 ] , 10 ] } } } ));
 
-    // })
+    }})
 
     Template.testingZone.rendered = function () {
         var mapOptions = {
@@ -124,6 +124,7 @@ if (Meteor.isClient) {
 
     // Meteor.user().services.facebook.name
     // Geolocation.currentLocation().coords.latitude
+
 }
 
 // if (Meteor.isServer) {
