@@ -91,16 +91,23 @@ if (Meteor.isClient) {
             var eventName = event.target.eventName.value;
             var eventDate = event.target.eventDate.value;
             var eventLocation = event.target.eventLocation.value;
+            // Testing out Mongo near function
+            // var eventLocation = [Geolocation.latLng().lng, Geolocation.latLng().lat];
             checkEvents.insert({
             name: eventName,
             date: eventDate,
             location: eventLocation
             });
+
             // console.log(Meteor.user.find({ _id: this.userId }, {fields: {testing: 1} } ) );
             Meteor.users.update({_id:Meteor.user()._id}, { $set: {eventDate: 1} });
             // Meteor.user().newField = "Testing";
            
-        }
+
+            console.log(checkEvents.find().fetch());
+            // below does not work on client side
+            // console.log(checkEvents.find({"location": { $geoWithin : { $center : [ [-74, 40.74 ] , 10 ] } } } ));
+
     })
 
     Template.testingZone.rendered = function () {
