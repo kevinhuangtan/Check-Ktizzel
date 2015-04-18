@@ -1,0 +1,94 @@
+<!-- View Event Page -->
+<template name = "viewEvent">
+	<div class="container">
+		<br><br>
+		<a href="{{pathFor route='home'}}">Back</a>
+
+		<!-- Page Content -->
+    <div class="container mainDiv">
+        <div class="row">
+            <div  class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Attendance</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id="attendee-count">
+                            <p id="came">245</p><p id="attendee-total" class="came2">/285</p>
+                            <p class="came2">Attendees</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Gender Ratio</h3>
+                    </div>
+                    <div class="panel-body">
+                    	<!--<div id="gender-ratio"></div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div  class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Ethnicity Ratios</h3>
+                    </div>
+                    <div class="panel-body">
+                        <img src="graph1.png">
+                    </div>
+                </div>    
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Attendance Trend</h3>
+                    </div>
+                    <div class="panel-body">
+                        <img src="graph2.png">
+                    </div>
+                </div>
+            </div>                  
+        </div>
+        <div id="Roster">
+            <table  border="1" style="width:100%">
+                <tr>
+                    <th>NAME</th>
+                    <th>EMAIL</th>
+                    <th>PHONE</th>
+                    <th>ATTENDANCE</th>
+                </tr>
+                <tr>
+                    <td>John Doe</td>
+                    <td>john.doe@gmail.com</td>
+                    <td>555-029-3751</td> 
+                    <td>Yes</td>
+                </tr>
+                    <td>Jane Doe</td>
+                    <td>jane.doe@gmail.com</td>
+                    <td>555-029-3752</td>
+                    <td>Yes</td>
+                <tr> 
+                    <td>Joe Don</td>
+                    <td>joe.don@yahoo.com</td>               
+                    <td>555-029-3753</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Joe Dane</td>
+                    <td>joe.dane@hotmail.com</td>
+                    <td>555-029-3754</td>
+                    <td>Yes</td> 
+                </tr>
+            </table>
+        </div>
+    </div>
+			<!-- C3 currently not working; will need to modify for use with meteor package -->
+     <!--    <div id="ethnicity_donut_chart" class="col-md-6"></div>
+     <div id="attendence_rate_line" class="col-md-6"></div> -->
+	</div>
+</template>
