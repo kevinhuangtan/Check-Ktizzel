@@ -43,13 +43,32 @@
 
 			<!-- /.navbar-collapse -->
 		</div>
+
+		<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav side-nav">
+                <li class="active">
+                    <a href="{{pathFor route='home'}}"><i class="fa fa-fw fa-dashboard"></i>Home</a>
+                </li>
+                <li class="active">
+                    <a href="{{pathFor route='createEvent'}}"><i class="fa fa-fw fa-dashboard"></i>Create Event</a>
+                </li>
+                <li class="active">
+                    <a href="{{pathFor route='viewEvent'}}"><i class="fa fa-fw fa-dashboard"></i>View Event</a>
+                </li>
+                <li class="active">
+                    <a href="{{pathFor route='testingZone'}}"><i class="fa fa-fw fa-dashboard"></i>Testing Zone</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
 		<!-- /.container -->
 	</nav>
 </body>
 
 <!-- Confirm Checkin  Page -->
 <template name = "checkIn">
-	<div class="container">
+	<div class="container mainDiv">
 		<br><br>
 		<a href="{{pathFor route='home'}}">Back</a>
 		<div class="row">
@@ -62,30 +81,5 @@
 	</div>
 </template>
 
-<template name = "scrollEvents">
-	<div class="container">
-		<br><br>
-		<header>
-		    <h1>Your Events ({{incompleteCount}})</h1>
-
-		    <label class="hide-completed">
-		      <input type="checkbox" checked="{{hideCompleted}}" />
-		      Hide Completed Events
-		    </label>
-
-			  <!-- add a form below the h1 -->
-			<form class="new-task">
-			  	<div class = "col-lg-4">
-					<a href="{{pathFor route='createEvent'}}" class="btn btn-primary btn-lg">Create Event</a>
-				</div>
-			</form>
-		</header>
-	    <ul>
-	      {{#each event}}
-	        {{> event}}
-	      {{/each}}
-	    </ul>
-	</div>
-</template>
 
 

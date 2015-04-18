@@ -1,7 +1,7 @@
 
 <template name = "home">
 	<div class ="container homePage">
-		<div class="container">
+		<div class="container mainDiv">
 			{{#if currentUser}}
 			<div class="row">
 				<div class = "col-lg-3">
@@ -12,9 +12,6 @@
 				</div>
 				<div class = "col-lg-3">
 					<a href="{{pathFor route='checkIn'}}" class="btn btn-primary btn-lg">Check In</a>
-				</div>
-				<div class = "col-lg-3">
-					<a href="{{pathFor route='scrollEvents'}}" class="btn btn-primary btn-lg">Scroll Dat Shit</a>
 				</div>
 			</div>
 			{{> testingZone}}
