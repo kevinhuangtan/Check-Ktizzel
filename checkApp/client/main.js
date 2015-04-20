@@ -13,6 +13,8 @@ Router.map(function() {
 //     location: "Yale CEID"});
 
 if (Meteor.isClient) {
+    console.log("test client");
+   Meteor.subscribe("userData");
   // This code only runs on the client
     // Template.scrollEvents.helpers({
     //     tasks: function () {
@@ -76,7 +78,7 @@ if (Meteor.isClient) {
         }
     })
 
-     Template.createEvent.helpers({
+    Template.createEvent.helpers({
         'checkEvent': function(){
             return checkEvents.find().fetch()
         }
@@ -85,24 +87,33 @@ if (Meteor.isClient) {
         // }
     })
 
+
+    Template.createEvent.helpers({'myevents': function(){
+        var currentUserId = Meteor.userId();
+        return checkEvents.find({createdby: Meteor.userId()});
+    }});
+
     Template.createEvent.events({
         'submit form': function(event){
             event.preventDefault();
             var eventName = event.target.eventName.value;
             var eventDate = event.target.eventDate.value;
-            var eventLocation = event.target.eventLocation.value;
-            // Testing out Mongo near function
-            // var eventLocation = [Geolocation.latLng().lng, Geolocation.latLng().lat];
+            // var eventLocation = event.target.eventLocation.value;
+            // Logs event location as an array of the place the event was created
+            var eventLocation = [Geolocation.latLng().lng, Geolocation.latLng().lat];
+            var currentUserId = Meteor.userId();
             checkEvents.insert({
             name: eventName,
             date: eventDate,
-            location: eventLocation
+            location: eventLocation,
+            //associates the event to the creator
+            createdby: currentUserId
             });
 
             // console.log(Meteor.user.find({ _id: this.userId }, {fields: {testing: 1} } ) );
             // Meteor.users.update({_id:Meteor.user()._id}, { $set: {eventDate: 1} });
-            Meteor.user().newField = "Testing";
-           
+            // Meteor.user().newField = "Testing";
+
 
             console.log(checkEvents.find().fetch());
             // below does not work on client side
