@@ -5,6 +5,7 @@ Router.map(function() {
     this.route("createEvent", {path: '/createEvent'});
     this.route("checkIn", {path: '/checkIn'});
     this.route("scrollEvents", {path: '/scrollEvents'});
+    this.route("viewLocalEvents", {path: '/viewLocalEvents'});
 });
 
 // checkEvents.insert({
@@ -71,9 +72,38 @@ if (Meteor.isClient) {
         },
         error: Geolocation.error
     });
+    //Map
+    Template.checkIn.helpers({
+        'checkEvent': function(){
+            return checkEvents.find().fetch(); 
+        },
+        'nearbyEvents' : function(){
+            var locations = checkEvents.find().fetch(); 
+            var nearbyLocations = []
+            var delta_x = 0;
+            var delta_y = 0;
+            for (var i = 0; i < locations.length; i++ ){
+                console.log(Geolocation.latLng().lat)
+                console.log(locations[i].location[0])
+                delta_x = Geolocation.latLng().lng - locations[i].location[0]
+                delta_y = Geolocation.latLng().lat - locations[i].location[1]
+
+                if ((delta_x*delta_x + delta_y*delta_y) < 10*10 ){
+                    nearbyLocations.push(locations[i]);
+                    console.log('yes');
+                    console.log(nearbyLocations[0])
+                }
+            }
+
+            return nearbyLocations
+
+        }
+
+    });
 
     Template.testingZone.helpers({
         'user': function(){
+
             return Meteor.users.find().fetch()
         }
     })
@@ -81,10 +111,10 @@ if (Meteor.isClient) {
     Template.createEvent.helpers({
         'checkEvent': function(){
             return checkEvents.find().fetch()
+        },
+        'nearbyEvents': function(){
+            return checkEvents.find({"location": { $geoWithin : { $center : [ [-74, 40.74 ] , 10 ] } } } );
         }
-        // 'currentUser': function(){
-        //     return Meteor.user();
-        // }
     })
 
 
@@ -119,7 +149,7 @@ if (Meteor.isClient) {
             // below does not work on client side
             // console.log(checkEvents.find({"location": { $geoWithin : { $center : [ [-74, 40.74 ] , 10 ] } } } ));
 
-    }})
+    }});
 
     Template.testingZone.rendered = function () {
         var mapOptions = {

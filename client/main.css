@@ -211,3 +211,22 @@ p{
   padding-left: 50px;
   margin-left: 50px;
 }
+
+
+#login-buttons{
+    margin-top: 15px;
+}
+
+/*****************checkin styling***************/
+.nearby{
+
+}
+
+#map{
+  height:200px!important;
+}
+
+
+
+
+

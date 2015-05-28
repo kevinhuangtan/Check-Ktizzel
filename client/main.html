@@ -1,6 +1,7 @@
 <head>
 	<title>Check</title>
 	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3IaCGmNfltsyk5fyATz-icw-D5VFhSYw"></script>
+
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -70,17 +71,39 @@
 		<br><br>
 		<a href="{{pathFor route='home'}}">Back</a>
 		<div class="row">
-			<h1>Where am I?</h1>
-				<img src="http://maps.googleapis.com/maps/api/staticmap?center={{loc.lat}},{{loc.lng}}&zoom=17&size=600x300&maptype=roadmap&markers=color:blue%7C{{loc.lat}},{{loc.lng}}" />
-			{{#if error}}
-			<p>Error: {{error.message}}</p>
-			{{/if}}
+			<div class="col-md-4">
+				<h3>Where am I?</h3>
+					<img src="http://maps.googleapis.com/maps/api/staticmap?center={{loc.lat}},{{loc.lng}}&zoom=17&size=300x300&maptype=roadmap&markers=color:blue%7C{{loc.lat}},{{loc.lng}}" />
+				{{#if error}}
+					<p>Error: {{error.message}}</p>
+				{{/if}}
+				<br>
+				<p>My Location</p>
+				<p>latitude: {{loc.lat}}</p><br>
+				<p>longitude: {{loc.lng}}</p>
+			</div>
+			<div class="col-md-4">
+				<h3>All Events</h3>
+				<ul class="nearby">
+			        {{#each checkEvent}}
+			       		<b><li>{{name}}</li></b>
+			       		<li>{{date}}</li>
+			       		<li>{{location}}</li>
+			        {{/each}}
+	       		</ul>
+	       		<h3>Nearby (10 mile radius)</h3>
+				<ul class="nearby">
+			        {{#each nearbyEvents}}
+			       		<b><li>{{name}}</li></b>
+			       		<li>{{date}}</li>
+			        {{/each}}
+	       		</ul>
+       		</div>
+       		<div id='map'></div>
+
  		</div>
-        <ul>
-        {{#each checkEvent}}
-        <li>{{name}}</li>
-        {{/each}}
-        </ul>
+
+
 	</div>
 </template>
 
