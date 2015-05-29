@@ -141,6 +141,10 @@ table, th, td {
 p{
   display: inline-block;
 }
+li{
+  list-style-type: none;
+  margin: 5px;
+}
 
 /* Side Navigation */
 
@@ -208,6 +212,7 @@ p{
 
 
 .mainDiv{
+  padding-top: 50px;
   padding-left: 50px;
   margin-left: 50px;
 }

@@ -1,0 +1,34 @@
+<template name = "users">
+	<div class="container mainDiv">
+		<h3>Users:</h3>
+		<ul>
+			{{#each user}}
+				<li>{{username}}</li>
+			{{/each}}
+		</ul>
+	</div>
+</template>
+
+<template name = "profile">
+	<div class="container mainDiv">
+		<h3>My Profile</h3>
+		<form class="profile-form">
+			<ul>
+				<li>Name: {{currentUser.username}}</li>
+				{{#if email}}
+					<li>Email: {{email}}</li>
+				{{else}}
+					<li>Please Enter Email: <input type="text" name="email" placeholder="Email"></li>
+				{{/if}}
+				{{#if profpic}}
+					<li>profpic: {{profpic}}</li>
+				{{else}}
+					<li>Please Enter profpic: <input type="text" name="profpic" placeholder="profpic"></li>
+				{{/if}}
+
+			</ul>
+			
+				<button type="submit" class = "btn btn-lg btn-primary">Update Profile</button>
+		</form>
+	</div>
+</template>
