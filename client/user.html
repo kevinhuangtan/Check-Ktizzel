@@ -1,12 +1,44 @@
-<template name = "users">
+
+<template name = "splash">
 	<div class="container mainDiv">
-		<h3>Users:</h3>
-		<ul>
-			{{#each user}}
-				<li>{{username}}</li>
-			{{/each}}
-		</ul>
-	</div>
+		{{#if currentUser}}
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6">
+				<button class='btn'>Check In</button>
+				<a href="{{pathFor route='createEvent'}}"><button class='btn'>Create Event</button></a>
+			</div>
+		</div>
+		{{else}}
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6">
+				<form class="signin">
+					<input type="text" name="email" placeholder="Email">
+					<input type="text" name="password" placeholder="Password">
+					<!-- <input type="submit" value="Submit"> -->
+
+				
+					<button type="submit" class = "btn btn-lg btn-primary">Sign In</button>
+				</form>
+			</div>
+		</div>
+		{{/if}}
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6">
+	       		<p>Ongoing Events in {{myCity}} (10 mile radius)</p>
+	       		<ul class="nearby">
+	       			<li>Nearby events:</li>
+			        {{#each nearbyEvents}}
+			       		<b><li class="event-li">{{name}}</li></b>
+			       		<li>{{date}}</li>
+			       		<li>{{_id}}</li>
+			        {{/each}}
+	       		</ul>
+	       		
+       		</div>
+ 		</div>
+
+ 	</div>
+
 </template>
 
 <template name = "profile">
@@ -14,21 +46,43 @@
 		<h3>My Profile</h3>
 		<form class="profile-form">
 			<ul>
-				<li>Name: {{currentUser.username}}</li>
+				<!-- <li>Name: {{currentUser.username}}</li> -->
+				{{#if name}}
+					<li>Name {{name}}<button id="name" class="btn edit-field">Edit</button> </li>
+				{{else}}
+					<li><input type="text" name="name" placeholder="Name"><button id="name" class="btn edit-field">Edit</button> </li>
+				{{/if}}
+				{{#if gender}}
+					<li>Gender {{gender}}<button  id="gender" class="btn edit-field">Edit</button> </li>
+				{{else}}
+					<li><input type="text" name="gender" placeholder="Gender"><button id="gender" class="btn edit-field">Edit</button> </li>
+				{{/if}}
 				{{#if email}}
-					<li>Email: {{email}}</li>
+					<li>Email {{email}}<button class="btn edit-field">Edit</button> </li>
 				{{else}}
-					<li>Please Enter Email: <input type="text" name="email" placeholder="Email"></li>
+					<li><input type="text" name="email" placeholder="Email"><button class="btn edit-field">Edit</button> </li>
 				{{/if}}
-				{{#if profpic}}
-					<li>profpic: {{profpic}}</li>
+				{{#if phone}}
+					<li>Phone {{phone}}<button id="phone" class="btn edit-field">Edit</button> </li>
 				{{else}}
-					<li>Please Enter profpic: <input type="text" name="profpic" placeholder="profpic"></li>
+					<li><input type="text" name="phone" placeholder="Phone"><button id="phone" class="btn edit-field">Edit</button> </li>
 				{{/if}}
+				{{#if ethnicity}}
+					<li>Ethnicity {{ethnicity}}<button id="ethnicity" class="btn edit-field">Edit</button> </li>
+				{{else}}
+					<li><input type="text" name="ethnicity" placeholder="Ethnicity"><button id="ethnicity"  class="btn edit-field">Edit</button> </li>
+				{{/if}}
+				{{#if organization}}
+					<li>Organization {{organization}}<button id="organization" class="btn edit-field">Edit</button> </li>
+				{{else}}
+					<li><input type="text" name="organization" placeholder="Organization"><button  id="organization" class="btn edit-field">Edit</button> </li>
+				{{/if}}
+	
+
 
 			</ul>
 			
-				<button type="submit" class = "btn btn-lg btn-primary">Update Profile</button>
+				<button type="submit" class = "update btn btn-lg btn-primary">Update Profile</button>
 		</form>
 	</div>
 </template>

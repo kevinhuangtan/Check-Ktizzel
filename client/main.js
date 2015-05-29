@@ -1,69 +1,67 @@
 
 Router.map(function() {
-	this.route("home", {path: '/'});
-	this.route("viewEvent", {path: '/viewEvent'});
+	this.route("splash", {path: '/'});
+	this.route("event", {path: '/event'});
 	this.route("createEvent", {path: '/createEvent'});
 	this.route("checkIn", {path: '/checkIn'});
 	this.route("scrollEvents", {path: '/scrollEvents'});
-	this.route("users", {path: '/users'});
 	this.route("profile", {path: '/profile'});
+
 });
-
-
-checkEvents = new Mongo.Collection("checkEvents");
 
 if (Meteor.isClient) {
 	Meteor.subscribe("userData");
-
+	Meteor.subscribe("events");
 
 
 //////////////////USERS///////////////////////
-	Template.users.helpers({
-		'user': function(){
-			console.log(Meteor.user())
-			return Meteor.users.find().fetch()
-		}
-	});
 	Template.profile.helpers({
 		'email': function(){
+			document.title = "My Profile";
 			var user = Meteor.user();
 			return user.emails[0].address;
 
 		},
-		'profpic' : function(){
-			return Meteor.user().profile.pic;
+		'name' : function(){
+			return Meteor.user().profile.name;
+		},
+		'gender' : function(){
+			return Meteor.user().profile.gender;
+		},
+		'phone' : function(){
+			return Meteor.user().profile.phone;
+		},
+		'ethnicity' : function(){
+			return Meteor.user().profile.ethnicity;
+		},
+		'organization' : function(){
+			return Meteor.user().profile.organization;
 		}
 	});
 
 	Template.profile.events({
-		'submit .profile-form': function(event){
-			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.pic": 'profpic'} });
+		'click .update': function(event){
+			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.name": event.target.name.value,"profile.gender": event.target.gender.value,"profile.phone": event.target.phone.value,"profile.ethnicity": event.target.ethnicity.value,"profile.organization": event.target.organization.value} });
+		},
+
+		'click #gender': function(event){
+			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.gender": ""} });
+		},
+		'click #phone': function(event){
+			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.phone": "adfafa"} });
+		},
+		'click #ethnicity': function(event){
+			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.ethnicity": ""} });
+		},
+		'click #organization': function(event){
+			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.organization": ""} });
 		}
 	});
-
-
-////////////////EVENTS////////////////////////
-	Template.createEvent.events({
-		'submit form': function(event){
-			event.preventDefault();
-			var eventName = event.target.eventName.value;
-			var eventDate = event.target.eventDate.value;
-			var eventLocation = [Geolocation.latLng().lng, Geolocation.latLng().lat];
-			var eventHost = Meteor.userId();
-			var attending = [];
-			attending.push(eventHost);
-			checkEvents.insert({
-				name: eventName,
-				date: eventDate,
-				location: eventLocation,
-				host: currentUserId,
-				attending: attending
-			});
-
-
-	}});
-
-	Template.checkIn.helpers({
+	Template.splash.helpers({
+		myLocation: function () {
+			// return 0, 0 if the location isn't ready
+			return Geolocation.latLng() || { lat: 0, lng: 0 };
+		},
 		'checkEvent': function(){
 			return checkEvents.find().fetch(); 
 		},
@@ -73,23 +71,112 @@ if (Meteor.isClient) {
 			var delta_x = 0;
 			var delta_y = 0;
 			for (var i = 0; i < locations.length; i++ ){
-				console.log(Geolocation.latLng().lat)
-				console.log(locations[i].location[0])
 				delta_x = Geolocation.latLng().lng - locations[i].location[0]
 				delta_y = Geolocation.latLng().lat - locations[i].location[1]
 
 				if ((delta_x*delta_x + delta_y*delta_y) < 10*10 ){
 					nearbyLocations.push(locations[i]);
-					console.log('yes');
-					console.log(nearbyLocations[0])
 				}
 			}
-
-			return nearbyLocations
-
+			return checkEvents.find().fetch(); 
+		},
+		'myevents': function(){
+			var currentUserId = Meteor.userId();
+			return checkEvents.find().fetch()
+			// return checkEvents.find({createdby: Meteor.userId()});
+		},
+		'myCity' : function(){
+			var js;
+			var loc = Geolocation.latLng();
+			var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+loc.lat+','+loc.lng+'&key=AIzaSyA3IaCGmNfltsyk5fyATz-icw-D5VFhSYw';
+			var cityName;
+			var cityName2;
+			$.ajaxSetup({
+			   async: false
+			});
+			$.getJSON(url, function(data) {
+   				js = data;
+   				// console.log(js.results[0].address_components[3])
+   				cityName = js.results[0].address_components[3].long_name;
+   				cityName2 = js.results[0].address_components[4].long_name;
+    			// you can even pass data as parameter to your target function like myFunct(data);
+			});
+			var result = cityName + ', ' + cityName2;
+			return result 
 		}
-
 	});
+	Template.splash.events({
+		'click .event-li': function(event){
+			Session.set("currentEvent", this._id);
+			Router.go('event');
+		}
+	});
+
+////////////////EVENTS////////////////////////
+	Template.createEvent.events({
+		'submit form': function(event){
+			console.log('submit');
+			event.preventDefault();
+			var eventName = event.target.eventName.value;
+			var eventDate = event.target.eventDate.value;
+			var eventGeolocation = Geolocation.latLng();
+			var eventArea = event.target.eventArea.value;
+			var eventLocation = event.target.eventLocation.value;
+			var eventHost = Meteor.userId();
+			var attending = [];
+			attending.push(eventHost);
+			checkEvents.insert({
+				name: eventName,
+				date: eventDate,
+				geoLocation: eventLocation,
+				eventArea: eventArea,
+				location: eventLocation,
+				createdby: Meteor.userId(),
+				attending: attending
+			});
+		}
+	});
+	Template.createEvent.helpers({
+		'myevents': function(){
+			var currentUserId = Meteor.userId();
+			return checkEvents.find().fetch()
+			// return checkEvents.find({createdby: Meteor.userId()});
+		}
+	});
+
+	Template.createEvent.onRendered(function () {
+	  // Use the Packery jQuery plugin
+		function initialize() {
+	        var mapCanvas = document.getElementById('map-canvas');
+	        var mapOptions = {
+	          center: new google.maps.LatLng(44.5403, -78.5463),
+	          zoom: 8,
+	          mapTypeId: google.maps.MapTypeId.ROADMAP
+	        }
+	        console.log('here')
+	        var map = new google.maps.Map(mapCanvas, mapOptions)
+    	}
+      	google.maps.event.addDomListener(window, 'load', initialize);	
+	});
+
+	Template.event.helpers({
+		'currentEvent' : function(){
+			var id = Session.get("currentEvent")
+
+			var result = checkEvents.findOne({_id: "Qoiqqee4AbZdo3Tnn"})
+			console.log(result)
+			return result		
+		},
+		'attendees' : function(){
+			var result = checkEvents.findOne({_id: "Qoiqqee4AbZdo3Tnn"})
+			var attendees = []
+			for (var i = 0; i < result.attending.length; i++){
+				attendees.push(Meteor.users.findOne({_id: result.attending[i]}).emails[0].address)
+			}
+			return attendees
+		}
+	});
+
 
 
 
@@ -103,20 +190,6 @@ if (Meteor.isClient) {
 		}
 	})
 
-	Template.createEvent.helpers({
-		'checkEvent': function(){
-			return checkEvents.find().fetch()
-		}
-	})
-
-
-	Template.createEvent.helpers({
-		'myevents': function(){
-			var currentUserId = Meteor.userId();
-			return checkEvents.find({createdby: Meteor.userId()});
-		}
-	});
-
 		//Map
 	Template.checkIn.helpers({
 		loc: function () {
@@ -127,41 +200,12 @@ if (Meteor.isClient) {
 	});
 
 
-
-	Template.testingZone.rendered = function () {
-		var mapOptions = {
-			center: { lat: -34.397, lng: 150.644},
-			zoom: 9,
-			mapTypeId: google.maps.MapTypeId.HYBRID
-		};
-
-		var map = new google.maps.Map(document.getElementById('map-canvas'),
-			mapOptions);
-	}
 		// checkEvents.insert({ name: "Bob", date: 03/04/15, time: 22:00})
 
 	// Meteor.user().services.facebook.name
 	// Geolocation.currentLocation().coords.latitude
 
 }
-Accounts.ui.config({
-  passwordSignupFields: "USERNAME_ONLY"
-});
 
-
-// if (Meteor.isServer) {
-//   Meteor.publish("userData", function () {
-// 	return Meteor.users.find();
-//   });
-// }
-// if (Meteor.isServer) {
-//     Meteor.users().allow({
-//     'insert': function (userId,doc) {
-//        user and doc checks ,
-//       return true to allow insert 
-//       return true; 
-//     }
-//   });
-// }
 
 //------------------------------------------------------------//

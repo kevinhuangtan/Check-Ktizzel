@@ -231,6 +231,41 @@ li{
   height:200px!important;
 }
 
+.edit-field{
+  display: inline-block;
+}
+
+/****************splash page****************/
+
+
+input{
+  display: block;
+}
+#map-canvas{
+  height:1000px;
+}
+.signin input{
+  display: inline-block;
+}
+.event-li{
+  cursor: pointer;
+}
+
+.event-li:hover{
+  opacity:.5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
