@@ -3,22 +3,14 @@
 
 		<!-- Page Content -->
     <div class="container mainDiv">
+
         <div class="row">
-            <div  class="col-md-4">
+            <div  class="col-md-6">
                 <h2>Current Event: 
                     {{currentEvent.name}}
                 </h2>
-<!--                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Attendance</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div id="attendee-count">
-                            <p id="came">245</p><p id="attendee-total" class="came2">/285</p>
-                            <p class="came2">Attendees</p>
-                        </div>
-                    </div>
-                </div> -->
+
+                {{#if checkedIn}}
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Attendees</h3>
@@ -26,12 +18,21 @@
                     <div class="panel-body">
                         <div>
                             {{#each attendees}}
-                               <li>{{attendees}}</li>
+                               <li>{{this}}</li>
                             {{/each}}
                         </div>
                     </div>
                 </div>
+                
+
+                <button class='checkIn btn'>Check In</button>
+                {{else}}
+                    <p>Sign in to Check into event</p>
+                {{/if}}
+
+
             </div>   
+
         </div>
 
 	</div>

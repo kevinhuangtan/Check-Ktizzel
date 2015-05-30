@@ -1,7 +1,7 @@
 <template name = "createEvent">
 	<div class="container mainDiv">
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<h2>Create New Event</h2>
 				<form class="new-event">
 					<input type="text" name="eventName" placeholder="Event Name">
@@ -14,12 +14,6 @@
 				
 					<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
 				</form>
-				<ul>
-					<u><p>All events</p></u>
-					{{#each myevents}}
-						<li>{{name}}</li>
-					{{/each}}
-				</ul>
 
 			</div>
 			<div class="col-md-6">

@@ -10,11 +10,13 @@ Router.map(function() {
 });
 
 if (Meteor.isClient) {
-	Meteor.subscribe("userData");
-	Meteor.subscribe("events");
+	// Meteor.subscribe("userData");
+	 Meteor.subscribe("allUserData");
 
 
-//////////////////USERS///////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////USERS//////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 	Template.profile.helpers({
 		'email': function(){
 			document.title = "My Profile";
@@ -57,6 +59,7 @@ if (Meteor.isClient) {
 			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.organization": ""} });
 		}
 	});
+
 	Template.splash.helpers({
 		myLocation: function () {
 			// return 0, 0 if the location isn't ready
@@ -112,11 +115,13 @@ if (Meteor.isClient) {
 		}
 	});
 
-////////////////EVENTS////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////EVENTS//////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+	
 	Template.createEvent.events({
 		'submit form': function(event){
-			console.log('submit');
-			event.preventDefault();
+
 			var eventName = event.target.eventName.value;
 			var eventDate = event.target.eventDate.value;
 			var eventGeolocation = Geolocation.latLng();
@@ -153,7 +158,6 @@ if (Meteor.isClient) {
 	          zoom: 8,
 	          mapTypeId: google.maps.MapTypeId.ROADMAP
 	        }
-	        console.log('here')
 	        var map = new google.maps.Map(mapCanvas, mapOptions)
     	}
       	google.maps.event.addDomListener(window, 'load', initialize);	
@@ -163,20 +167,47 @@ if (Meteor.isClient) {
 		'currentEvent' : function(){
 			var id = Session.get("currentEvent")
 
-			var result = checkEvents.findOne({_id: "Qoiqqee4AbZdo3Tnn"})
-			console.log(result)
+			var result = checkEvents.findOne({_id: Session.get("currentEvent")})
+			// console.log(result)
 			return result		
 		},
 		'attendees' : function(){
-			var result = checkEvents.findOne({_id: "Qoiqqee4AbZdo3Tnn"})
+			var result = checkEvents.findOne({_id: Session.get("currentEvent")})
 			var attendees = []
+			var attendee;
+			var email;
+			var email2;
 			for (var i = 0; i < result.attending.length; i++){
-				attendees.push(Meteor.users.findOne({_id: result.attending[i]}).emails[0].address)
+				attendee = result.attending[i];
+				// attendees.push(attendee);   
+				console.log(attendee)
+				email = Meteor.users.findOne({_id: attendee});
+				console.log(email)
+				email2 = email.emails[0].address
+
+				attendees.push(email2);
 			}
+			// console.log(attendees)
 			return attendees
+		},
+		'checkedIn': function(){
+			var result = checkEvents.findOne({_id: Session.get("currentEvent")})
+			if(result.attending.indexOf(Meteor.userId())!=-1&&Meteor.user()){
+				return true
+			}
+			else{
+				return false
+			}
 		}
 	});
-
+	Template.event.events({
+		'click .checkIn':function(){
+			var eventId = Session.get("currentEvent")
+			// console.log(eventId);
+			checkEvents.update({_id: eventId}, {$push: {attending: Meteor.userId()}});
+			// console.log(checkEvents.findOne({_id: "Qoiqqee4AbZdo3Tnn"}).attending)
+		}
+	})
 
 
 
@@ -185,19 +216,12 @@ if (Meteor.isClient) {
 
 	Template.testingZone.helpers({
 		'user': function(){
-
 			return Meteor.users.find().fetch()
 		}
 	})
 
 		//Map
-	Template.checkIn.helpers({
-		loc: function () {
-			// return 0, 0 if the location isn't ready
-			return Geolocation.latLng() || { lat: 0, lng: 0 };
-		},
-		error: Geolocation.error
-	});
+
 
 
 		// checkEvents.insert({ name: "Bob", date: 03/04/15, time: 22:00})

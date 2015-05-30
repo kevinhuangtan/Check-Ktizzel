@@ -3,8 +3,13 @@
 	<div class="container mainDiv">
 		{{#if currentUser}}
 		<div class="row">
-			<div class="col-md-offset-3 col-md-6">
-				<button class='btn'>Check In</button>
+            <div class="col-md-offset-3 col-md-3">
+            	<button class='btn'>Check In</button>
+            </div>
+        </div>
+		<div class="row">
+			<div class="col-md-offset-3 col-md-3">
+				
 				<a href="{{pathFor route='createEvent'}}"><button class='btn'>Create Event</button></a>
 			</div>
 		</div>
@@ -24,13 +29,11 @@
 		{{/if}}
 		<div class="row">
 			<div class="col-md-offset-3 col-md-6">
-	       		<p>Ongoing Events in {{myCity}} (10 mile radius)</p>
+	       		<p>Ongoing Events in {{myCity}}</p>
 	       		<ul class="nearby">
-	       			<li>Nearby events:</li>
 			        {{#each nearbyEvents}}
 			       		<b><li class="event-li">{{name}}</li></b>
 			       		<li>{{date}}</li>
-			       		<li>{{_id}}</li>
 			        {{/each}}
 	       		</ul>
 	       		
@@ -38,7 +41,6 @@
  		</div>
 
  	</div>
-
 </template>
 
 <template name = "profile">

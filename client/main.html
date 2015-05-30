@@ -24,9 +24,7 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li>
-						<a href="#">About</a>
-					</li>
+
 				</ul>
 				<form class="navbar-form navbar-left" role="search">
 					<div class="form-group">
@@ -47,48 +45,3 @@
 
 	</nav>
 </body>
-
-<!-- Confirm Checkin  Page -->
-<template name = "checkIn">
-	<div class="container mainDiv">
-		<br><br>
-		<a href="{{pathFor route='home'}}">Back</a>
-		<div class="row">
-			<div class="col-md-4">
-				<h3>Where am I?</h3>
-					<img src="http://maps.googleapis.com/maps/api/staticmap?center={{loc.lat}},{{loc.lng}}&zoom=17&size=300x300&maptype=roadmap&markers=color:blue%7C{{loc.lat}},{{loc.lng}}" />
-				{{#if error}}
-					<p>Error: {{error.message}}</p>
-				{{/if}}
-				<br>
-				<p>My Location</p>
-				<p>latitude: {{loc.lat}}</p><br>
-				<p>longitude: {{loc.lng}}</p>
-			</div>
-			<div class="col-md-4">
-				<h3>All Events</h3>
-				<ul class="nearby">
-			        {{#each checkEvent}}
-			       		<b><li class="event-li">{{name}}</li></b>
-			       		<li>{{date}}</li>
-			       		<li>{{location}}</li>
-			        {{/each}}
-	       		</ul>
-	       		<h3>Nearby (10 mile radius)</h3>
-				<ul class="nearby">
-			        {{#each nearbyEvents}}
-			       		<b><li>{{name}}</li></b>
-			       		<li>{{date}}</li>
-			        {{/each}}
-	       		</ul>
-       		</div>
-       		<div id='map'></div>
-
- 		</div>
-
-
-	</div>
-</template>
-
-
-
