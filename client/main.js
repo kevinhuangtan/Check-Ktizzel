@@ -25,7 +25,7 @@ if (Meteor.isClient) {
 
 		},
 		'name' : function(){
-			return Meteor.user().profile.name;
+			return Meteor.user().profile.fullname;
 		},
 		'gender' : function(){
 			return Meteor.user().profile.gender;
@@ -41,22 +41,22 @@ if (Meteor.isClient) {
 		}
 	});
 
-	Template.profile.events({
-		'click .update': function(event){
-			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.name": event.target.name.value,"profile.gender": event.target.gender.value,"profile.phone": event.target.phone.value,"profile.ethnicity": event.target.ethnicity.value,"profile.organization": event.target.organization.value} });
-		},
 
-		'click #gender': function(event){
-			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.gender": ""} });
-		},
-		'click #phone': function(event){
-			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.phone": "adfafa"} });
-		},
-		'click #ethnicity': function(event){
-			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.ethnicity": ""} });
-		},
-		'click #organization': function(event){
-			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.organization": ""} });
+	Template.profile.events({
+	    'click .edit' : function() {
+	    	console.log('help')
+	        Session.set('edit', true);
+	    }
+	});
+
+	Template.profile.editme = function () {
+	    return Session.get('edit');
+	};
+
+
+	Template.profile.events({
+		'submit .profile-form': function(event){
+			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.fullname": event.target.name.value,"profile.gender": event.target.gender.value,"profile.phone": event.target.phone.value,"profile.ethnicity": event.target.ethnicity.value,"profile.organization": event.target.organization.value} });
 		}
 	});
 
@@ -68,23 +68,28 @@ if (Meteor.isClient) {
 		'checkEvent': function(){
 			return checkEvents.find().fetch(); 
 		},
+		'eventYourAt' : function(){
+
+		},
 		'nearbyEvents' : function(){
 			var locations = checkEvents.find().fetch(); 
 			var nearbyLocations = []
 			var delta_x = 0;
 			var delta_y = 0;
+			console.log(locations)
 			for (var i = 0; i < locations.length; i++ ){
-				delta_x = Geolocation.latLng().lng - locations[i].location[0]
-				delta_y = Geolocation.latLng().lat - locations[i].location[1]
-
+				delta_x = Geolocation.latLng().lng - locations[i].geoLocation.lng
+				delta_y = Geolocation.latLng().lat - locations[i].geoLocation.lat
+				console.log(Geolocation.latLng().lng)
+				console.log(locations[i].geoLocation.lng)
 				if ((delta_x*delta_x + delta_y*delta_y) < 10*10 ){
 					nearbyLocations.push(locations[i]);
 				}
 			}
-			return checkEvents.find().fetch(); 
+			console.log(nearbyLocations)
+			return nearbyLocations; 
 		},
 		'myevents': function(){
-			var currentUserId = Meteor.userId();
 			return checkEvents.find().fetch()
 			// return checkEvents.find({createdby: Meteor.userId()});
 		},
@@ -121,24 +126,25 @@ if (Meteor.isClient) {
 	
 	Template.createEvent.events({
 		'submit form': function(event){
-
+			event.preventDefault()
 			var eventName = event.target.eventName.value;
 			var eventDate = event.target.eventDate.value;
-			var eventGeolocation = Geolocation.latLng();
-			var eventArea = event.target.eventArea.value;
 			var eventLocation = event.target.eventLocation.value;
 			var eventHost = Meteor.userId();
 			var attending = [];
+			var geoLocation = Geolocation.latLng();
 			attending.push(eventHost);
 			checkEvents.insert({
 				name: eventName,
 				date: eventDate,
-				geoLocation: eventLocation,
-				eventArea: eventArea,
+				geoLocation: geoLocation,
 				location: eventLocation,
 				createdby: Meteor.userId(),
-				attending: attending
+				attending: attending,
 			});
+			var currEvent = checkEvents.findOne({name: eventName})
+			Session.set("currentEvent", currEvent._id);
+			Router.go('event');
 		}
 	});
 	Template.createEvent.helpers({
@@ -179,7 +185,7 @@ if (Meteor.isClient) {
 			var email2;
 			for (var i = 0; i < result.attending.length; i++){
 				attendee = result.attending[i];
-				// attendees.push(attendee);   
+				// attend.ees.push(attendee);   
 				console.log(attendee)
 				email = Meteor.users.findOne({_id: attendee});
 				console.log(email)
@@ -192,7 +198,7 @@ if (Meteor.isClient) {
 		},
 		'checkedIn': function(){
 			var result = checkEvents.findOne({_id: Session.get("currentEvent")})
-			if(result.attending.indexOf(Meteor.userId())!=-1&&Meteor.user()){
+			if(result.attending.indexOf(Meteor.userId())!=-1 && Meteor.user()){
 				return true
 			}
 			else{
@@ -214,20 +220,6 @@ if (Meteor.isClient) {
 
 ////////////////END////////////////////////
 
-	Template.testingZone.helpers({
-		'user': function(){
-			return Meteor.users.find().fetch()
-		}
-	})
-
-		//Map
-
-
-
-		// checkEvents.insert({ name: "Bob", date: 03/04/15, time: 22:00})
-
-	// Meteor.user().services.facebook.name
-	// Geolocation.currentLocation().coords.latitude
 
 }
 
