@@ -6,20 +6,28 @@
 				<form class="new-event">
 					<input type="text" name="eventName" placeholder="Event Name">
 					<!-- <input type="submit" value="Submit"> -->
-					<input type="text" name="eventLocation" placeholder="Location (Woolsey Hall)">
+					<input type="text" name="eventPlace" placeholder="Place (Woolsey Hall)">
 					<input type="text" name="eventDate" placeholder="Date">
-					<!-- <input type="submit" value="Submit"> -->
-
-				
 					<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
+					<br>
+					<br>
+					<p>Development only (invisible in shipped version):</p>
+   					 <input class="" name = "latFld" type="text" id="latFld">
+   					 <input class="" name = "lngFld" type="text" id="lngFld">
+				
+					
 				</form>
+				
 
 			</div>
 			<div class="col-md-6">
 				<div id="map-canvas"></div>
 			</div>
 		</div>
-
+		{{loc.lat}}
+		{{#if error}}
+		    <p>Error: {{error.message}}</p>
+		{{/if}}
 	
 	</div>
 </template>

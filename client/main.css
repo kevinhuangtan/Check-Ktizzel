@@ -242,7 +242,7 @@ input{
   display: block;
 }
 #map-canvas{
-  height:1000px;
+  height:500px;
 }
 .signin input{
   display: inline-block;
@@ -259,6 +259,9 @@ input{
   margin: 10px;
 }
 
+.hidden{
+  display: none;
+}
 
 
 

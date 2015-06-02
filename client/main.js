@@ -14,28 +14,29 @@ if (Meteor.isClient) {
 	 Meteor.subscribe("allUserData");
 
 
+
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////USERS//////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
 	Template.profile.helpers({
-		'email': function(){
+		email: function(){
 			document.title = "My Profile";
 			var user = Meteor.user();
 			return user.emails[0].address;
 		},
-		'name' : function(){
+		name : function(){
 			return Meteor.user().profile.fullname;
 		},
-		'gender' : function(){
+		gender : function(){
 			return Meteor.user().profile.gender;
 		},
-		'phone' : function(){
+		phone : function(){
 			return Meteor.user().profile.phone;
 		},
-		'ethnicity' : function(){
+		ethnicity : function(){
 			return Meteor.user().profile.ethnicity;
 		},
-		'organization' : function(){
+		organization : function(){
 			return Meteor.user().profile.organization;
 		}
 	});
@@ -43,7 +44,6 @@ if (Meteor.isClient) {
 
 	Template.profile.events({
 	    'click .edit' : function() {
-	    	console.log('help')
 	        Session.set('edit', true);
 	    }
 	});
@@ -64,35 +64,32 @@ if (Meteor.isClient) {
 			// return 0, 0 if the location isn't ready
 			return Geolocation.latLng() || { lat: 0, lng: 0 };
 		},
-		'checkEvent': function(){
+		checkEvent: function(){
 			return checkEvents.find().fetch(); 
 		},
-		'eventYourAt' : function(){
+		eventYourAt : function(){
 
 		},
-		'nearbyEvents' : function(){
+		nearbyEvents : function(){
 			var locations = checkEvents.find().fetch(); 
 			var nearbyLocations = []
 			var delta_x = 0;
 			var delta_y = 0;
-			console.log(locations)
 			for (var i = 0; i < locations.length; i++ ){
 				delta_x = Geolocation.latLng().lng - locations[i].geoLocation.lng
 				delta_y = Geolocation.latLng().lat - locations[i].geoLocation.lat
-				console.log(Geolocation.latLng().lng)
-				console.log(locations[i].geoLocation.lng)
-				if ((delta_x*delta_x + delta_y*delta_y) < 10*10 ){
+				// 2 miles * (1 minute/1.15 miles) * (1 degree/60 minute) 
+				if ((delta_x*delta_x + delta_y*delta_y) < .029 ){
 					nearbyLocations.push(locations[i]);
 				}
 			}
-			console.log(nearbyLocations)
 			return nearbyLocations; 
 		},
-		'myevents': function(){
+		myevents: function(){
 			return checkEvents.find().fetch()
 			// return checkEvents.find({createdby: Meteor.userId()});
 		},
-		'myCity' : function(){
+		myCity : function(){
 			var js;
 			var loc = Geolocation.latLng();
 			var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+loc.lat+','+loc.lng+'&key=AIzaSyA3IaCGmNfltsyk5fyATz-icw-D5VFhSYw';
@@ -128,16 +125,17 @@ if (Meteor.isClient) {
 			event.preventDefault()
 			var eventName = event.target.eventName.value;
 			var eventDate = event.target.eventDate.value;
-			var eventLocation = event.target.eventLocation.value;
+			var eventPlace = event.target.eventPlace.value;
 			var eventHost = Meteor.userId();
 			var attending = [];
-			var geoLocation = Geolocation.latLng();
+			var geoLocation = Geolocation.latLng();///target
+			var location = {lat: Number(event.target.latFld.value), lng: Number(event.target.latFld.value)}
 			attending.push(eventHost);
 			checkEvents.insert({
 				name: eventName,
 				date: eventDate,
 				geoLocation: geoLocation,
-				location: eventLocation,
+				place: eventPlace,
 				createdby: Meteor.userId(),
 				attending: attending,
 			});
@@ -147,7 +145,12 @@ if (Meteor.isClient) {
 		}
 	});
 	Template.createEvent.helpers({
-		'myevents': function(){
+		loc: function () {
+		  // return 0, 0 if the location isn't ready
+		  return Geolocation.latLng() || { lat: 0, lng: 0 };
+		},
+		error: Geolocation.error,
+		myevents: function(){
 			var currentUserId = Meteor.userId();
 			return checkEvents.find().fetch()
 			// return checkEvents.find({createdby: Meteor.userId()});
@@ -156,27 +159,64 @@ if (Meteor.isClient) {
 
 	Template.createEvent.onRendered(function () {
 	  // Use the Packery jQuery plugin
+	 	var map;
+        var markersArray = [];
+      	// var geoLocation = [lat: Session.get('lat'), lng: Session.get('lng')]
 		function initialize() {
 	        var mapCanvas = document.getElementById('map-canvas');
 	        var mapOptions = {
-	          center: new google.maps.LatLng(44.5403, -78.5463),
+	          center: new google.maps.LatLng(44.5,-78.5),
 	          zoom: 8,
 	          mapTypeId: google.maps.MapTypeId.ROADMAP
 	        }
-	        var map = new google.maps.Map(mapCanvas, mapOptions)
+	        map = new google.maps.Map(mapCanvas, mapOptions)
+	    	google.maps.event.addListener(map, "click", function(event)
+            {
+                // place a marker
+                placeMarker(event.latLng);
+
+                // display the lat/lng in your form's lat/lng fields
+                document.getElementById("latFld").value = event.latLng.lat();
+                document.getElementById("lngFld").value = event.latLng.lng();
+            });
+
     	}
+        function placeMarker(location) {
+            // first remove all markers if there are any
+            deleteOverlays();
+
+            var marker = new google.maps.Marker({
+                position: location, 
+                map: map
+            });
+
+            // add marker in markers array
+            markersArray.push(marker);
+
+            //map.setCenter(location);
+        }
+
+        // Deletes all markers in the array by removing references to them
+        function deleteOverlays() {
+            if (markersArray) {
+                for (i in markersArray) {
+                    markersArray[i].setMap(null);
+                }
+            markersArray.length = 0;
+            }
+        }
       	google.maps.event.addDomListener(window, 'load', initialize);	
 	});
 
 	Template.event.helpers({
-		'currentEvent' : function(){
+		currentEvent : function(){
 			var id = Session.get("currentEvent")
 
 			var result = checkEvents.findOne({_id: Session.get("currentEvent")})
 			// console.log(result)
 			return result		
 		},
-		'attendees' : function(){
+		attendees : function(){
 			var result = checkEvents.findOne({_id: Session.get("currentEvent")})
 			var attendees = []
 			var attendee;
@@ -185,17 +225,14 @@ if (Meteor.isClient) {
 			for (var i = 0; i < result.attending.length; i++){
 				attendee = result.attending[i];
 				// attend.ees.push(attendee);   
-				console.log(attendee)
 				email = Meteor.users.findOne({_id: attendee});
-				console.log(email)
 				email2 = email.emails[0].address
 
 				attendees.push(email2);
 			}
-			// console.log(attendees)
 			return attendees
 		},
-		'checkedIn': function(){
+		checkedIn: function(){
 			var result = checkEvents.findOne({_id: Session.get("currentEvent")})
 			if(result.attending.indexOf(Meteor.userId())!=-1 && Meteor.user()){
 				return true
