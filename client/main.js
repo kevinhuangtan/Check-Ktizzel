@@ -22,7 +22,6 @@ if (Meteor.isClient) {
 			document.title = "My Profile";
 			var user = Meteor.user();
 			return user.emails[0].address;
-
 		},
 		'name' : function(){
 			return Meteor.user().profile.fullname;
