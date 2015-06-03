@@ -62,7 +62,14 @@ if (Meteor.isClient) {
 	Template.splash.helpers({
 		myLocation: function () {
 			// return 0, 0 if the location isn't ready
+			console.log(Geolocation.latLng());
+			Session.set('geoLocation', Geolocation.latLng());
+
 			return Geolocation.latLng() || { lat: 0, lng: 0 };
+		},
+		geoLocationSession: function(){
+			console.log(Session.get('geoLocation'));
+			return Session.get('geoLocation');
 		},
 		checkEvent: function(){
 			return checkEvents.find().fetch(); 
@@ -162,16 +169,9 @@ if (Meteor.isClient) {
 	});
 
 	Template.createEvent.onRendered(function(){
-		var el = this.find('#map-canvas');
-	})
-
-
-	initMap = function(){
-		console.log("initialize");
 		var map;
         var markersArray = [];
-        var geoLocation = Geolocation.latLng() || { lat: 0, lng: 0 };
-        console.log(Geolocation.latLng().lat)
+        var geoLocation = Session.get('geoLocation');
       	// var geoLocation = [lat: Session.get('lat'), lng: Session.get('lng')]
 		function initialize() {
 	        var mapCanvas = document.getElementById('map-canvas');
@@ -217,7 +217,7 @@ if (Meteor.isClient) {
             }
         }
         initialize();
-	}
+	});
 
 
 
