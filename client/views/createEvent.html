@@ -14,6 +14,7 @@
 					<p>Development only (invisible in shipped version):</p>
    					 <input class="" name = "latFld" type="text" id="latFld">
    					 <input class="" name = "lngFld" type="text" id="lngFld">
+					{{loc.lng}}
 					
 				</form>
 				
@@ -27,6 +28,6 @@
 		{{#if error}}
 		    <p>Error: {{error.message}}</p>
 		{{/if}}
-		<p class='debug'>Help</p>
+	
 	</div>
 </template>

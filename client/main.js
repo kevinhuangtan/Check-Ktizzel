@@ -142,6 +142,9 @@ if (Meteor.isClient) {
 			var currEvent = checkEvents.findOne({name: eventName})
 			Session.set("currentEvent", currEvent._id);
 			Router.go('event');
+		},
+		'click .debug' : function(){
+			var selectEl = template.find()
 		}
 	});
 	Template.createEvent.helpers({
@@ -154,19 +157,27 @@ if (Meteor.isClient) {
 			var currentUserId = Meteor.userId();
 			return checkEvents.find().fetch()
 			// return checkEvents.find({createdby: Meteor.userId()});
-		}
+		},
+
 	});
 
-	Template.createEvent.onRendered(function () {
-	  // Use the Packery jQuery plugin
-	 	var map;
+	Template.createEvent.onRendered(function(){
+		var el = this.find('#map-canvas');
+	})
+
+
+	initMap = function(){
+		console.log("initialize");
+		var map;
         var markersArray = [];
+        var geoLocation = Geolocation.latLng() || { lat: 0, lng: 0 };
+        console.log(Geolocation.latLng().lat)
       	// var geoLocation = [lat: Session.get('lat'), lng: Session.get('lng')]
 		function initialize() {
 	        var mapCanvas = document.getElementById('map-canvas');
 	        var mapOptions = {
-	          center: new google.maps.LatLng(44.5,-78.5),
-	          zoom: 8,
+	          center: new google.maps.LatLng(geoLocation.lat,geoLocation.lng),
+	          zoom: 13,
 	          mapTypeId: google.maps.MapTypeId.ROADMAP
 	        }
 	        map = new google.maps.Map(mapCanvas, mapOptions)
@@ -205,8 +216,11 @@ if (Meteor.isClient) {
             markersArray.length = 0;
             }
         }
-      	google.maps.event.addDomListener(window, 'load', initialize);	
-	});
+        initialize();
+	}
+
+
+
 
 	Template.event.helpers({
 		currentEvent : function(){
@@ -242,6 +256,8 @@ if (Meteor.isClient) {
 			}
 		}
 	});
+
+
 	Template.event.events({
 		'click .checkIn':function(){
 			var eventId = Session.get("currentEvent")
