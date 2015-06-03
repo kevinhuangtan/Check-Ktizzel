@@ -136,14 +136,18 @@ if (Meteor.isClient) {
 		'submit form': function(event){
 			var target = event.target
 			event.preventDefault()
-			var PM = 0;
-			if (Number(target.startAmpm.value) == "PM"){
-				PM = PM + 12
+			var startPM = 0;
+			var endPM = 0;
+			if (target.startAmpm.value == "PM"){
+				startPM = startPM + 12
+			}
+			if (target.endAmpm.value == "PM"){
+				endPM = endPM + 12
 			}
 			var month = Number(target.month.value) - 1
 			var day = Number(target.day.value) + 1
-			var startDate = new Date(target.year.value, month, day, target.startHour.value + PM, target.startMinute.value);
-			var endDate = new Date(target.year.value, month, day, target.endHour.value + PM, target.endMinute.value);
+			var startDate = new Date(target.year.value, month, day, Number(target.startHour.value) + startPM, target.startMinute.value);
+			var endDate = new Date(target.year.value, month, day, Number(target.endHour.value) + endPM, target.endMinute.value);
 			var eventName = event.target.eventName.value;
 			var eventPlace = event.target.eventPlace.value;
 			var eventHost = Meteor.userId();
