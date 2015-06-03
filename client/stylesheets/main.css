@@ -238,6 +238,9 @@ li{
 /****************splash page****************/
 
 
+.new-event input{
+  display: inline-block;
+}
 input{
   display: block;
 }

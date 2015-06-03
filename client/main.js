@@ -62,13 +62,10 @@ if (Meteor.isClient) {
 	Template.splash.helpers({
 		myLocation: function () {
 			// return 0, 0 if the location isn't ready
-			console.log(Geolocation.latLng());
 			Session.set('geoLocation', Geolocation.latLng());
-
 			return Geolocation.latLng() || { lat: 0, lng: 0 };
 		},
 		geoLocationSession: function(){
-			console.log(Session.get('geoLocation'));
 			return Session.get('geoLocation');
 		},
 		checkEvent: function(){
@@ -82,17 +79,25 @@ if (Meteor.isClient) {
 			var nearbyLocations = []
 			var delta_x = 0;
 			var delta_y = 0;
+			console.log()
 			for (var i = 0; i < locations.length; i++ ){
+				console.log(Geolocation.latLng().lng)
+				console.log(locations[i].geoLocation.lng)
 				delta_x = Geolocation.latLng().lng - locations[i].geoLocation.lng
 				delta_y = Geolocation.latLng().lat - locations[i].geoLocation.lat
 				// 2 miles * (1 minute/1.15 miles) * (1 degree/60 minute) 
-				if ((delta_x*delta_x + delta_y*delta_y) < .029 ){
+
+				if ((delta_x*delta_x + delta_y*delta_y) < .1 ){
 					nearbyLocations.push(locations[i]);
 				}
 			}
+			console.log('Nearby Events:')			
+			console.log(nearbyLocations)
 			return nearbyLocations; 
 		},
 		myevents: function(){
+			console.log('All Events:')
+			console.log(checkEvents.find().fetch())
 			return checkEvents.find().fetch()
 			// return checkEvents.find({createdby: Meteor.userId()});
 		},
@@ -129,19 +134,27 @@ if (Meteor.isClient) {
 	
 	Template.createEvent.events({
 		'submit form': function(event){
+			var target = event.target
 			event.preventDefault()
+			var PM = 0;
+			if (Number(target.startAmpm.value) == "PM"){
+				PM = PM + 12
+			}
+			var month = Number(target.month.value) - 1
+			var day = Number(target.day.value) + 1
+			var startDate = new Date(target.year.value, month, day, target.startHour.value + PM, target.startMinute.value);
+			var endDate = new Date(target.year.value, month, day, target.endHour.value + PM, target.endMinute.value);
 			var eventName = event.target.eventName.value;
-			var eventDate = event.target.eventDate.value;
 			var eventPlace = event.target.eventPlace.value;
 			var eventHost = Meteor.userId();
 			var attending = [];
-			var geoLocation = Geolocation.latLng();///target
-			var location = {lat: Number(event.target.latFld.value), lng: Number(event.target.latFld.value)}
+			var location = {lat: Number(event.target.latFld.value), lng: Number(event.target.lngFld.value)}
 			attending.push(eventHost);
 			checkEvents.insert({
 				name: eventName,
-				date: eventDate,
-				geoLocation: geoLocation,
+				startDate: startDate,
+				endDate: endDate,
+				geoLocation: location,
 				place: eventPlace,
 				createdby: Meteor.userId(),
 				attending: attending,
@@ -171,7 +184,7 @@ if (Meteor.isClient) {
 	Template.createEvent.onRendered(function(){
 		var map;
         var markersArray = [];
-        var geoLocation = Session.get('geoLocation');
+        var geoLocation = Session.get('geoLocation') || { lat: 40.7, lng: -74 };
       	// var geoLocation = [lat: Session.get('lat'), lng: Session.get('lng')]
 		function initialize() {
 	        var mapCanvas = document.getElementById('map-canvas');
