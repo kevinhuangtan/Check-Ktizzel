@@ -10,6 +10,25 @@ Router.map(function() {
 	this.route("profile", {path: '/profile'});
 
 });
+function distance(lon1, lat1, lon2, lat2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = (lat2-lat1).toRad();  // Javascript functions in radians
+  var dLon = (lon2-lon1).toRad(); 
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * 
+          Math.sin(dLon/2) * Math.sin(dLon/2); 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c; // Distance in km
+  // var d  = 5
+  return d.toFixed(1);
+}
+
+/** Converts numeric degrees to radians */
+if (typeof(Number.prototype.toRad) === "undefined") {
+  Number.prototype.toRad = function() {
+    return this * Math.PI / 180;
+  }
+}
 
 if (Meteor.isClient) {
 	// Meteor.subscribe("userData");
@@ -74,16 +93,18 @@ if (Meteor.isClient) {
 
 		},
 		nearbyEvents : function(){
+
 			var locations = checkEvents.find().fetch(); 
+			var myGeolocation = Geolocation.latLng();
 			var nearbyLocations = []
 			var delta_x = 0;
 			var delta_y = 0;
 			for (var i = 0; i < locations.length; i++ ){
-				delta_x = Geolocation.latLng().lng - locations[i].geoLocation.lng
-				delta_y = Geolocation.latLng().lat - locations[i].geoLocation.lat
-				// 2 miles * (1 minute/1.15 miles) * (1 degree/60 minute) 
-
+				delta_x = myGeolocation.lng - locations[i].geoLocation.lng
+				delta_y = myGeolocation.lat - locations[i].geoLocation.lat
+					// 2 miles * (1 minute/1.15 miles) * (1 degree/60 minute) 
 				if ((delta_x*delta_x + delta_y*delta_y) < .1 ){
+					locations[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locations[i].geoLocation.lng, locations[i].geoLocation.lat);
 					nearbyLocations.push(locations[i]);
 				}
 			}
@@ -169,11 +190,10 @@ if (Meteor.isClient) {
 	});
 	Template.eventLocation.events({
 		'submit form': function(event){
-			var target = event.target
 			event.preventDefault()
 			var eventPlace = event.target.eventPlace.value;
 			var location = {lat: Number(event.target.latFld.value), lng: Number(event.target.lngFld.value)}
-			checkEvents.update(Session.get("currentEvent"),{$set: {geoLocation: location,place: eventPlace}});		
+			checkEvents.update(Session.get("currentEvent"),{$set: {geoLocation: location, place: eventPlace}});		
 			Router.go('event');
 		}
 	});
@@ -281,7 +301,6 @@ if (Meteor.isClient) {
 
 
 ////////////////END////////////////////////
-
 
 }
 
