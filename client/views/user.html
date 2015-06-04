@@ -9,7 +9,7 @@
 		<div class="row">
 			<div class="col-md-offset-3 col-md-3">
 				
-				<a href="{{pathFor route='createEvent'}}"><button class='btn'>Create Event</button></a>
+				<a href="{{pathFor route='eventTitle'}}"><button class='btn'>Create Event</button></a>
 			</div>
 		</div>
 		{{else}}
@@ -44,6 +44,8 @@
 	       		<ul class="nearby">
 			        {{#each myevents}}
 			       		<b><li class="event-li">{{name}}</li></b>
+			       		<li>Place: {{place}}</li>
+			       		<li>description: {{description}}</li>
 			       		<li>start date: {{startDate}}</li>
 			       		<li>end date: {{endDate}}</li>
 			        {{/each}}

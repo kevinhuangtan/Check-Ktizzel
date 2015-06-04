@@ -2,7 +2,9 @@
 Router.map(function() {
 	this.route("splash", {path: '/'});
 	this.route("event", {path: '/event'});
-	this.route("createEvent", {path: '/createEvent'});
+	this.route("eventTitle", {path: '/createEvent'});
+	this.route("eventDateAndTime", {path: '/eventDateAndTime'});
+	this.route("eventLocation", {path: '/eventLocation'});
 	this.route("checkIn", {path: '/checkIn'});
 	this.route("scrollEvents", {path: '/scrollEvents'});
 	this.route("profile", {path: '/profile'});
@@ -65,9 +67,6 @@ if (Meteor.isClient) {
 			Session.set('geoLocation', Geolocation.latLng());
 			return Geolocation.latLng() || { lat: 0, lng: 0 };
 		},
-		geoLocationSession: function(){
-			return Session.get('geoLocation');
-		},
 		checkEvent: function(){
 			return checkEvents.find().fetch(); 
 		},
@@ -79,10 +78,7 @@ if (Meteor.isClient) {
 			var nearbyLocations = []
 			var delta_x = 0;
 			var delta_y = 0;
-			console.log()
 			for (var i = 0; i < locations.length; i++ ){
-				console.log(Geolocation.latLng().lng)
-				console.log(locations[i].geoLocation.lng)
 				delta_x = Geolocation.latLng().lng - locations[i].geoLocation.lng
 				delta_y = Geolocation.latLng().lat - locations[i].geoLocation.lat
 				// 2 miles * (1 minute/1.15 miles) * (1 degree/60 minute) 
@@ -132,7 +128,26 @@ if (Meteor.isClient) {
 ////////////////////////////////////EVENTS//////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
 	
-	Template.createEvent.events({
+	Template.eventTitle.events({
+		'submit form': function(event){
+			event.preventDefault()
+			var eventName = event.target.eventName.value;
+			var eventDescription = event.target.description.value;
+			var eventHost = Meteor.userId();
+			var attending = [];
+			attending.push(eventHost);
+			var id = checkEvents.insert({
+				name: eventName,
+				createdby: Meteor.userId(),
+				attending: attending,
+				description: eventDescription
+			});
+			console.log(id);
+			Session.set("currentEvent", id);
+			Router.go('eventDateAndTime');
+		}
+	});
+	Template.eventDateAndTime.events({
 		'submit form': function(event){
 			var target = event.target
 			event.preventDefault()
@@ -148,44 +163,22 @@ if (Meteor.isClient) {
 			var day = Number(target.day.value) + 1
 			var startDate = new Date(target.year.value, month, day, Number(target.startHour.value) + startPM, target.startMinute.value);
 			var endDate = new Date(target.year.value, month, day, Number(target.endHour.value) + endPM, target.endMinute.value);
-			var eventName = event.target.eventName.value;
-			var eventPlace = event.target.eventPlace.value;
-			var eventHost = Meteor.userId();
-			var attending = [];
-			var location = {lat: Number(event.target.latFld.value), lng: Number(event.target.lngFld.value)}
-			attending.push(eventHost);
-			checkEvents.insert({
-				name: eventName,
-				startDate: startDate,
-				endDate: endDate,
-				geoLocation: location,
-				place: eventPlace,
-				createdby: Meteor.userId(),
-				attending: attending,
-			});
-			var currEvent = checkEvents.findOne({name: eventName})
-			Session.set("currentEvent", currEvent._id);
-			Router.go('event');
-		},
-		'click .debug' : function(){
-			var selectEl = template.find()
+			checkEvents.update(Session.get("currentEvent"),{$set: {startDate: startDate,endDate: endDate}});
+			Router.go('eventLocation');
 		}
 	});
-	Template.createEvent.helpers({
-		loc: function () {
-		  // return 0, 0 if the location isn't ready
-		  return Geolocation.latLng() || { lat: 0, lng: 0 };
-		},
-		error: Geolocation.error,
-		myevents: function(){
-			var currentUserId = Meteor.userId();
-			return checkEvents.find().fetch()
-			// return checkEvents.find({createdby: Meteor.userId()});
-		},
-
+	Template.eventLocation.events({
+		'submit form': function(event){
+			var target = event.target
+			event.preventDefault()
+			var eventPlace = event.target.eventPlace.value;
+			var location = {lat: Number(event.target.latFld.value), lng: Number(event.target.lngFld.value)}
+			checkEvents.update(Session.get("currentEvent"),{$set: {geoLocation: location,place: eventPlace}});		
+			Router.go('event');
+		}
 	});
 
-	Template.createEvent.onRendered(function(){
+	Template.eventLocation.onRendered(function(){
 		var map;
         var markersArray = [];
         var geoLocation = Session.get('geoLocation') || { lat: 40.7, lng: -74 };
