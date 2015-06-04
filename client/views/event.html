@@ -8,6 +8,8 @@
                     {{currentEvent.name}}
                 </h2>
 
+                 
+
                 {{#if checkedIn}}
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -21,14 +23,26 @@
                         </div>
                     </div>
                 </div>
+
+                <p>Host name: {{currentEvent.host_info.name}}</p>
+                <br>
+                 <p>host organization: {{currentEvent.host_info.organization}}</p>
+                 <br>
+                <p>{{currentEvent.startDate}}</p>
+                  <p>{{currentEvent.endDate}}</p>
+                <p>{{currentEvent.description}}</p>
                 
                 {{else}}
                     <button class='checkIn btn'>Check In</button>
                    
                 {{/if}}
 
-            </div>   
-
+            </div>  
+            <div class="col-md-6">
+                <div id="map-canvas"></div>
+            </div> 
+    lat: <input class="" name = "latFld" type="text" id="latFld">
+                    lng: <input class="" name = "lngFld" type="text" id="lngFld">
         </div>
 
 	</div>
