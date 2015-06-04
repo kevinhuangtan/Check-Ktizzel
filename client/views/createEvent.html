@@ -1,61 +1,6 @@
-<!-- <template name = "createEvent">
-	<div class="container mainDiv">
-		<div class="row">
-			<div class="col-md-4">
-				<h2>Create New Event</h2>
-				<form class="new-event">
-					Event Name <input type="text" name="eventName" placeholder="e.g Intro to Economics">
-					<br>
-					Building & Place <input type="text" name="eventPlace" placeholder="e.g (Woolsey Hall)">
-					<br>
-					Details <input type="text" name="description" placeholder="Add more info..">
-					<br>
-					Date
-					<input size="3" type="text" name="month" placeholder="M">
-					<input size="3" type="text" name="day" placeholder="D">
-					<input size="3" type="text" name="year" placeholder="Y">
-					<br>
-					Start Time
-					<input size="1" type="text" name="startHour" placeholder="3">
-					<input size="2" type="text" name="startMinute" placeholder="30">
-					<select name="startAmpm">
-						<option> AM </option>
-						<option> PM </option>
-					</select>
-					<br>
-					End Time
-					<input size="1" type="text" name="endHour" placeholder="3">
-					<input size="2" type="text" name="endMinute" placeholder="30">
-					<select name="endAmpm">
-						<option> AM </option>
-						<option> PM </option>
-					</select>
-					<br>
-					<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
-					<br>
-					<br>
-					<p>Development only (invisible in shipped version):</p>
-   					lat: <input class="" name = "latFld" type="text" id="latFld">
-   					lng: <input class="" name = "lngFld" type="text" id="lngFld">
-					
-				</form>
-				
-
-			</div>
-			<div class="col-md-6">
-				<div id="map-canvas"></div>
-			</div>
-		</div>
-		
-		{{#if error}}
-		    <p>Error: {{error.message}}</p>
-		{{/if}}
-	
-	</div>
-</template>
- -->
 <template name="eventTitle">
 	<div class="container mainDiv">
+		<p class="hidden">{{initalize}}</p>
 		<form class="new-event">
 			Event Name 
 			<input type="text" name="eventName" placeholder="e.g Intro to Economics">
