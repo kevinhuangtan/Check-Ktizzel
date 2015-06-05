@@ -88,8 +88,8 @@ if (Meteor.isClient) {
 		checkEvent: function(){
 			return checkEvents.find().fetch(); 
 		},
-		eventYourAt : function(){
-
+		eventYoureAt : function(){
+			return Session.get('eventYoureAt')
 		},
 		nearbyEvents : function(){
 			var locations = checkEvents.find().fetch(); 
@@ -97,15 +97,22 @@ if (Meteor.isClient) {
 			var nearbyLocations = []
 			var delta_x = 0;
 			var delta_y = 0;
+			var closeByDistance = 3 //km
+			var eventYoureAtDistance = .5 //km
 			for (var i = 0; i < locations.length; i++ ){
 				var locGeolocation = locations[i].geoLocation || {'lat':0, 'lng':0}
-				delta_x = myGeolocation.lng - locGeolocation.lng
-				delta_y = myGeolocation.lat - locGeolocation.lat
+				// delta_x = myGeolocation.lng - locGeolocation.lng
+				// delta_y = myGeolocation.lat - locGeolocation.lat
 					// 2 miles * (1 minute/1.15 miles) * (1 degree/60 minute) 
-				if ((delta_x*delta_x + delta_y*delta_y) < .1 ){
-					locations[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);
+				// if ((delta_x*delta_x + delta_y*delta_y) < .1 ){
+				locations[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);
+				if(locations[i].distance < closeByDistance){
 					nearbyLocations.push(locations[i]);
+					if(locations[i].distance < .5){
+						Session.set('eventYoureAt', locations[i])
+					}
 				}
+
 			}
 			console.log('Nearby Events:')			
 			console.log(nearbyLocations)
