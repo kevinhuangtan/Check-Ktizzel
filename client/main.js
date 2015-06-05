@@ -9,6 +9,7 @@ Router.map(function() {
 	this.route("profile", {path: '/profile'});
 
 });
+
 function distance(lon1, lat1, lon2, lat2) {
   var R = 6371; // Radius of the earth in km
   var dLat = (lat2-lat1).toRad();  // Javascript functions in radians
@@ -27,6 +28,16 @@ if (typeof(Number.prototype.toRad) === "undefined") {
   Number.prototype.toRad = function() {
     return this * Math.PI / 180;
   }
+}
+
+checkEmailIsValid = function (aString) {  
+  aString = aString || '';
+  return aString.length > 1 && aString.indexOf('@') > -1;
+}
+
+checkPasswordIsValid = function (aString) {  
+  aString = aString || '';
+  return aString.length > 7;
 }
 
 if (Meteor.isClient) {
@@ -79,6 +90,7 @@ if (Meteor.isClient) {
 		}
 	});
 
+
 	Template.splash.helpers({
 		myLocation: function () {
 			// return 0, 0 if the location isn't ready
@@ -99,20 +111,22 @@ if (Meteor.isClient) {
 			var delta_y = 0;
 			var closeByDistance = 3 //km
 			var eventYoureAtDistance = .5 //km
+			var atEvent = false
 			for (var i = 0; i < locations.length; i++ ){
+
 				var locGeolocation = locations[i].geoLocation || {'lat':0, 'lng':0}
-				// delta_x = myGeolocation.lng - locGeolocation.lng
-				// delta_y = myGeolocation.lat - locGeolocation.lat
-					// 2 miles * (1 minute/1.15 miles) * (1 degree/60 minute) 
-				// if ((delta_x*delta_x + delta_y*delta_y) < .1 ){
 				locations[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);
 				if(locations[i].distance < closeByDistance){
 					nearbyLocations.push(locations[i]);
-					if(locations[i].distance < .5){
+					if(locations[i].distance < .1){
 						Session.set('eventYoureAt', locations[i])
+						atEvent = true
 					}
 				}
 
+			}
+			if(!atEvent){
+				delete Session.keys['eventYoureAt']
 			}
 			console.log('Nearby Events:')			
 			console.log(nearbyLocations)
@@ -122,7 +136,6 @@ if (Meteor.isClient) {
 			console.log('All Events:')
 			console.log(checkEvents.find().fetch())
 			return checkEvents.find().fetch()
-			// return checkEvents.find({createdby: Meteor.userId()});
 		},
 		myCity : function(){
 			var js;
@@ -135,29 +148,63 @@ if (Meteor.isClient) {
 			});
 			$.getJSON(url, function(data) {
    				js = data;
-   				// console.log(js.results[0].address_components[3])
    				cityName = js.results[0].address_components[3].long_name;
    				cityName2 = js.results[0].address_components[4].long_name;
-    			// you can even pass data as parameter to your target function like myFunct(data);
 			});
 			var result = cityName + ', ' + cityName2;
 			return result 
 		}
 	});
+	Template.splash.helpers({
+		user_error: function(){
+			return Session.get('error') || ""
+		}
+	})
 	Template.splash.events({
 		'click .event-li': function(event){
 			Session.set("currentEvent", this._id);
 			Router.go('event');
+		},
+		'submit .signin': function(event){
+			event.preventDefault()
+			var user = {'email':event.target.email.value, 'password' :event.target.password.value}
+			Accounts.createUser({
+				email: user['email'],
+				password: user['password']
+			}, function(err) { 
+			// only calls back if error
+				Session.set('error', err.reason)
+			});
+
+			Accounts.onLogin(function(){
+				console.log('success')
+			})
+
+		},
+		'submit .login': function(event){
+			event.preventDefault()
+			var user = {'email':event.target.email.value, 'password' :event.target.password.value}
+			Meteor.loginWithPassword(user['email'], user['password'], 
+			function(error){
+				Session.set('error', error.reason)
+
+			});
+			// Accounts.onLogin(function(){
+			// 	console.log('success')
+			// })
+
+		},
+		'click .signout': function(event){
+			Meteor.logout(function(error){
+				if(error){
+					console.log(error)
+					Session.set('error', err.reason)
+				} else{
+					// Session.set('error', "")
+				}
+				
+			});
 		}
 	});
 
-
-
-
-
-////////////////END////////////////////////
-
 }
-
-
-//------------------------------------------------------------//

@@ -1,34 +1,49 @@
 <template name = "splash">
 	<div class="container mainDiv">
 		{{#if currentUser}}
-		<div class="row">
-            <div class="col-md-offset-3 col-md-5">
-            	{{#if eventYoureAt}}
-            	<p>Event You Are Currently At: {{eventYoureAt.name}}</p>
-            	<button class='btn'>Check In</button>
-            	{{/if}}
-            </div>
-        </div>
-		<div class="row">
-			<div class="col-md-offset-3 col-md-3">
-				
-				<a href="{{pathFor route='eventTitle'}}"><button class='btn'>Create Event</button></a>
+			<p>signed in {{currentUser._id}}</p><br>
+			<a href="/profile">profile</a>
+			<a class='signout'>sign out</a>
+			<div class="row">
+	            <div class="col-md-offset-3 col-md-5">
+	            	{{#if eventYoureAt}}
+	            	<p>Event You Are Currently At: {{eventYoureAt.name}}</p>
+	            	<button class='btn'>Check In</button>
+	            	{{/if}}
+	            </div>
+	        </div>
+			<div class="row">
+				<div class="col-md-offset-3 col-md-3">
+					<a href="{{pathFor route='eventTitle'}}"><button class='btn'>Create Event</button></a>
+				</div>
 			</div>
-		</div>
-		{{else}}
-		<div class="row">
-			<div class="col-md-offset-3 col-md-6">
-				<form class="signin">
-					<input type="text" name="email" placeholder="Email">
-					<input type="text" name="password" placeholder="Password">
-					<!-- <input type="submit" value="Submit"> -->
 
-				
-					<button type="submit" class = "btn btn-lg btn-primary">Sign In</button>
-				</form>
+
+		{{else}}
+			<p>signup</p>
+			{{user_error}}
+
+			<div class="row">
+				<div class="col-md-offset-3 col-md-6">
+					<form class="signin">
+						<input type="text" name="email" placeholder="Email">
+						<input type="text" name="password" placeholder="Password">
+						<button type="submit" class = "btn btn-lg btn-primary">Sign In</button>
+					</form>
+				</div>
 			</div>
-		</div>
+			<p>login</p>
+				<div class="row">
+					<div class="col-md-offset-3 col-md-6">
+						<form class="login">
+							<input type="text" name="email" placeholder="Email">
+							<input type="text" name="password" placeholder="Password">
+							<button type="submit" class = "btn btn-lg btn-primary">Sign In</button>
+						</form>
+					</div>
+				</div>
 		{{/if}}
+
 		<p class="hidden">{{myLocation}}</p>
 		<div class="row">
 			<div class="col-md-offset-3 col-md-6">
@@ -52,10 +67,6 @@
 	       		<ul class="nearby">
 			        {{#each myevents}}
 			       		<b><li class="event-li">{{name}}</li></b>
-<!-- 			       		<li>Place: {{place}}</li>
-			       		<li>description: {{description}}</li>
-			       		<li>start date: {{startDate}}</li>
-			       		<li>end date: {{endDate}}</li> -->
 			        {{/each}}
 	       		</ul>
 	       		
@@ -67,16 +78,12 @@
 
 <template name = "profile">
 	<div class="container mainDiv">
-		{{sessionTest}}
 		<h3>My Profile</h3>
 		<button class = "edit btn btn-lg btn-primary">Edit</button>
 
 		{{#if editme}}
 		<form class="profile-form">
 			<ul>
-		<!-- 		{{currentUser.username}}
-				{{currentUser._id}} -->
-				<!-- <li>Name: {{currentUser.username}}</li> -->
 					<li><input type="text" name="name" placeholder="Name" value={{name}}></li>
 					<li><input type="text" name="gender" placeholder="gender" value={{gender}}> </li>
 					<li>Email: {{email}}</li>
@@ -94,9 +101,6 @@
 		{{else}}
 		<form class="profile-form">
 			<ul>
-		<!-- 		{{currentUser.username}}
-				{{currentUser._id}} -->
-				<!-- <li>Name: {{currentUser.username}}</li> -->
 					<li>Name: {{name}} </li>
 					<li>Gender: {{gender}}</li>
 					<li>Email: {{email}}</li>
