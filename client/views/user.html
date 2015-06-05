@@ -1,7 +1,7 @@
 <template name = "splash">
 	<div class="container mainDiv">
 		{{#if currentUser}}
-			<p>signed in {{currentUser._id}}</p><br>
+			<p>Hello {{currentUser.profile.fullname}}</p><br>
 			<a href="/profile">profile</a>
 			<a class='signout'>sign out</a>
 			<div class="row">

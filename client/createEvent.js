@@ -15,7 +15,17 @@ if (Meteor.isClient) {
 			var eventName = event.target.eventName.value;
 			var eventDescription = event.target.description.value;
 			var user = Meteor.user();
-			var eventHost = {'name': user.profile.fullname, 'email':user.emails[0].address, 'organization': user.profile.organization}
+			var userName;
+			var userOrganization;
+			if(user.profile){
+				userName = user.profile.fullname
+				userOrganization = user.profile.organization
+			}
+			else{
+				userName = ""
+				userOrganization = ""
+			}
+			var eventHost = {'name': userName, 'email':user.emails[0].address, 'organization': userOrganization}
 			var attending = [];
 			attending.push(Meteor.userId());
 			var eventSession = {'name': eventName, 'host': Meteor.userId(), 'host_info':eventHost, 'attending': attending, 'description': eventDescription}
@@ -89,8 +99,8 @@ if (Meteor.isClient) {
                 document.getElementById("latFld").value = event.latLng.lat();
                 document.getElementById("lngFld").value = event.latLng.lng();
             });
-
     	}
+
         function placeMarker(location) {
             // first remove all markers if there are any
             deleteOverlays();
