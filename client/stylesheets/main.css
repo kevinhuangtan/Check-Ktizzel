@@ -77,3 +77,10 @@ li{
     top: 10px;
   }
 }
+
+/*.fa-map-marker:before {
+  content: "\f041";
+}
+example of pictures as bulletpoints (to be used on homepage event bubbles)
+
+<li><i class="fa-map-marker"></i></li>*/
