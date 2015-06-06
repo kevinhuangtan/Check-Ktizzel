@@ -35,16 +35,9 @@ li{
   display: none;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+.mainDiv{
+  /*padding-top: 70px;*/
+  /*padding-left: 50px;
+  margin-left: 50px;*/
+  background-color: #FCFCFC;
+}

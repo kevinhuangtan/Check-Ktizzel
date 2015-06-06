@@ -1,4 +1,5 @@
 <template name = "splash">
+	<div class="mainDiv">
 		{{#if currentUser}}
 			<p>Hello {{currentUser.profile.fullname}}</p>
 			<p><a href="/profile">profile</a></p>
@@ -30,25 +31,54 @@
 		{{/if}}
 
 		<p class="hidden">{{myLocation}}</p>
+		
+		<div class="row">
+			<div class="col-xs-12">
 
-	       		<p>Ongoing Events in {{myCity}}</p>
-	       		<ul class="nearby">
-			        {{#each nearbyEvents}}
-			       		<b><li class="event-li">{{name}}</li></b>
-			       		<li>{{distance}}</li>
-			       		<li>Place: {{place}}</li>
-			       		<li>description: {{description}}</li>
-			       		<li>start date: {{startDate}}</li>
-			       		<li>end date: {{endDate}}</li>
-			        {{/each}}
-	       		</ul>
-	       		<p>All Events (development only, see console for more each event object)</p>
-	       		<ul class="nearby">
-			        {{#each myevents}}
-			       		<b><li class="event-li">{{name}}</li></b>
-			        {{/each}}
-	       		</ul>
-
+			<p>Ongoing Events in {{myCity}}</p>
+				<div>
+					{{#each nearbyEvents}}
+					<div class="panel panel-default event-panel">
+	                    <div class="panel-body">
+		                    <div style="float:right">
+		                    	<li>{{distance}}</li>
+		                    </div>
+		                    <div class="nearby">	
+			                    <b><li class="event-li">{{name}}</li></b>
+					       		<ul class="nearby">
+							       		<li>{{date}}</li>
+					       		</ul>
+					       		<hr>
+					       		<ul>
+				       				<li>Place: {{place}}</li>
+				       				<li>description: {{description}}</li>
+				       				<li>start date: {{startDate}}</li>
+				       				<li>end date: {{endDate}}</li>
+					       		</ul>
+					       	</div>
+	                    </div>
+	                </div>
+					{{/each}}
+	            </div>     		
+       		</div>
+ 		</div>
+ 		<div class="row">
+			<div class="col-xs-12">
+			<p>All Events (development only, see console for more each event object)</p>
+				<div>
+					{{#each myevents}}
+					<div class="panel panel-default event-panel">
+	                    <div class="panel-body">
+		                    <div class="nearby">
+			                    <b><div class="event-li">{{name}}</div></b>
+				       		</div>
+	                    </div>
+	                </div>
+					{{/each}}
+	            </div>     		
+       		</div>
+ 		</div>
+	</div>
 </template>
 
 
