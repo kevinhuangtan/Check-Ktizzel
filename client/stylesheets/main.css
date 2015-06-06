@@ -1,5 +1,11 @@
 body {
-	padding:30px 0px 0px 50px;
+	padding:0px 0px 0px 0px;
+}
+
+@media screen and (min-width: 500px){
+  body{
+    padding-top: 30px;
+  }
 }
 
 
@@ -40,4 +46,34 @@ li{
   /*padding-left: 50px;
   margin-left: 50px;*/
   background-color: #FCFCFC;
+}
+
+.navtext{
+  font-color: black;
+}
+
+.pushhome{
+  padding-top: 60px;
+}
+
+@media screen and (max-width: 500px){ 
+  .brand{
+    position: relative;
+    left: -20px;
+    top: -14px;
+  }
+
+}
+
+@media screen and (min-width: 500px){ 
+  .brand{
+    position: relative;
+    left: -20px;
+    top: -16px;
+  }
+
+  #login{
+    position: relative;
+    top: 10px;
+  }
 }

@@ -1,14 +1,12 @@
 <template name = "splash">
 	<div class="mainDiv">
 		{{#if currentUser}}
-			<p>Hello {{currentUser.profile.fullname}}</p>
-			<p><a href="/profile">profile</a></p>
-			<p><a class='signout'>sign out</a></p>
+			<h3>Hello {{currentUser.profile.fullname}}!!</h3>			
+			<p><a href="{{pathFor route='eventTitle'}}"><button class='btn'>Create Event</button></a></p>
             {{#if eventYoureAt}}
             	<p>Event You Are Currently At: {{eventYoureAt.name}}</p>
             	<button class='btn'>Check In</button>
             {{/if}}
-			<p><a href="{{pathFor route='eventTitle'}}"><button class='btn'>Create Event</button></a></p>
 		{{else}}
 			<p>signup</p>
 			{{accounts_error}}

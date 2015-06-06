@@ -20,35 +20,41 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/">
+				<a class="navbar-brand brand" href="/">
 					<img class="logo" alt="Brand" src="checklogo.png">
 				</a>
 				
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
 
-				</ul>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<form class="navbar-form navbar-left" role="search">
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="enter event keywords">
 					</div>
-					<a href='/profile'><p>Profile</p></a>
 					<!-- <button type="submit" class="btn btn-default">Submit</button> -->
 				</form>
+		
 				<!-- Login button does not collapse into navbar. Moved up. -->
-				<div class="collapse navbar-collapse" id="navigation">
-        			<ul class="nav navbar-nav">
-          				{{> loginButtons}}
-        			</ul>
+				<div id="navigation login">
+        			<div class="nav navbar-nav navtext">
+          				{{> loginButtons}}           				      				
+        			</div>      			          			
       			</div>
+				<!-- /.navbar-collapse -->
+				<div class="navbar-right navbuttons">
+	      			{{#if currentUser}}
+						<div>
+							<p><a href='/profile'>Profile</a></p>
+						</div>
+						<div>
+							<p><a class='signout'>Sign Out</a></p>
+						</div>
+					{{/if}}
+				</div>
 			</div>
-
-			<!-- /.navbar-collapse -->
 		</div>
 	</nav>
-
-	<p><a href='/'>home</a></p>
+	<p class="pushhome"><a href='/'><button class='btn'>Home</button></a></p>
 </body>
 
