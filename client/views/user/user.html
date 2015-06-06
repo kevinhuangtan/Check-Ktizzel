@@ -1,52 +1,36 @@
 <template name = "splash">
-	<div class="container mainDiv">
 		{{#if currentUser}}
-			<p>Hello {{currentUser.profile.fullname}}</p><br>
-			<a href="/profile">profile</a>
-			<a class='signout'>sign out</a>
-			<div class="row">
-	            <div class="col-md-offset-3 col-md-5">
-	            	{{#if eventYoureAt}}
-	            	<p>Event You Are Currently At: {{eventYoureAt.name}}</p>
-	            	<button class='btn'>Check In</button>
-	            	{{/if}}
-	            </div>
-	        </div>
-			<div class="row">
-				<div class="col-md-offset-3 col-md-3">
-					<a href="{{pathFor route='eventTitle'}}"><button class='btn'>Create Event</button></a>
-				</div>
-			</div>
-
-
+			<p>Hello {{currentUser.profile.fullname}}</p>
+			<p><a href="/profile">profile</a></p>
+			<p><a class='signout'>sign out</a></p>
+            {{#if eventYoureAt}}
+            	<p>Event You Are Currently At: {{eventYoureAt.name}}</p>
+            	<button class='btn'>Check In</button>
+            {{/if}}
+			<p><a href="{{pathFor route='eventTitle'}}"><button class='btn'>Create Event</button></a></p>
 		{{else}}
 			<p>signup</p>
 			{{accounts_error}}
 
-			<div class="row">
-				<div class="col-md-offset-3 col-md-6">
+
 					<form class="signin">
 						<input type="text" name="email" placeholder="Email">
 						<input type="text" name="password" placeholder="Password">
 						<button type="submit" class = "btn btn-lg btn-primary">Sign In</button>
 					</form>
-				</div>
-			</div>
+
 			<p>login</p>
-				<div class="row">
-					<div class="col-md-offset-3 col-md-6">
+
 						<form class="login">
 							<input type="text" name="email" placeholder="Email">
 							<input type="text" name="password" placeholder="Password">
 							<button type="submit" class = "btn btn-lg btn-primary">Sign In</button>
 						</form>
-					</div>
-				</div>
+
 		{{/if}}
 
 		<p class="hidden">{{myLocation}}</p>
-		<div class="row">
-			<div class="col-md-offset-3 col-md-6">
+
 	       		<p>Ongoing Events in {{myCity}}</p>
 	       		<ul class="nearby">
 			        {{#each nearbyEvents}}
@@ -58,22 +42,13 @@
 			       		<li>end date: {{endDate}}</li>
 			        {{/each}}
 	       		</ul>
-	       		
-       		</div>
- 		</div>
- 		<div class="row">
-			<div class="col-md-offset-3 col-md-6">
 	       		<p>All Events (development only, see console for more each event object)</p>
 	       		<ul class="nearby">
 			        {{#each myevents}}
 			       		<b><li class="event-li">{{name}}</li></b>
 			        {{/each}}
 	       		</ul>
-	       		
-       		</div>
- 		</div>
 
- 	</div>
 </template>
 
 

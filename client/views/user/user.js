@@ -30,6 +30,7 @@ checkPasswordIsValid = function (aString) {
 }
 
 Meteor.subscribe("allUserData");
+Meteor.subscribe("events");
 
 
 Template.splash.helpers({

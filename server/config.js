@@ -13,3 +13,6 @@
 // // 	// return true
 // // });
 
+Meteor.publish("events", function () {
+	return checkEvents.find();
+});

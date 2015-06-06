@@ -1,21 +1,17 @@
 <template name="eventTitle">
-	<div class="container mainDiv">
-		<p class="hidden">{{initalize}}</p>
-		<form class="new-event">
-			Event Name 
-			<input type="text" name="eventName" placeholder="e.g Intro to Economics">
-			<!-- <input type="submit" value="Submit"> -->
-			<br>
-			Description <input type="text" name="description" placeholder="Add more info..">
-			
-			<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
-			<br>
+	<p class="hidden">{{initalize}}</p>
+	<form class="new-event">
+		Event Name 
+		<input type="text" name="eventName" placeholder="e.g Intro to Economics">
+		<br>
+		Description <input type="text" name="description" placeholder="Add more info..">
+		<br>
+		<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
+		<br>
 	</form>
-	</div>
 </template>
 
 <template name="eventDateAndTime">
-	<div class="container mainDiv">
 	<form class="new-event">
 		Date
 		<input size="3" type="text" name="month" placeholder="M">
@@ -40,27 +36,18 @@
 		<br>
 		<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
 	</form>
-	</div>
 </template>
 
 <template name="eventLocation">
-	<div class="container mainDiv">
-		<div class="row">
-			<div class="col-md-4">
-				<form class="new-event">
-					Building & Place <input type="text" name="eventPlace" placeholder="e.g (Woolsey Hall)">
-					<br>
-					<p>Development only (invisible in shipped version):</p>
-					lat: <input class="" name = "latFld" type="text" id="latFld">
-					lng: <input class="" name = "lngFld" type="text" id="lngFld">
-					<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
+	<form class="new-event">
+		Building & Place <input type="text" name="eventPlace" placeholder="e.g (Woolsey Hall)">
+		<br>
+		<p>Development only (invisible in shipped version):</p>
+		lat: <input class="" name = "latFld" type="text" id="latFld">
+		lng: <input class="" name = "lngFld" type="text" id="lngFld">
+		<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
 
-				</form>
-			</div>
-			<div class="col-md-6">
-				<div id="map-canvas"></div>
-			</div>
-		</div>
-	</div>
+	</form>
+	<div id="map-canvas"></div>
 </template>
 
