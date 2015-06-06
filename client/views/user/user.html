@@ -21,7 +21,7 @@
 
 		{{else}}
 			<p>signup</p>
-			{{user_error}}
+			{{accounts_error}}
 
 			<div class="row">
 				<div class="col-md-offset-3 col-md-6">
@@ -76,47 +76,5 @@
  	</div>
 </template>
 
-<template name = "profile">
-	<div class="container mainDiv">
-		<h3>My Profile</h3>
-		<button class = "edit btn btn-lg btn-primary">Edit</button>
 
-		{{#if editme}}
-		<form class="profile-form">
-			<ul>
-					<li><input type="text" name="name" placeholder="Name" value={{name}}></li>
-					<li><input type="text" name="gender" placeholder="gender" value={{gender}}> </li>
-					<li>Email: {{email}}</li>
-					<li><input type="text" name="phone" placeholder="Phone" value={{phone}}></li>
-					<li><input type="text" name="ethnicity" placeholder="Ethnicity" value={{ethnicity}}> </li>
-					<li><input type="text" name="organization" placeholder="Organization" value={{organization}}></li>
 
-			</ul>
-			
-				<button type="submit" class = "update btn btn-lg btn-primary">Update Profile</button>
-		</form>
-
-		
-
-		{{else}}
-		<form class="profile-form">
-			<ul>
-					<li>Name: {{name}} </li>
-					<li>Gender: {{gender}}</li>
-					<li>Email: {{email}}</li>
-					<li>Phone: {{phone}}</li>
-					<li>Ethnicity: {{ethnicity}} </li>
-					<li>Organization {{organization}}</li>
-			</ul>
-			
-				<button type="submit" class = "update btn btn-lg btn-primary">Update Profile</button>
-		</form>
-
-		
-		{{/if}}
-
-	</div>
-</template>
-
-<template name="profile-form">
-</template>
