@@ -1,0 +1,11 @@
+.event-li{
+  cursor: pointer;
+}
+
+.event-li:hover{
+  opacity:.5;
+}
+
+.event-panel{
+  border-left: thick double blue;
+}

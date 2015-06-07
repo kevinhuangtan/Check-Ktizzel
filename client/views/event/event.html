@@ -1,5 +1,83 @@
 <!-- View Event Page -->
 <template name = "event">
+    <!-- Page Content -->
+    <div class="container mainDiv">
+        <div class="row ">
+            <div  class="col-xs-12 event-title-bar">
+                <div id="container-profile">
+                    <div id='cover_container' style="background-color: #191970">
+                        <div class="col-xs-offset-2 col-xs-10">
+                            <h3 id="event-name">Current Event: 
+                                {{currentEvent.name}}
+                            </h3>
+                        </div>
+                        <div id='info_box'>
+                            <div id="event_img">Image will go here<!--image with class='avatar_img'/>--></div>
+                            <div id="info-box">
+                                <div id="info-name">
+                                    Event Type<!--Event Type goes here-->
+                                </div>
+                            </div>
+                            <div style='clear:both'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="row">
+            <div  class="col-xs-12">
+                {{#if checkedIn}}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Attendees</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            {{#each attendees}}
+                               <li>{{this}}</li>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <p>Host name: {{currentEvent.host_info.name}}</p>
+                            <p>host organization: {{currentEvent.host_info.organization}}</p>
+                        </div>
+                    </div>
+                </div>
+    
+                 <div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <p>{{currentEvent.startDate}}</p>
+                            <p>{{currentEvent.endDate}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div>
+                            <p>{{currentEvent.description}}</p>
+                        </div>
+                        <hr>
+                        <p> Learn More <!--link elsewhere--></p>
+                    </div>
+                </div>
+
+                {{else}}
+                    <button class='checkIn btn'>Check In</button>
+                {{/if}}
+
+                <div id="map-canvas"></div>
+            </div> 
+        </div>
+    </div>        
+<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    
     <h2>Current Event: 
         {{currentEvent.name}}
     </h2>
@@ -18,16 +96,12 @@
         </div>
     </div>
 
-    <p>Host name: {{currentEvent.host_info.name}}</p>
-     <p>host organization: {{currentEvent.host_info.organization}}</p>
-    <p>{{currentEvent.startDate}}</p>
-    <p>{{currentEvent.endDate}}</p>
-    <p>{{currentEvent.description}}</p>
+
 
     {{else}}
         <button class='checkIn btn'>Check In</button>  
     {{/if}}
 
-    <div id="map-canvas"></div>
+    <div id="map-canvas"></div>-->
 
 </template>
