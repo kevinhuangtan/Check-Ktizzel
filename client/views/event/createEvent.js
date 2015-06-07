@@ -1,9 +1,34 @@
+// CONSTANTS////////
+var WEEKDAY = new Array(7);
+WEEKDAY[0]=  "SUN";
+WEEKDAY[1] = "MON";
+WEEKDAY[2] = "TUE";
+WEEKDAY[3] = "WED";
+WEEKDAY[4] = "THU";
+WEEKDAY[5] = "FRI";
+WEEKDAY[6] = "SAT";
+
+var MONTH = new Array(12);
+MONTH[0] = "JAN"
+MONTH[1] = "FEB"
+MONTH[2] = "MAR"
+MONTH[3] = "APR"
+MONTH[4] = "MAY"
+MONTH[5] = "JUN"
+MONTH[6] = "JUL"
+MONTH[7] = "AUG"
+MONTH[8] = "SEP"
+MONTH[9] = "OCT"
+MONTH[10] = "NOV"
+MONTH[11] = "DEC"
+
 Template.eventTitle.onRendered(function(){
 	document.title = "Create Event"
 
 	delete Session.keys['eventSession']
 	return 0
 });
+
 
 Template.eventTitle.events({
 	'submit form': function(event){
@@ -42,10 +67,29 @@ Template.eventDateAndTime.events({
 			endPM = endPM + 12
 		}
 		var month = Number(target.month.value) - 1
-		var day = Number(target.day.value) + 1
-		var startDate = new Date(target.year.value, month, day, Number(target.startHour.value) + startPM, target.startMinute.value);
-		var endDate = new Date(target.year.value, month, day, Number(target.endHour.value) + endPM, target.endMinute.value);
+		var date = Number(target.date.value) + 1
+		var startDate = new Date(target.year.value, month, date, Number(target.startHour.value) + startPM, target.startMinute.value);
+		var endDate = new Date(target.year.value, month, date, Number(target.endHour.value) + endPM, target.endMinute.value);
 		var eventSession = Session.get('eventSession');
+
+		///parsing
+		var weekday = startDate.getDay()
+		var options = {hour:'2-digit', minute:'2-digit' };
+		var startTime = startDate.toLocaleTimeString('en-US',options).toString();
+		var endTime = endDate.toLocaleTimeString('en-US',options).toString();
+		
+
+		var startDateParse = startDate.toLocaleDateString();
+		var endDateParse = endDate.toLocaleDateString();
+		if(startDateParse = endDateParse){
+			eventSession['dateParsed'] = WEEKDAY[weekday] + ', ' + MONTH[month] + ' '+ date + ', ' + startTime + ' - ' + endTime
+		}
+		else{
+			var endDay = weekday[eventSession.endDate.getDay()]
+			eventSession['dateParsed'] = WEEKDAY[weekday] + ', ' + MONTH[month] + ' '+ date + ', ' + startTime + ' - ' + endDay + ' ' + endTime
+		}
+
+
 		eventSession['startDate'] = startDate;
 		eventSession['endDate'] = endDate;
 		Session.set('eventSession', eventSession)
@@ -63,6 +107,7 @@ Template.eventLocation.events({
 			host: eventSession['host'],
 			host_info: eventSession['host_info'],
 			attending: eventSession['attending'],
+			dateParsed: eventSession['dateParsed'],
 			description: eventSession['description'],
 			startDate: eventSession['startDate'],
 			endDate: eventSession['endDate'],

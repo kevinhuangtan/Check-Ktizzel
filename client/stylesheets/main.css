@@ -87,3 +87,7 @@ li{
 example of pictures as bulletpoints (to be used on homepage event bubbles)
 
 <li><i class="fa-map-marker"></i></li>*/
+
+.development{
+  background-color: gray;
+}

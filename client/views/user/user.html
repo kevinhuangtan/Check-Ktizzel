@@ -1,37 +1,39 @@
 <template name = "splash">
 	<div class="container mainDiv">
 		{{#if currentUser}}
-			<h3>Hello {{currentUser.profile.fullname}}!!</h3>			
+		<!-- Intro to signed in user -->
+			<h3>Hello {{currentUser.profile.fullname}}!!</h3>
 			<p><a href="{{pathFor route='eventTitle'}}"><button class='btn'>Create Event</button></a></p>
             {{#if eventYoureAt}}
             	<p>Event You Are Currently At: {{eventYoureAt.name}}</p>
             	<button class='btn'>Check In</button>
             {{/if}}
+            <a><p class="signout">signout</p></a>
+            <a href="/profile"><p>Profile</p></a>
+
+	<!--   Accounts   sign up form-->		
 		{{else}}
 			<p>signup</p>
 			{{accounts_error}}
-
-
 					<form class="signin">
 						<input type="text" name="email" placeholder="Email">
 						<input type="password" name="password" placeholder="Password">
-						<button type="submit" class = "btn btn-lg btn-primary">Sign In</button>
-						<input type="text" name="password" placeholder="Password">
 						<button type="submit" class = "btn btn-lg btn-primary">Sign Up</button>
 					</form>
 
 			<p>login</p>
 
-						<form class="login">
-							<input type="text" name="email" placeholder="Email">
-							<input type="password" name="password" placeholder="Password">
-							<button type="submit" class = "btn btn-lg btn-primary">Sign In</button>
-							<input type="text" name="password" placeholder="Password">
-							<button type="submit" class = "btn btn-lg btn-primary">Log In</button>
-						</form>
+			<form class="login">
+				<input type="text" name="email" placeholder="Email">
+				<input type="password" name="password" placeholder="Password">
+				<button type="submit" class = "btn btn-lg btn-primary">Log In</button>
+			</form>
 
 		{{/if}}
 
+
+
+		<!-- events list -->
 		{{#if past}}
 			<p class="upcoming">Upcoming</p>
 			<p class="past underline">Past</p>
@@ -45,9 +47,6 @@
 			<div class="col-xs-12">
 
 			<p>Ongoing Events in {{myCity}}</p>
-			<p>{{today}}</p>
-
-
 				<div>
 					{{#each nearbyEvents}}
 					<div class="panel panel-default event-panel">
@@ -57,15 +56,11 @@
 		                    </div>
 		                    <div class="nearby">	
 			                    <b><li class="event-li">{{name}}</li></b>
-					       		<ul class="nearby">
-							       		<li>{{date}}</li>
-					       		</ul>
 					       		<hr>
 					       		<ul>
 				       				<li>Place: {{place}}</li>
 				       				<li>Description: {{description}}</li>
-				       				<li>Start date: {{startDate}}</li>
-				       				<li>End date: {{endDate}}</li>
+				       				<li>{{dateParsed}}</li>
 					       		</ul>
 					       	</div>
 	                    </div>
@@ -75,7 +70,7 @@
        		</div>
  		</div>
  		 <div class="row">
-			<div class="col-xs-12">
+			<div class="col-xs-12 development">
 			<p>All Events (development only, see console for more each event object)</p>
 				<div>
 					{{#each myevents}}

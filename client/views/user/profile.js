@@ -23,7 +23,8 @@ Template.profile.helpers({
 
 
 Template.profile.events({
-    'click .edit' : function() {
+    'click .edit' : function(event) {
+    	event.preventDefault()
         Session.set('edit', true);
     }
 });

@@ -17,3 +17,12 @@ if (typeof(Number.prototype.toRad) === "undefined") {
     return this * Math.PI / 180;
   }
 }
+
+var weekday = new Array(7);
+weekday[0]=  "SUN";
+weekday[1] = "MON";
+weekday[2] = "TUE";
+weekday[3] = "WED";
+weekday[4] = "THU";
+weekday[5] = "FRI";
+weekday[6] = "SAT";

@@ -8,7 +8,7 @@ function distance(lon1, lat1, lon2, lat2) {
           Math.sin(dLon/2) * Math.sin(dLon/2); 
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
   var d = R * c; // Distance in km
-  // var d  = 5
+  d = d*.62137 //to miles
   return d.toFixed(1);
 }
 
@@ -28,6 +28,11 @@ checkPasswordIsValid = function (aString) {
   aString = aString || '';
   return aString.length > 7;
 }
+
+
+var closeByDistance = 3 //miles
+var eventYoureAtDistance = .1 //miles
+////////
 
 Meteor.subscribe("allUserData");
 Meteor.subscribe("events");
@@ -53,22 +58,19 @@ Template.splash.helpers({
 	past: function(){
 		return Session.get('past')
 	},
+	// MON, MAR 9, 9:00AM - 11:15AM
 	nearbyEvents : function(){
 		var locations = checkEvents.find().fetch(); 
 		var myGeolocation = Geolocation.latLng() || {'lat':0, 'lng':0};
 		var nearbyLocations = []
-		var delta_x = 0;
-		var delta_y = 0;
-		var closeByDistance = 3 //km
-		var eventYoureAtDistance = .5 //km
 		var atEvent = false
 		for (var i = 0; i < locations.length; i++ ){
 			var locGeolocation = locations[i].geoLocation || {'lat':0, 'lng':0}
 			locations[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);
-			console.log('eventtime '+ locations[i].startDate)
-			console.log('mytime' + new Date())
+
 			// nearby events
 			if(locations[i].distance < closeByDistance){
+
 				// get past events
 				if(Session.get('past') && (new Date() > locations[i].startDate)){
 					nearbyLocations.push(locations[i]);
@@ -80,7 +82,7 @@ Template.splash.helpers({
 				//get future events
 				else if(!Session.get('past') && (new Date() < locations[i].startDate)){
 					nearbyLocations.push(locations[i]);
-					if(locations[i].distance < .1){
+					if(locations[i].distance < eventYoureAtDistance){
 						Session.set('eventYoureAt', locations[i])
 						atEvent = true
 					}
