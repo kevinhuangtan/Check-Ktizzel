@@ -11,6 +11,10 @@
 		float: right;
 		border: none;
 	}
+
+	.latlong{
+		width: 100%;
+	}
 }
 
 @media screen and (min-width: 500px){
@@ -27,7 +31,6 @@
 	.detail-entry{
 		width: 85%;
 	}
-
 	.entry-request:focus{
 		text-align:left;
 	}

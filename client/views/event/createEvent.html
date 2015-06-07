@@ -66,13 +66,24 @@
 		<form class="new-event">
 			<div class="panel panel-default">
                 <div class="panel-body">
-                	<p class="entry-title">Building and Location   </p>
-                	<input class="entry-request" type="text" name="eventPlace" placeholder="e.g (Woolsey Hall)">
+                	<p class="entry-title col-xs-6">Building and Location   </p>
+                	<input class="entry-request" type="text" style="width: 50%" name="eventPlace" placeholder="e.g (Woolsey Hall)">
 				</div>
 			</div>
 			<p>Development only (invisible in shipped version):</p>
-			lat: <input class="" name = "latFld" type="text" id="latFld">
-			lng: <input class="" name = "lngFld" type="text" id="lngFld">
+			<div class="panel panel-default">
+                <div class="panel-body">
+                   	<p class="entry-title">Lat:   </p>
+                   	<div class="entry-request">
+                   		<input style="width: 90%" class="" name = "latFld" type="text" id="latFld">
+                   	</div>
+                	<hr style="width: 100%">
+                	<p class="entry-title">Long:   </p>
+					<div class="entry-request">
+						<input style="width: 90%" class="" name = "lngFld" type="text" id="lngFld">
+					</div>
+				</div>
+			</div>
 			<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
 
 		</form>
