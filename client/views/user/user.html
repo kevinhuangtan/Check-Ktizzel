@@ -32,12 +32,22 @@
 
 		{{/if}}
 
+		{{#if past}}
+			<p class="upcoming">Upcoming</p>
+			<p class="past underline">Past</p>
+		{{else}}
+			<p class="upcoming underline">Upcoming</p>
+			<p class="past">Past</p>
+		{{/if}}
 		<p class="hidden">{{myLocation}}</p>
 		
 		<div class="row">
 			<div class="col-xs-12">
 
 			<p>Ongoing Events in {{myCity}}</p>
+			<p>{{today}}</p>
+
+
 				<div>
 					{{#each nearbyEvents}}
 					<div class="panel panel-default event-panel">
@@ -64,7 +74,7 @@
 	            </div>     		
        		</div>
  		</div>
- 		<div class="row">
+ 		 <div class="row">
 			<div class="col-xs-12">
 			<p>All Events (development only, see console for more each event object)</p>
 				<div>

@@ -1,10 +1,9 @@
-Template.eventTitle.helpers({
-	initialize: function(){
-		document.title = "Create Event"
-		delete Session.keys['eventSession']
-		return 0
-	}
-})
+Template.eventTitle.onRendered(function(){
+	document.title = "Create Event"
+
+	delete Session.keys['eventSession']
+	return 0
+});
 
 Template.eventTitle.events({
 	'submit form': function(event){

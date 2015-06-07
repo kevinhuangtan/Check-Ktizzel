@@ -33,15 +33,25 @@ Meteor.subscribe("allUserData");
 Meteor.subscribe("events");
 
 
+// set for other views to access location
 Template.splash.helpers({
 	myLocation: function () {
 		// return 0, 0 if the location isn't ready
 		document.title = "Home";
 		Session.set('geoLocation', Geolocation.latLng());
 		return Geolocation.latLng() || { lat: 0, lng: 0 };
-	},
+	}
+})
+Template.splash.onRendered(function(){
+	Session.set('past', true);
+})
+
+Template.splash.helpers({
 	eventYoureAt : function(){
 		return Session.get('eventYoureAt')
+	},
+	past: function(){
+		return Session.get('past')
 	},
 	nearbyEvents : function(){
 		var locations = checkEvents.find().fetch(); 
@@ -55,14 +65,27 @@ Template.splash.helpers({
 		for (var i = 0; i < locations.length; i++ ){
 			var locGeolocation = locations[i].geoLocation || {'lat':0, 'lng':0}
 			locations[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);
+			console.log('eventtime '+ locations[i].startDate)
+			console.log('mytime' + new Date())
+			// nearby events
 			if(locations[i].distance < closeByDistance){
-				nearbyLocations.push(locations[i]);
-				if(locations[i].distance < .1){
-					Session.set('eventYoureAt', locations[i])
-					atEvent = true
+				// get past events
+				if(Session.get('past') && (new Date() > locations[i].startDate)){
+					nearbyLocations.push(locations[i]);
+					if(locations[i].distance < .1){
+						Session.set('eventYoureAt', locations[i])
+						atEvent = true
+					}
+				}
+				//get future events
+				else if(!Session.get('past') && (new Date() < locations[i].startDate)){
+					nearbyLocations.push(locations[i]);
+					if(locations[i].distance < .1){
+						Session.set('eventYoureAt', locations[i])
+						atEvent = true
+					}
 				}
 			}
-
 		}
 		if(!atEvent){
 			delete Session.keys['eventYoureAt']
@@ -70,11 +93,6 @@ Template.splash.helpers({
 		console.log('Nearby Events:')			
 		console.log(nearbyLocations)
 		return nearbyLocations; 
-	},
-	myevents: function(){
-		console.log('All Events:')
-		console.log(checkEvents.find().fetch())
-		return checkEvents.find().fetch()
 	},
 	myCity : function(){
 		var js;
@@ -92,13 +110,31 @@ Template.splash.helpers({
 
 		});
 		var result = cityName0 + ', '+cityName ;
-		return result 
+		return result
+	},
+	today : function(){
+		return new Date();
 	}
 });
+// debug
 Template.splash.helpers({
-	'click .event-li': function(event){
-	Session.set("currentEvent", this._id);
-	Router.go('event');
+	myevents: function(){
+		console.log('All Events:')
+		console.log(checkEvents.find().fetch())
+		return checkEvents.find().fetch()
 	}
+})
+Template.splash.events({
+	'click .event-li': function(event){
+		Session.set("currentEvent", this._id);
+		Router.go('event');
+	},
+	'click .upcoming' : function(event){
+		Session.set('past', false)
+	},
+	'click .past' : function(event){
+		Session.set('past', true)
+	},
+
 })
 

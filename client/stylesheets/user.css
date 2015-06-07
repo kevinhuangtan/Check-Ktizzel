@@ -9,3 +9,7 @@
 .event-panel{
   border-left: thick double blue;
 }
+
+.underline {
+    text-decoration: underline;
+}
