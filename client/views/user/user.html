@@ -1,5 +1,5 @@
 <template name = "splash">
-	<div class="mainDiv">
+	<div class="container mainDiv">
 		{{#if currentUser}}
 			<h3>Hello {{currentUser.profile.fullname}}!!</h3>			
 			<p><a href="{{pathFor route='eventTitle'}}"><button class='btn'>Create Event</button></a></p>

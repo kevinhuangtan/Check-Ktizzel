@@ -1,53 +1,82 @@
 <template name="eventTitle">
-	<p class="hidden">{{initalize}}</p>
-	<form class="new-event">
-		Event Name 
-		<input type="text" name="eventName" placeholder="e.g Intro to Economics">
-		<br>
-		Description <input type="text" name="description" placeholder="Add more info..">
-		<br>
-		<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
-		<br>
-	</form>
+	<div class="container mainDiv">
+		<p class="hidden">{{initalize}}</p>
+		<h3>Event Details</h3>
+		<form class="new-event">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p class="entry-title">Event Name   </p><input class="entry-request detail-entry" type="text" name="eventName" placeholder="e.g Intro to Economics">
+                    <hr style="position:relative; width: 100%">
+                    <p class="entry-title">Description   </p>
+                    <input class="entry-request detail-entry" type="text" name="description" placeholder="Add more info..">
+                </div>
+            </div>
+            <br>
+			<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
+			<br>
+		</form>
+	</div>
 </template>
 
 <template name="eventDateAndTime">
-	<form class="new-event">
-		Date
-		<input size="3" type="text" name="month" placeholder="M">
-		<input size="3" type="text" name="day" placeholder="D">
-		<input size="3" type="text" name="year" placeholder="Y">
-		<br>
-		Start Time
-		<input size="1" type="text" name="startHour" placeholder="3">
-		<input size="2" type="text" name="startMinute" placeholder="30">
-		<select name="startAmpm">
-			<option> AM </option>
-			<option> PM </option>
-		</select>
-		<br>
-		End Time
-		<input size="1" type="text" name="endHour" placeholder="3">
-		<input size="2" type="text" name="endMinute" placeholder="30">
-		<select name="endAmpm">
-			<option> AM </option>
-			<option> PM </option>
-		</select>
-		<br>
-		<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
-	</form>
+	<div class="container mainDiv">
+		<h3>Event Date and Time</h3>
+		<form class="new-event">
+			<div class="panel panel-default">
+                <div class="panel-body">
+                   	<p class="entry-title">Date   </p>
+                   	<div class="entry-request">
+						<input class="newcol-xs-offset-3 newcol-xs-3" size="3" type="text" name="month" placeholder="M">
+						<input class="newcol-xs-3" size="3" type="text" name="day" placeholder="D">
+						<input class="newcol-xs-3" size="3" type="text" name="year" placeholder="Y">
+					</div>
+					<hr style="position:relative; width: 100%">
+
+					<p class="entry-title">Start Time   </p>
+					<div class="entry-request">
+						<input class="newcol-xs-offset-3 newcol-xs-3" size="1" type="text" name="startHour" placeholder="3">
+						<input class="newcol-xs-3" size="2" type="text" name="startMinute" placeholder="30">
+						<select class="newcol-xs-3" name="startAmpm">
+							<option> AM </option>
+							<option> PM </option>
+						</select>
+					</div>
+					<hr style="position:relative; width: 100%">
+
+					<p class="entry-title">End Time   </p>
+					<div class="entry-request">
+						<input class="newcol-xs-offset-3 newcol-xs-3" size="1" type="text" name="endHour" placeholder="3">
+						<input class="newcol-xs-3" size="2" type="text" name="endMinute" placeholder="30">
+						<select class="newcol-xs-3" name="endAmpm">
+							<option> AM </option>
+							<option> PM </option>
+						</select>
+					</div>
+                </div>
+            </div>
+			<br>
+			<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
+		</form>
+	</div>
 </template>
 
 <template name="eventLocation">
-	<form class="new-event">
-		Building & Place <input type="text" name="eventPlace" placeholder="e.g (Woolsey Hall)">
-		<br>
-		<p>Development only (invisible in shipped version):</p>
-		lat: <input class="" name = "latFld" type="text" id="latFld">
-		lng: <input class="" name = "lngFld" type="text" id="lngFld">
-		<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
+	<div class="container mainDiv">
+		<h3>Location</h3>
+		<form class="new-event">
+			<div class="panel panel-default">
+                <div class="panel-body">
+                	<p class="entry-title">Building and Location   </p>
+                	<input class="entry-request" type="text" name="eventPlace" placeholder="e.g (Woolsey Hall)">
+				</div>
+			</div>
+			<p>Development only (invisible in shipped version):</p>
+			lat: <input class="" name = "latFld" type="text" id="latFld">
+			lng: <input class="" name = "lngFld" type="text" id="lngFld">
+			<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
 
-	</form>
-	<div id="map-canvas"></div>
+		</form>
+		<div id="map-canvas"></div>
+	</div>
 </template>
 

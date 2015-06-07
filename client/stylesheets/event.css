@@ -19,9 +19,24 @@
   float: right;
   float: bottom;
 }
+
+.event-name-spacing{
+  position: relative;
+  min-height: 1px;
+  padding-right: 0px;
+  padding-left: 0px;
+  float: left;
+}
+
 @media screen and (max-width: 500){
   #event-name{
     font-size: 100%;
+  }
+
+  .event-name-spacing{
+    margin-left: 33.33333333%;    
+    width: 66.66666667%;
+    /*equivalent to col-xs-offset-4 and col-xs-8*/
   }
 }
 
@@ -29,7 +44,15 @@
   #event-name{
     font-size: 100px;
   }
+
+  .event-name-spacing{
+    margin-left: 8.33333333%;
+    width: 83.33333333%;
+    /*equivalent to col-xs-offset-1 and col-xs-11*/
+  }
 }
+
+
 
 .event-type-bar{
   background-color: #FCFCFC;

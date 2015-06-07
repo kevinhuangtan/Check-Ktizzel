@@ -52,17 +52,16 @@ li{
   font-color: black;
 }
 
-.pushhome{
-  padding-top: 60px;
-}
-
 @media screen and (max-width: 500px){ 
   .brand{
     position: relative;
     left: -20px;
     top: -14px;
   }
-
+  
+  .pushhome{
+    padding-top: 60px;
+  }
 }
 
 @media screen and (min-width: 500px){ 
@@ -75,6 +74,10 @@ li{
   #login{
     position: relative;
     top: 10px;
+  }
+
+  .pushhome{
+    padding-top: 40px;
   }
 }
 
