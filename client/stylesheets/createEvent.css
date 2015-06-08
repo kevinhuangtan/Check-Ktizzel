@@ -79,6 +79,9 @@ body{
 	border:none;
 	outline:none
 }
+.create-button:focus{
+	outline:none
+}
 
 
 #map-canvas{
