@@ -7,9 +7,69 @@
 }
 
 .event-panel{
-  border-left: thick double blue;
+  border-left: solid thick blue;
+  border-left-width: 5px;
+  width: 100%;
 }
 
 .underline {
     text-decoration: underline;
+}
+/*below is a test for tabs*/
+.tabs {
+  width: 650px;
+  float: none;
+  list-style: none;
+  position: relative;
+  margin: 0px 0 0 0px;
+  text-align: left;
+  padding-left:0px;
+}
+.tabs li {
+  float: left;
+  display: block;
+}
+.tabs input[type="radio"] {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+.tabs label {
+  display: block;
+  padding: 5px 21px;
+  border-radius: 2px 2px 0 0;
+  /*font-size: 20px;
+  font-weight: normal;*/
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+.tabs label:hover {
+  background: gray;
+}/*
+.tabs .tab-content {
+  z-index: 2;
+  display: none;
+  overflow: hidden;
+  width: 100%;
+  font-size: 17px;
+  line-height: 25px;
+  padding: 25px;
+  position: absolute;
+  top: 53px;
+  left: 0;
+  background: gray;
+}*/
+.tabs [id^="tab"]:checked + label {
+  top: 0;
+  padding-top: 17px;
+  background: gray;
+}
+.tabs [id^="tab"]:checked ~ [id^="tab-content"] {
+  display: block;
 }

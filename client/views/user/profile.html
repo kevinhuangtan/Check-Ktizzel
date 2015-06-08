@@ -3,20 +3,29 @@
         {{#if editme}}
 		<form class="profile-form">
 			<h3> My Profile </h3>
-			<button class = "edit btn btn-lg btn-primary">Edit</button>
-			<ul>
-					<li><input type="text" name="name" placeholder="Name" value={{name}}></li>
-					<li><input type="text" name="gender" placeholder="gender" value={{gender}}> </li>
-					<li>Email: {{email}}</li>
-					<li><input type="text" name="phone" placeholder="Phone" value={{phone}}></li>
-					<li><input type="text" name="ethnicity" placeholder="Ethnicity" value={{ethnicity}}> </li>
-					<li><input type="text" name="organization" placeholder="Organization" value={{organization}}></li>
+			<div class="panel panel-default">
+                <div class="panel-body">
+					<p class="entry-title">Name   </p>
+					<input class="entry-request detail-entry" type="text" name="name" placeholder="Name" value={{name}}>
+        				<hr style="position:relative; width: 100%">
+					<p class="entry-title">Gender   </p>
+					<input class="entry-request detail-entry" type="text" name="gender" placeholder="gender" value={{gender}}>
+        				<hr style="position:relative; width: 100%">
+					<p style="float:left">Email:</p><p style="float:right"> {{email}}</p>
+        				<hr style="position:relative; width: 100%">
+					<p class="entry-title">Phone   </p>
+					<input class="entry-request detail-entry" type="text" name="phone" placeholder="Phone" value={{phone}}>
+        				<hr style="position:relative; width: 100%">
+					<p class="entry-title">Ethnicity   </p>
+					<input class="entry-request detail-entry" type="text" name="ethnicity" placeholder="Ethnicity" value={{ethnicity}}>
+        				<hr style="position:relative; width: 100%">
+					<p class="entry-title">Organization   </p>
+					<input class="entry-request detail-entry" type="text" name="organization" placeholder="Organization" value={{organization}}>
 
-			</ul>
-			
-				<button type="submit" class = "update btn btn-lg btn-primary">Update Profile</button>
+				</div>
+			</div>
+			<button type="submit" class = "update btn btn-lg btn-primary">Update Profile</button>
 		</form>
-
 		{{else}}
 		<form class="profile-form">
 			<div class="row ">

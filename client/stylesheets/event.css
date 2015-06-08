@@ -4,7 +4,6 @@
 
 #container-profile{
 	margin:0 auto;
-  padding-top: 50px;
 	width:100%;
 }
 
@@ -126,4 +125,67 @@ width:290px;
   #profile-name{
     font-size: 100%;
   }
+}*/
+body{
+  margin:0;
+  padding:0;
+  height:100%;
+}
+
+.total{
+  min-height: 100%;
+  position: relative;
+}
+
+.event-container{
+  padding-bottom: 60px;
+}
+
+.checkIn{
+  height: 60px;
+  position: fixed;
+  float: bottom;
+  width: 100%;
+  background-color: #99FFCC;
+  text-transform: uppercase;
+  font-color: white;
+  font: serif;
+  z-index: 100;
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 0px;
+  bottom: 0px;
+}
+
+/*
+@media screen and (min-width: 500){
+
+}
+
+@media screen and (max-width: 500){
+  .checkIn{
+    left: -5px;
+    top: 160px;
+  }
+}*/
+
+.shiftdetails{
+  position: relative;
+  top: -20px;
+}
+
+.host-info{
+  border: 0px;
+}
+
+/*
+ul.host-name-list{
+  list-style-image: url("hostnameli.png");
+}*/
+/*
+.host-name-list li {
+    background: url("hostnameli.png") no-repeat left 5px;
+    padding-left: 1em;
 }*/

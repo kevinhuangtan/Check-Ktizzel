@@ -23,12 +23,19 @@ button[type=button] {
 li{
   list-style-type: none;
 }
-
-#map-canvas{
-  height:500px;
-  width:400px;
+@media screen and (max-width: 400px){
+  #map-canvas{
+    height:500px;
+    width:100%;
+  }
 }
 
+@media screen and (min-width: 400px){ 
+  #map-canvas{
+    height:500px;
+    width:400px;
+  }
+}
 .event-li{
   cursor: pointer;
 }
