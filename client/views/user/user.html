@@ -68,17 +68,32 @@
 
 <template name="navigation">
 	<div class="navigation-bar">
-		<p>
-			<a href="{{pathFor route='eventTitle'}}">
-				<button class='btn'>Create Event</button>
+	<ul>
+		<li>
+			<img src="check.png"/>
+			<a href="/createEvent">
+				<p>Create</p>
 			</a>
-		</p>
-		<a>
-			<p class="signout">signout</p>
-		</a>
-		<a href="/profile">
-			<p>Profile</p>
-		</a>
+		</li>
+		<li>
+			<img src="recent.png"/>
+			<a href="/">
+				<p>Recent</p>
+			</a>
+		</li>
+		<li>
+			<img src="profile.png"/>
+			<a href="/profile">
+				<p>Profile</p>
+			</a>
+		</li>
+		<li>
+			<img src="more.png"/>
+			<a href="/profile">
+				<p>More</p>
+			</a>
+		</li>
+	</ul>
     </div>
 </template>
 

@@ -1,7 +1,9 @@
 body{
   background-color: #F4F4F4;
   padding: 0;
+  margin: 0;
   font-size: 14px;
+  overflow: hidden;
 }
 button[type=button] {
     background-color: #E3E1B8; 
