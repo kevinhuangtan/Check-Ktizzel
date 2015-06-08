@@ -19,17 +19,6 @@ if (typeof(Number.prototype.toRad) === "undefined") {
   }
 }
 
-checkEmailIsValid = function (aString) {  
-  aString = aString || '';
-  return aString.length > 1 && aString.indexOf('@') > -1;
-}
-
-checkPasswordIsValid = function (aString) {  
-  aString = aString || '';
-  return aString.length > 7;
-}
-
-
 var closeByDistance = 3 //miles
 var eventYoureAtDistance = .1 //miles
 ////////
@@ -48,7 +37,7 @@ Template.splash.helpers({
 	}
 })
 Template.splash.onRendered(function(){
-	Session.set('past', true);
+	Session.set('past', false);
 })
 
 Template.splash.helpers({
@@ -127,7 +116,7 @@ Template.splash.helpers({
 	}
 })
 Template.splash.events({
-	'click .event-li': function(event){
+	'click .panel-user': function(event){
 		Session.set("currentEvent", this._id);
 		Router.go('event');
 	},

@@ -1,75 +1,76 @@
-.event-li{
-  cursor: pointer;
+
+.upcoming-past{
+    width:10em;
+    position: absolute;
+    margin: 0 auto;
+    left: 0 ;
+    right:0;
+    text-align: center;
+    color:#00BE3B;
+    top: 2em;
+    border-radius: 2px;
 }
 
-.event-li:hover{
-  opacity:.5;
+.upcoming-past div{
+  display: inline-block;
+  position: absolute;
+  height:1.7em;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #00BE3B;
+  width:50%;
+   
+}
+.upcoming-past .past{
+    right: 0;
 }
 
-.event-panel{
-  border-left: solid thick blue;
-  border-left-width: 5px;
-  width: 100%;
+.upcoming-past .upcoming{
+    left:0;
+}
+.upcoming-past ul{
+  display: inline-block;
+  padding: 0;
+}
+.upcoming-past li{
+  margin: 0;
+  font-size: 10px;
+   vertical-align: middle;
+  font-weight: 200;
+  line-height: 2em;
 }
 
 .underline {
-    text-decoration: underline;
+    background-color: #00BE3B;
+    color: white!important;
 }
-/*below is a test for tabs*/
-.tabs {
-  width: 650px;
-  float: none;
-  list-style: none;
-  position: relative;
-  margin: 0px 0 0 0px;
-  text-align: left;
-  padding-left:0px;
-}
-.tabs li {
-  float: left;
-  display: block;
-}
-.tabs input[type="radio"] {
+
+.events-container{
+  margin-top: 2em;
   position: absolute;
-  top: -9999px;
-  left: -9999px;
-}
-.tabs label {
-  display: block;
-  padding: 5px 21px;
-  border-radius: 2px 2px 0 0;
-  /*font-size: 20px;
-  font-weight: normal;*/
-  text-transform: uppercase;
-  cursor: pointer;
-  position: relative;
-  top: 4px;
-  -moz-transition: all 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out;
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-}
-.tabs label:hover {
-  background: gray;
-}/*
-.tabs .tab-content {
-  z-index: 2;
-  display: none;
-  overflow: hidden;
   width: 100%;
-  font-size: 17px;
-  line-height: 25px;
-  padding: 25px;
-  position: absolute;
-  top: 53px;
-  left: 0;
-  background: gray;
-}*/
-.tabs [id^="tab"]:checked + label {
-  top: 0;
-  padding-top: 17px;
-  background: gray;
 }
-.tabs [id^="tab"]:checked ~ [id^="tab-content"] {
-  display: block;
+
+.panel-user img{
+  margin-bottom: .3em;
+  height: 1em
+}
+.panel-user{
+  border-left: solid blue;
+  border-left-width: 3px;
+  cursor:pointer;
+  font-family: "Avenir Next";
+  border-radius: 0;
+}
+.panel-user ul{
+  padding-left: 10px;
+  margin-bottom: 0;
+}
+.panel-user .distance{
+  float:right
+}
+
+.navigation-bar{
+  position: absolute;
+  bottom: 0;
 }

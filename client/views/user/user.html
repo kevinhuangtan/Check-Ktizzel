@@ -1,93 +1,53 @@
 <template name = "splash">
-	<div class="container mainDiv">
-		{{#if currentUser}}
-		<!-- Intro to signed in user -->
-			<h3>Hello {{currentUser.profile.fullname}}!!</h3>
-			<p><a href="{{pathFor route='eventTitle'}}"><button class='btn'>Create Event</button></a></p>
-            {{#if eventYoureAt}}
-            	<p>Event You Are Currently At: {{eventYoureAt.name}}</p>
-            	<button class='btn'>Check In</button>
-            {{/if}}
-            <a><p class="signout">signout</p></a>
-            <a href="/profile"><p>Profile</p></a>
 
-	<!--   Accounts   sign up form-->		
-		{{else}}
-			<p>signup</p>
-			{{accounts_error}}
-					<form class="signin">
-						<input type="text" name="email" placeholder="Email">
-						<input type="password" name="password" placeholder="Password">
-						<button type="submit" class = "btn btn-lg btn-primary">Sign Up</button>
-					</form>
+	{{>upperBar}}
 
-			<p>login</p>
-
-			<form class="login">
-				<input type="text" name="email" placeholder="Email">
-				<input type="password" name="password" placeholder="Password">
-				<button type="submit" class = "btn btn-lg btn-primary">Log In</button>
-			</form>
-
-		{{/if}}
-
-
-
-		<!-- events list -->
-		{{#if past}}
-		<ul class="filter_tabs">
-			<li>
-			    <input type="radio" name="tabs" id="tab5" />
-			    <label for="tab5" class="upcoming">Upcoming</label>
-			</li>
-			<li>
-			    <input type="radio" name="tabs" id="tab6" />
-			    <label for="tab6" class= "past underline">Past</label>
-			</li>
-
-		</ul>
-		{{else}}
-		<ul class="filter_tabs">
-			<li>
-			    <input type="radio" name="tabs" id="tab3" />
-			    <label for="tab3" class="upcoming underline">Upcoming</label>
-			</li>
-			<li>
-			    <input type="radio" name="tabs" id="tab4" />
-			    <label for="tab4" class="past">Past</label>
-			</li>
-		</ul>
-
-		{{/if}}
 		<p class="hidden">{{myLocation}}</p>
-		
-		<div class="row">
-			<div class="col-xs-12">
 
-			<p>Ongoing Events in {{myCity}}</p>
-				<div>
-					{{#each nearbyEvents}}
-					<div class="panel panel-default event-panel">
-	                    <div class="panel-body">
-		                    <div style="float:right">
-		                    	<li>{{distance}} miles</li>
-		                    </div>
-		                    <div class="nearby">	
-			                    <b><li class="event-li">{{name}}</li></b>
-					       		<hr>
-					       		<ul>
-				       				<li>Place: {{place}}</li>
-				       				<li>Description: {{description}}</li>
-				       				<li>{{dateParsed}}</li>
-					       		</ul>
-					       	</div>
-	                    </div>
-	                </div>
-					{{/each}}
-	            </div>     		
-       		</div>
- 		</div>
- 		 <div class="row">
+		{{#if currentUser}}
+		{{else}}
+			{{>signin}}
+		{{/if}}
+
+		<div class="upper-bar">
+			<!-- upcoming/past -->
+			{{#if past}}
+				<div class='upcoming-past'>
+					<div class="upcoming">
+						<li class="upcoming">Upcoming</li>
+					</div>
+					<div class="underline past">
+						<li class="past">Past</li>
+					</div>
+				</div>
+			{{else}}
+				<div class='upcoming-past'>
+					<div class="underline upcoming">
+						<li class="upcoming">Upcoming</li>
+					</div>
+					<div class="past">
+						<li class="past">Past</li>
+					</div>
+				</div>
+			{{/if}}
+		</div>
+
+	
+		<div class="events-container">
+			{{#each nearbyEvents}}
+			<div class="panel panel-user panel-default">
+	            <div class="panel-body">
+	                <li class="distance">{{distance}} mi</li>
+	                <b><li class="event-name">{{name}}</li></b>
+		       		<ul>
+		       			<li><img src="time.png"> {{dateParsed}}</li>
+	       				<li><img src="venue.png"> {{place}}</li>
+		       		</ul>
+	            </div>
+	        </div>
+			{{/each}}
+       </div>     		
+ 		<!--  <div class="row">
 			<div class="col-xs-12 development">
 			<p>All Events (development only, see console for more each event object)</p>
 				<div>
@@ -102,9 +62,27 @@
 					{{/each}}
 	            </div>     		
        		</div>
- 		</div>
-	</div>
+ 		</div> -->
+ 		{{>navigation}}
 </template>
 
+<template name="navigation">
+	<div class="navigation-bar">
+		<p>
+			<a href="{{pathFor route='eventTitle'}}">
+				<button class='btn'>Create Event</button>
+			</a>
+		</p>
+		<a>
+			<p class="signout">signout</p>
+		</a>
+		<a href="/profile">
+			<p>Profile</p>
+		</a>
+    </div>
+</template>
 
+<template name ="upperBar">
+	
+</template>
 
