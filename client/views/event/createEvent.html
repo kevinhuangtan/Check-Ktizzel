@@ -60,17 +60,24 @@
 </template>
 
 <template name="eventLocation">
-	<div class="container mainDiv">
-		<h3>Location</h3>
+		<div id="map-canvas"></div>
 		<form class="new-event">
+
 			<div class="panel panel-default">
-                <div class="panel-body">
-                	<p class="entry-title col-xs-6">Building and Location   </p>
+                <div class="panel-body building-panel">
+                	<p class="entry-title col-xs-6">Building & Room  </p>
                 	<input class="entry-request" type="text" style="width: 50%" name="eventPlace" placeholder="e.g (Woolsey Hall)">
+
+				</div>
+				<div class="divider"></div>
+				<div class="panel-body">
+                	<p class="entry-title col-xs-6">Address</p>
+                	<input class="entry-request" type="text" style="width: 50%" name="eventPlace" placeholder="Locate on Map">
 				</div>
 			</div>
-			<p>Development only (invisible in shipped version):</p>
-			<div class="panel panel-default">
+			
+			<div class="panel panel-default development hidden">
+				<p>Development only (invisible in shipped version):</p>
                 <div class="panel-body">
                    	<p class="entry-title">Lat:   </p>
                    	<div class="entry-request">
@@ -83,10 +90,8 @@
 					</div>
 				</div>
 			</div>
-			<button type="submit" class = "btn btn-lg btn-primary">Submit</button>
+			<button type="submit" class = "create-button">CREATE</button>
 
 		</form>
-		<div id="map-canvas"></div>
-	</div>
 </template>
 

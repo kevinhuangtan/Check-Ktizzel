@@ -2,11 +2,6 @@ body {
 	padding:0px 0px 0px 0px;
 }
 
-@media screen and (min-width: 500px){
-  body{
-    padding-top: 30px;
-  }
-}
 
 
 button[type=button] {
@@ -18,24 +13,22 @@ button[type=button] {
     border-color: #aaa #444 #444 #aaa;
     color: #000
 }
+.container{
+  padding:0;
+}
 
+.pushhome{
+  position:absolute;
+  bottom: 10px;
+}
 
 li{
   list-style-type: none;
 }
-@media screen and (max-width: 400px){
-  #map-canvas{
-    height:500px;
-    width:100%;
-  }
-}
+
 
 @media screen and (min-width: 400px){ 
-  #map-canvas{
-    height:500px;
-    width:400px;
-  }
-}
+
 .event-li{
   cursor: pointer;
 }
@@ -52,11 +45,14 @@ li{
   /*padding-top: 70px;*/
   /*padding-left: 50px;
   margin-left: 50px;*/
+
   background-color: #FCFCFC;
 }
 
 .navtext{
   font-color: black;
+}
+
 }
 
 @media screen and (max-width: 500px){ 
@@ -65,13 +61,6 @@ li{
     left: -20px;
     top: -14px;
   }
-  
-  .pushhome{
-    padding-top: 60px;
-  }
-}
-
-@media screen and (min-width: 500px){ 
   .brand{
     position: relative;
     left: -20px;
@@ -83,9 +72,6 @@ li{
     top: 10px;
   }
 
-  .pushhome{
-    padding-top: 40px;
-  }
 }
 
 /*.fa-map-marker:before {

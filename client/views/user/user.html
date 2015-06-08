@@ -35,7 +35,7 @@
 
 		<!-- events list -->
 		{{#if past}}
-		<ul class="tabs">
+		<ul class="filter_tabs">
 			<li>
 			    <input type="radio" name="tabs" id="tab5" />
 			    <label for="tab5" class="upcoming">Upcoming</label>
@@ -44,13 +44,10 @@
 			    <input type="radio" name="tabs" id="tab6" />
 			    <label for="tab6" class= "past underline">Past</label>
 			</li>
-		<!--
-			<p class="upcoming">Upcoming</p>
-			<p class="past underline">Past</p>
-		-->
+
 		</ul>
 		{{else}}
-		<ul class="tabs">
+		<ul class="filter_tabs">
 			<li>
 			    <input type="radio" name="tabs" id="tab3" />
 			    <label for="tab3" class="upcoming underline">Upcoming</label>
@@ -60,10 +57,7 @@
 			    <label for="tab4" class="past">Past</label>
 			</li>
 		</ul>
-		<!--
-			<p class="upcoming underline">Upcoming</p>
-			<p class="past">Past</p>
-		-->
+
 		{{/if}}
 		<p class="hidden">{{myLocation}}</p>
 		
