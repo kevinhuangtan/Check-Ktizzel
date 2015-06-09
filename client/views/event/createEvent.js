@@ -124,7 +124,8 @@ Template.eventLocation.events({
 		Session.set("currentEvent", id);
 		Router.go('event');
 	},
-	'click #map-canvas':function(){
+	'click #map-canvas':function(event){
+		event.preventDefault()
 		var lat = Number(document.getElementById("latFld").value)
 		var lng = Number(document.getElementById("lngFld").value)
 		var js;

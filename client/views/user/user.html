@@ -1,9 +1,12 @@
 <template name = "splash">
+	<div style="top: 12px">
+		{{#if currentUser}}
+		<form>
+			<input type="text" name="eventSearch" placeholder="Search..." style="text-align: center;
+			float: right; width: 25%; position: relative; top: 2px">
+		</form>
 
 		<p class="hidden">{{myLocation}}</p>
-
-		{{#if currentUser}}
-		
 
 		<div class="upper-bar">
 			<!-- upcoming/past -->
@@ -41,13 +44,64 @@
 	            </div>
 	        </div>
 			{{/each}}
-       </div>   
+       </div>     		
+ 		<!--  <div class="row">
+			<div class="col-xs-12 development">
+			<p>All Events (development only, see console for more each event object)</p>
+				<div>
+					{{#each myevents}}
+					<div class="panel panel-default event-panel">
+	                    <div class="panel-body">
+		                    <div class="nearby">
+			                    <b><div class="event-li">{{name}}</div></b>
+				       		</div>
+	                    </div>
+	                </div>
+					{{/each}}
+	            </div>     		
+       		</div>
+ 		</div> -->
+ 		{{else}}
+ 		{{/if}}
+ 		{{>navigation}}
+ 	</div>
+</template>
+
+<template name="navigation">
+	{{#if currentUser}}
+	<div class="navigation-bar">
+	<ul>
+		<li>
+			<img src="check.png"/>
+			<a href="/createEvent">
+				<p>Create</p>
+			</a>
+		</li>
+		<li>
+			<img src="recent.png"/>
+			<a href="/">
+				<p>Recent</p>
+			</a>
+		</li>
+		<li>
+			<img src="profile.png"/>
+			<a href="/profile">
+				<p>Profile</p>
+			</a>
+		</li>
+		<li>
+			<img src="more.png"/>
+			<a href="/">
+				<p>More</p>
+			</a>
+		</li>
+	</ul>
+    </div>
        {{>checkNavigation}}
 
        {{else}}
 			{{>signin}}
-		{{/if}}  		
- 		
+		{{/if}} 
 </template>
 
 
