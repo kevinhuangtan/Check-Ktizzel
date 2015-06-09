@@ -15,6 +15,7 @@
 			<br>
 		</form>
 	</div>
+	{{>checkNavigation}}
 </template>
 
 <template name="eventDateAndTime">
@@ -57,10 +58,12 @@
 			<button type="submit" class = "btn btn-lg btn-primary">Next</button>
 		</form>
 	</div>
+	{{>checkNavigation}}
 </template>
 
 <template name="eventLocation">
-		<div id="map-canvas"></div>
+		<div id="map-canvas" class="map-container"></div>
+
 		<form class="new-event">
 
 			<div class="panel panel-eventLocation panel-default">
@@ -72,26 +75,18 @@
 				<div class="divider"></div>
 				<div class="panel-body">
                 	<p class="entry-title col-xs-6">Address</p>
-                	<input class="entry-request" type="text" style="width: 50%" placeholder="Locate on Map">
+                	<input class="entry-request" type="text" style="width: 50%" placeholder={{address}} disabled>
 				</div>
 			</div>
 			
-			<div class="panel panel-default development hidden">
+			<div class="development hidden">
 				<p>Development only (invisible in shipped version):</p>
-                <div class="panel-body">
-                   	<p class="entry-title">Lat:   </p>
-                   	<div class="entry-request">
-                   		<input style="width: 90%" class="" name = "latFld" type="text" id="latFld">
-                   	</div>
-                	<hr style="width: 100%">
-                	<p class="entry-title">Long:   </p>
-					<div class="entry-request">
-						<input style="width: 90%" class="" name = "lngFld" type="text" id="lngFld">
-					</div>
-				</div>
+                   	<input style="width: 40%" class="latlng" name = "latFld" type="text" id="latFld">
+					<input style="width: 40%" class="latlng" name = "lngFld" type="text" id="lngFld">
 			</div>
+			
 			<button type="submit" class = "create-button">CREATE</button>
 
 		</form>
+		{{>checkNavigation}}
 </template>
-

@@ -116,10 +116,35 @@ Template.eventLocation.events({
 		});			
 		Session.set("currentEvent", id);
 		Router.go('event');
+	},
+	'click #map-canvas':function(){
+		var lat = Number(document.getElementById("latFld").value)
+		var lng = Number(document.getElementById("lngFld").value)
+		var js;
+		var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&key=AIzaSyA3IaCGmNfltsyk5fyATz-icw-D5VFhSYw';
+		var cityName0;
+		var cityName;
+		$.ajaxSetup({
+		   async: false
+		});
+		$.getJSON(url, function(data) {
+				js = data;
+				cityName0 = js.results[0].address_components[1].long_name;
+				cityName = js.results[0].address_components[2].long_name;
+				cityName1 = js.results[0].address_components[3].long_name;
+
+		});
+		var result = cityName0 + ', '+cityName + ', ' + cityName1;
+		
+		Session.set('address', result)
+		// increment = Session.get('address') + 1
+		// Session.set('address', increment);
+		// console.log(Session.get('address'))
 	}
 });
 
 Template.eventLocation.onRendered(function(){
+	Session.set('address', "Locate On Map")
 	var map;
     var markersArray = [];
     var geoLocation = Session.get('geoLocation') || { lat: 40.7, lng: -74 };
@@ -127,8 +152,9 @@ Template.eventLocation.onRendered(function(){
         var mapCanvas = document.getElementById('map-canvas');
         var mapOptions = {
           center: new google.maps.LatLng(geoLocation.lat,geoLocation.lng),
-          zoom: 14,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+           disableDefaultUI: true,
         }
         map = new google.maps.Map(mapCanvas, mapOptions)
     	google.maps.event.addListener(map, "click", function(event)
@@ -153,8 +179,6 @@ Template.eventLocation.onRendered(function(){
 
         // add marker in markers array
         markersArray.push(marker);
-
-        //map.setCenter(location);
     }
 
     // Deletes all markers in the array by removing references to them
@@ -168,3 +192,16 @@ Template.eventLocation.onRendered(function(){
     }
     initialize();
 });
+
+Template.eventLocation.helpers({
+	address : function(){
+		return Session.get('address') || 'Locate On Map'
+	}
+});
+
+
+
+
+
+
+
