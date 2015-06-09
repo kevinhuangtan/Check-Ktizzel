@@ -46,23 +46,6 @@ Template.splash.events({
 			Session.set('error', error.reason)
 
 		});
-		// Accounts.onLogin(function(){
-		// 	console.log('success')
-		// })
 
 	}
 });
-Template.checkNavigation.events({
-	'click .signout': function(event){
-		event.preventDefault();
-		Meteor.logout(function(error){
-			if(error){
-				console.log(error)
-				Session.set('error', err.reason)
-			} else{
-				// Session.set('error', "")
-			}
-			
-		});
-	}
-})

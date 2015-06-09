@@ -33,6 +33,7 @@ Template.eventDateAndTime.onRendered(function(){
 Template.eventLocation.onRendered(function(){
 	document.title = "Location"
 	Session.set('currentPage', 'createEvent')
+	Session.set('address', 'Locate On Map')
 });
 
 
@@ -143,9 +144,7 @@ Template.eventLocation.events({
 		var result = cityName0 + ', '+cityName + ', ' + cityName1;
 		
 		Session.set('address', result)
-		// increment = Session.get('address') + 1
-		// Session.set('address', increment);
-		// console.log(Session.get('address'))
+
 	}
 });
 
@@ -198,6 +197,13 @@ Template.eventLocation.onRendered(function(){
     }
     initialize();
 });
+
+Template.eventLocation.helpers({
+	address: function(){
+		return Session.get('address')
+
+	}
+})
 
 
 

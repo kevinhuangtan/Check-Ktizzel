@@ -1,7 +1,6 @@
 
 Template.checkNavigation.helpers({
 	createEvent : function(){
-		console.log(Session.get('currentPage'))
 		return (Session.get('currentPage')=='createEvent')
 	},
 	splash : function(){
@@ -11,4 +10,19 @@ Template.checkNavigation.helpers({
 		return (Session.get('currentPage')=='profile')
 	}
 
+})
+
+Template.checkNavigation.events({
+	'click .signout': function(event){
+		// event.preventDefault();
+		Meteor.logout(function(error){
+			if(error){
+				console.log(error)
+				Session.set('error', err.reason)
+			} else{
+				// Session.set('error', "")
+			}
+			
+		});
+	}
 })
