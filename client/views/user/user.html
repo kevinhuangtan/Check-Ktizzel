@@ -1,6 +1,10 @@
 <template name = "splash">
-
-	{{>upperBar}}
+	<div style="top: 12px">
+		<form>
+				<input type="text" name="eventSearch" placeholder="Search..." style="text-align: center;
+				float: right; width: 25%; position: relative; top: 2px">
+		</form>
+		{{>upperBar}}
 
 		<p class="hidden">{{myLocation}}</p>
 
@@ -64,6 +68,7 @@
        		</div>
  		</div> -->
  		{{>navigation}}
+ 	</div>
 </template>
 
 <template name="navigation">
@@ -89,7 +94,7 @@
 		</li>
 		<li>
 			<img src="more.png"/>
-			<a href="/profile">
+			<a href="/">
 				<p>More</p>
 			</a>
 		</li>

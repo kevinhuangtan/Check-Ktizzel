@@ -114,22 +114,10 @@ width:290px;
   float: right;
   float: bottom;
 }
-/*
-@media screen and (max-width: 500){
-  #profile-name{
-    font-size: 100%;
-  }
-}
 
-@media screen and (min-width: 500){
-  #profile-name{
-    font-size: 100%;
-  }
-}*/
 body{
   margin:0;
   padding:0;
-  height:100%;
 }
 
 .total{
@@ -159,33 +147,10 @@ body{
   bottom: 0px;
 }
 
-/*
-@media screen and (min-width: 500){
-
-}
-
-@media screen and (max-width: 500){
-  .checkIn{
-    left: -5px;
-    top: 160px;
-  }
-}*/
-
-.shiftdetails{
-  position: relative;
-  top: -20px;
+.map{
+  width: 100%;
 }
 
 .host-info{
   border: 0px;
 }
-
-/*
-ul.host-name-list{
-  list-style-image: url("hostnameli.png");
-}*/
-/*
-.host-name-list li {
-    background: url("hostnameli.png") no-repeat left 5px;
-    padding-left: 1em;
-}*/

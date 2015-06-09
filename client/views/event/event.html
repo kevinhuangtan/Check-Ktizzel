@@ -2,78 +2,72 @@
 <template name = "event">
     <!-- Page Content -->
 <div class="total">
-    <div class="container mainDiv" style="padding-bottom: 0px;">
-        <div class="row ">
-            <div  class="event-title-bar">
-                <div id="container-profile">
-                    <div id='cover_container' style="background-color: #191970">
-                        <div class="col-xs-offset-4 col-xs-8">
-                            <h3 id="event-name">
-                                Current Event: 
-                                {{currentEvent.name}}
-                            </h3>
-                        </div>
-                        <div id='info_box'>
-                            <div id="event_img">Image will go here<!--image with class='avatar_img'/>--></div>
-                            <div id="info-box">
-                                <div id="info-name">
-                                    Event Type<!--Event Type goes here-->
-                                </div>
+    <div class="container mainDiv" style="padding-bottom: 0px">
+        <div  class="event-title-bar">
+            <div id="container-profile">
+                <div id='cover_container' style="background-color: #191970">
+                    <div class="col-xs-offset-4 col-xs-8">
+                        <h3 id="event-name">
+                            Current Event: 
+                            {{currentEvent.name}}
+                        </h3>
+                    </div>
+                    <div id='info_box'>
+                        <div id="event_img">Image will go here<!--image with class='avatar_img'/>--></div>
+                        <div id="info-box">
+                            <div id="info-name">
+                                Event Type<!--Event Type goes here-->
                             </div>
-                            <div style='clear:both'></div>
                         </div>
+                        <div style='clear:both'></div>
                     </div>
                 </div>
             </div>
         </div>
-        <br><br>
     </div>
+    <br><br>
         {{#if checkedIn}}
     <div class="container mainDiv shiftdetails">
-        <div class="row">
-            <div  class="">
-                <div class="panel panel-default">
-                    <div style="width: 100%" class="panel-body host-info">
-                        <div>
-                            <p>Host name: {{currentEvent.host_info.name}}</p>
-                            <p>Host organization: {{currentEvent.host_info.organization}}</p>
-                        </div>
-                    </div>
+        <div class="panel panel-default">
+            <div style="width: 100%" class="panel-body host-info">
+                <div>
+                    <p>Host name: {{currentEvent.host_info.name}}</p>
+                    <p>Host organization: {{currentEvent.host_info.organization}}</p>
                 </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Attendees</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div>
-                            {{#each attendees}}
-                               <li>{{this}}</li>
-                            {{/each}}
-                        </div>
-                    </div>
-                </div>
-    
-                 <div>
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <p>{{currentEvent.dateParsed}}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div>
-                            <p>{{currentEvent.description}}</p>
-                        </div>
-                        <hr>
-                        <p> Learn More <!--link elsewhere--></p>
-                    </div>
-                </div>
-                <div id="map-canvas"></div>
             </div>
         </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Attendees</h3>
+            </div>
+            <div class="panel-body">
+                <div>
+                    {{#each attendees}}
+                       <li>{{this}}</li>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+
+         <div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p>{{currentEvent.dateParsed}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div>
+                    <p>{{currentEvent.description}}</p>
+                </div>
+                <hr>
+                <p> Learn More <!--link elsewhere--></p>
+            </div>
+        </div>
+        <div id="map-canvas" class="container"></div>
     </div>
     {{else}}
     <div class="event-container"></div>

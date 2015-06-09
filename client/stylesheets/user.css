@@ -7,7 +7,7 @@
     right:0;
     text-align: center;
     color:#00BE3B;
-    top: 2em;
+    top: 2.25em;
     border-radius: 2px;
 }
 
@@ -46,7 +46,6 @@
 }
 
 .events-container{
-  margin-top: 2em;
   position: absolute;
   width: 100%;
 }
