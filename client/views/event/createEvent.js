@@ -24,9 +24,15 @@ MONTH[11] = "DEC"
 
 Template.eventTitle.onRendered(function(){
 	document.title = "Create Event"
-
-	delete Session.keys['eventSession']
-	return 0
+	Session.set('currentPage', 'createEvent')
+});
+Template.eventDateAndTime.onRendered(function(){
+	document.title = "Date and Time"
+	Session.set('currentPage', 'createEvent')
+});
+Template.eventLocation.onRendered(function(){
+	document.title = "Location"
+	Session.set('currentPage', 'createEvent')
 });
 
 
@@ -192,14 +198,6 @@ Template.eventLocation.onRendered(function(){
     }
     initialize();
 });
-
-Template.eventLocation.helpers({
-	address : function(){
-		return Session.get('address') || 'Locate On Map'
-	}
-});
-
-
 
 
 

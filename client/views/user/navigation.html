@@ -1,10 +1,13 @@
 <template name="checkNavigation">
 	<div class="navigation-bar">
 	<ul>
-		
 		<a href="/createEvent">
 			<li>
-				<img src="check.png"/>
+				{{#if createEvent}}
+					<img src="check_green.png"/>
+				{{else}}
+					<img src="check.png"/>
+				{{/if}}
 				<p>Create</p>
 			</li>
 		</a>
@@ -12,8 +15,13 @@
 		
 		<a href="/">
 			<li>
-				<img src="recent.png"/>
+				{{#if splash}}
+					<img src="recent_green.png"/>
+				{{else}}
+					<img src="recent.png"/>
+				{{/if}}
 				<p>Recent</p>
+
 			</li>
 		</a>
 		
@@ -26,13 +34,17 @@
 		
 		<a href="/profile">
 			<li>
-			<img src="profile.png"/>
+				{{#if profile}}
+					<img src="profile_green.png"/>
+				{{else}}
+					<img src="profile.png"/>
+				{{/if}}
 				<p>Profile</p>
 			</li>
 		</a>
 		
 		
-		<a href="/profile">
+		<a class="signout" href="/">
 			<li>
 				<img src="more.png"/>
 				<p>More</p>

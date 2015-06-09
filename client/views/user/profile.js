@@ -26,7 +26,10 @@ Template.profile.events({
     'click .edit' : function(event) {
     	event.preventDefault()
         Session.set('edit', true);
-    }
+    },
+    'submit .profile-form': function(event){
+		Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.fullname": event.target.name.value,"profile.gender": event.target.gender.value,"profile.phone": event.target.phone.value,"profile.ethnicity": event.target.ethnicity.value,"profile.organization": event.target.organization.value} });
+	}
 });
 
 Template.profile.editme = function () {
@@ -34,8 +37,7 @@ Template.profile.editme = function () {
 };
 
 
-Template.profile.events({
-	'submit .profile-form': function(event){
-		Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.fullname": event.target.name.value,"profile.gender": event.target.gender.value,"profile.phone": event.target.phone.value,"profile.ethnicity": event.target.ethnicity.value,"profile.organization": event.target.organization.value} });
-	}
+Template.profile.onRendered(function(){
+	document.title = "Profile"
+	Session.set('currentPage', 'profile')
 });
