@@ -50,8 +50,11 @@ Template.splash.events({
 		// 	console.log('success')
 		// })
 
-	},
+	}
+});
+Template.checkNavigation.events({
 	'click .signout': function(event){
+		event.preventDefault();
 		Meteor.logout(function(error){
 			if(error){
 				console.log(error)
@@ -62,4 +65,4 @@ Template.splash.events({
 			
 		});
 	}
-});
+})

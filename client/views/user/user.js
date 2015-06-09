@@ -31,13 +31,14 @@ Meteor.subscribe("events");
 Template.splash.helpers({
 	myLocation: function () {
 		// return 0, 0 if the location isn't ready
-		document.title = "Home";
 		Session.set('geoLocation', Geolocation.latLng());
 		return Geolocation.latLng() || { lat: 0, lng: 0 };
 	}
 })
 Template.splash.onRendered(function(){
+	document.title = "Home";
 	Session.set('past', false);
+	Session.set('currentPage', 'splash')
 })
 
 Template.splash.helpers({
