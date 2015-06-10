@@ -1,18 +1,26 @@
 <template name="eventTitle">
 	{{#if currentUser}}
-	<div class="container mainDiv">
-		<h3>Event Details</h3>
+	<div class="upper-bar">
+		<div class="title-format">
+			<a href="/"><img style="float:left" class="bar-icon" src="Delete-50.png"/></a>
+			<p class="page-title" style="vertical-align: middle"><b>New Class</b></p>
+			<!--<img style="float:right" class="bar-icon" src="Forward-50.png"/> next button removes need for this-->
+		</div>
+	</div>
+	<div class="mainDiv">
+		<p class="create-field create-text" style="margin-top: 20px"><b>Event Details</b></p>
 		<form class="new-event">
-            <div class="panel panel-default">
+            <div class="panel panel-default create-field" style="margin-top: -15px">
                 <div class="panel-body">
-                    <p class="entry-title">Event Name   </p><input class="entry-request detail-entry" type="text" name="eventName" placeholder="e.g Intro to Economics">
-                    <hr style="position:relative; width: 100%">
-                    <p class="entry-title">Description   </p>
+                    <p class="entry-title" style="font: sans-serif">Event Name   </p>
+                    <input class="entry-request detail-entry" type="text" name="eventName" placeholder="e.g Intro to Economics">
+                    <hr style="width: 100%">
+                    <p class="entry-title" style="font: sans-serif">Description   </p>
                     <input class="entry-request detail-entry" type="text" name="description" placeholder="Add more info..">
                 </div>
             </div>
             <br>
-			<button type="submit" class = "btn btn-lg btn-primary">Next</button>
+			<button type="submit" class="btn next-button create-field next-button-1st">Next</button>
 			<br>
 		</form>
 	</div>
@@ -23,12 +31,19 @@
 </template>
 
 <template name="eventDateAndTime">
-	<div class="container mainDiv">
-		<h3>Event Date and Time</h3>
+	<div class="upper-bar">
+		<div class="title-format">
+			<a href="/"><img style="float:left" class="bar-icon" src="Delete-50.png"/></a>
+			<p class="page-title" style="vertical-align: middle"><b>New Class</b></p>
+			<!--<img style="float:right" class="bar-icon" src="Forward-50.png"/> next button removes need for this-->
+		</div>
+	</div>
+	<div class="mainDiv">
+		<p class="create-field create-text" style="top: 20px"><b>Event Date and Time</b></p>
 		<form class="new-event">
-			<div class="panel panel-event panel-default">
+			<div class="panel panel-event panel-default create-field" style="top: -15px">
                 <div class="panel-body">
-                   	<p class="entry-title">Date   </p>
+                   	<p class="entry-title" style="font: sans-serif">Date   </p>
                    	<div class="entry-request">
 						<input class="newcol-xs-offset-3 newcol-xs-3" size="3" type="text" name="month" placeholder="M">
 						<input class="newcol-xs-3" size="3" type="text" name="date" placeholder="D">
@@ -36,7 +51,7 @@
 					</div>
 					<hr style="position:relative; width: 100%">
 
-					<p class="entry-title">Start Time   </p>
+					<p class="entry-title" style="font: sans-serif">Start Time   </p>
 					<div class="entry-request">
 						<input class="newcol-xs-offset-3 newcol-xs-3" size="1" type="text" name="startHour" placeholder="3">
 						<input class="newcol-xs-3" size="2" type="text" name="startMinute" placeholder="30">
@@ -47,7 +62,7 @@
 					</div>
 					<hr style="position:relative; width: 100%">
 
-					<p class="entry-title">End Time   </p>
+					<p class="entry-title" style="font: sans-serif">End Time   </p>
 					<div class="entry-request">
 						<input class="newcol-xs-offset-3 newcol-xs-3" size="1" type="text" name="endHour" placeholder="3">
 						<input class="newcol-xs-3" size="2" type="text" name="endMinute" placeholder="30">
@@ -59,38 +74,45 @@
                 </div>
             </div>
 			<br>
-			<button type="submit" class = "btn btn-lg btn-primary">Next</button>
+			<button type="submit" class="btn next-button create-field next-button-1st">Next</button>
 		</form>
 	</div>
 	{{>checkNavigation}}
 </template>
 
 <template name="eventLocation">
-		<div id="map-canvas" class="map-container"></div>
+	<div class="upper-bar">
+		<div class="title-format">
+			<a href="/"><img style="float:left" class="bar-icon" src="Delete-50.png"/></a>
+			<p class="page-title" style="vertical-align: middle"><b>New Class</b></p>
+			<!--<img style="float:right" class="bar-icon" src="Forward-50.png"/> next button removes need for this-->
+		</div>
+	</div>
+	<div id="map-canvas" class="map-container"></div>
 
-		<form class="new-event">
+	<form class="new-event">
 
-			<div class="panel panel-eventLocation panel-default">
-                <div class="panel-body building-panel">
-                	<p class="entry-title col-xs-6">Building & Room  </p>
-                	<input class="entry-request" type="text" style="width: 50%" name="eventPlace" placeholder="e.g (Woolsey Hall)">
+		<div class="panel panel-eventLocation panel-default">
+            <div class="panel-body building-panel">
+            	<p class="entry-title col-xs-6">Building & Room  </p>
+            	<input class="entry-request" type="text" style="width: 50%" name="eventPlace" placeholder="e.g (Woolsey Hall)">
 
-				</div>
-				<div class="divider"></div>
-				<div class="panel-body">
-                	<p class="entry-title col-xs-6">Address</p>
-                	<input disabled class="entry-request" type="text" style="width: 50%" placeholder={{address}} >
-				</div>
 			</div>
-			
-			<div class="development hidden">
-				<p>Development only (invisible in shipped version):</p>
-                   	<input style="width: 40%" class="latlng" name = "latFld" type="text" id="latFld">
-					<input style="width: 40%" class="latlng" name = "lngFld" type="text" id="lngFld">
+			<div class="divider"></div>
+			<div class="panel-body">
+            	<p class="entry-title col-xs-6">Address</p>
+            	<input disabled class="entry-request" type="text" style="width: 50%" placeholder={{address}} >
 			</div>
-			
-			<button type="submit" class = "create-button">CREATE</button>
+		</div>
+		
+		<div class="development hidden">
+			<p>Development only (invisible in shipped version):</p>
+               	<input style="width: 40%" class="latlng" name = "latFld" type="text" id="latFld">
+				<input style="width: 40%" class="latlng" name = "lngFld" type="text" id="lngFld">
+		</div>
+		
+		<button type="submit" class = "create-button">CREATE</button>
 
-		</form>
-		{{>checkNavigation}}
+	</form>
+	{{>checkNavigation}}
 </template>
