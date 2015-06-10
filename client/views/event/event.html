@@ -1,79 +1,49 @@
 <!-- View Event Page -->
 <template name = "event">
-    <!-- Page Content -->
-<div class="total">
-    <div class="container mainDiv" style="padding-bottom: 0px">
-        <div  class="event-title-bar">
-            <div id="container-profile">
-                <div id='cover_container' style="background-color: #191970">
-                    <div class="col-xs-offset-4 col-xs-8">
-                        <h3 id="event-name">
-                            Current Event: 
-                            {{currentEvent.name}}
-                        </h3>
-                    </div>
-                    <div id='info_box'>
-                        <div id="event_img">Image will go here<!--image with class='avatar_img'/>--></div>
-                        <div id="info-box">
-                            <div id="info-name">
-                                Event Type<!--Event Type goes here-->
-                            </div>
-                        </div>
-                        <div style='clear:both'></div>
-                    </div>
-                </div>
+
+    <div class="upper-bar">
+        <img id="back" src="back.png">
+        <img id="more" src="more.png">
+        <h3>{{currentEvent.name}}</h3>
+        
+    </div>
+<br>
+    <div class="panel panel-default event-hostinfo">
+        <div class="panel-body">
+            <img src="man.png"> 
+            <div class='panel-text'>
+                <p>{{currentEvent.host_info.name}}</p>
+                <p>{{currentEvent.host_info.organization}}</p>
             </div>
         </div>
     </div>
-    <br><br>
-        {{#if checkedIn}}
-    <div class="container mainDiv shiftdetails">
-        <div class="panel panel-default">
-            <div style="width: 100%" class="panel-body host-info">
-                <div>
-                    <p>Host name: {{currentEvent.host_info.name}}</p>
-                    <p>Host organization: {{currentEvent.host_info.organization}}</p>
-                </div>
+    <div class="panel panel-default event-date">
+        <div class="panel-body">
+            <img src="time.png">
+            <div class='panel-text'>
+                <p>{{currentEvent.dateParsed}}</p>
             </div>
         </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Attendees</h3>
-            </div>
-            <div class="panel-body">
-                <div>
-                    {{#each attendees}}
-                       <li>{{this}}</li>
-                    {{/each}}
-                </div>
-            </div>
-        </div>
-
-         <div>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <p>{{currentEvent.dateParsed}}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div>
-                    <p>{{currentEvent.description}}</p>
-                </div>
-                <hr>
-                <p> Learn More <!--link elsewhere--></p>
-            </div>
-        </div>
-        <div id="map-canvas" class="container"></div>
     </div>
-    {{else}}
-    <div class="event-container"></div>
-    <button class='checkIn btn'><b>Check In</b></button>
-    {{/if}}
-</div>
+    <div class="panel panel-default">
+        <div class="panel-body event-description">
+                {{currentEvent.description}}
+            <hr>
+            <p class="learn-more">Learn More</p>
+        </div>
+    </div>
+    <div id="map-canvas" class="map-event map-container"></div>
 
+    <div class="panel panel-default event-place">
+        <div class="panel-body">
+            <img src="venue.png">
+            <div class='panel-text'>
+                <p>{{currentEvent.place}}</p>
+                 <p>{{address}}</p>
+            </div>
+        </div>
+    </div>
+    <button  class = "remove-button">REMOVE</button>
 
 </template>
+

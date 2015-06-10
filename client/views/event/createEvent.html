@@ -1,4 +1,5 @@
 <template name="eventTitle">
+	{{#if currentUser}}
 	<div class="container mainDiv">
 		<h3>Event Details</h3>
 		<form class="new-event">
@@ -16,6 +17,9 @@
 		</form>
 	</div>
 	{{>checkNavigation}}
+	{{else}}
+	{{>signin}}
+	{{/if}}
 </template>
 
 <template name="eventDateAndTime">

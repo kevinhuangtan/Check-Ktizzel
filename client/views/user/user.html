@@ -1,13 +1,8 @@
 <template name = "splash">
-	<div style="top: 12px">
+
 		{{#if currentUser}}
-		<form>
-			<input type="text" name="eventSearch" placeholder="Search..." style="text-align: center;
-			float: right; width: 25%; position: relative; top: 2px">
-		</form>
 
 		<p class="hidden">{{myLocation}}</p>
-
 		<div class="upper-bar">
 			<!-- upcoming/past -->
 			{{#if past}}
@@ -62,46 +57,9 @@
        		</div>
  		</div> -->
  		{{else}}
+ 			{{>signin}}
  		{{/if}}
- 		{{>navigation}}
- 	</div>
-</template>
-
-<template name="navigation">
-	{{#if currentUser}}
-	<div class="navigation-bar">
-	<ul>
-		<li>
-			<img src="check.png"/>
-			<a href="/createEvent">
-				<p>Create</p>
-			</a>
-		</li>
-		<li>
-			<img src="recent.png"/>
-			<a href="/">
-				<p>Recent</p>
-			</a>
-		</li>
-		<li>
-			<img src="profile.png"/>
-			<a href="/profile">
-				<p>Profile</p>
-			</a>
-		</li>
-		<li>
-			<img src="more.png"/>
-			<a href="/">
-				<p>More</p>
-			</a>
-		</li>
-	</ul>
-    </div>
-       {{>checkNavigation}}
-
-       {{else}}
-			{{>signin}}
-		{{/if}} 
+ 		{{>checkNavigation}}
 </template>
 
 
