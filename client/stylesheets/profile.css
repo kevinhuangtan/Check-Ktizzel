@@ -1,3 +1,18 @@
+.update-btn{
+  font-size: 1.7em;
+  position:absolute;
+  width:90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  height:1.8em;
+  bottom: 3.5em;
+  background-color: rgba(208,2,27,.85);
+  border: none;
+  color:white;
+  font-family: HelveticaNeue-Light; 
+  letter-spacing: .2em;
+  font-weight: 450;
+}
 .edit{
   font-size: 1.7em;
   position:absolute;
@@ -14,12 +29,10 @@
   font-weight: 450;
 }
 .edit{
-    outline: 0;
+  outline: 0;
 }
-
-.info-list{
-  margin-top: 2px;
-  margin-bottom: 2px;
+.update-btn{
+    outline: 0;
 }
 
 .profile-info-img{
@@ -28,6 +41,20 @@
 }
 
 .info-panel-text{
-  display: inline-block;
   margin-left: 2em;
+}
+
+.profile-font{
+  font: sans-serif;
+  font-size: 15px;
+}
+
+.profile-font p{
+  font: sans-serif;
+  font-size: 15px;
+}
+
+.profile-font input{
+  font: sans-serif;
+  font-size: 15px;
 }

@@ -8,68 +8,65 @@
 		    </div>
 			<div class="panel panel-default">
                 <div class="panel-body">
-					<p class="entry-title">Name   </p>
-					<input class="entry-request detail-entry" type="text" name="name" placeholder="Name" value={{name}}>
-        				<hr style="position:relative; width: 100%">
-					<p class="entry-title">Gender   </p>
-					<input class="entry-request detail-entry" type="text" name="gender" placeholder="Fender" value={{gender}}>
-        				<hr style="position:relative; width: 100%">
-					<p style="float:left">Email:</p><p style="float:right"> {{email}}</p>
-        				<hr style="position:relative; width: 100%">
-					<p class="entry-title">Phone   </p>
-					<input class="entry-request detail-entry" type="text" name="phone" placeholder="Phone" value={{phone}}>
-        				<hr style="position:relative; width: 100%">
-					<p class="entry-title">Ethnicity   </p>
-					<input class="entry-request detail-entry" type="text" name="ethnicity" placeholder="Ethnicity" value={{ethnicity}}>
-        				<hr style="position:relative; width: 100%">
-					<p class="entry-title">Organization   </p>
-					<input class="entry-request detail-entry" type="text" name="organization" placeholder="Organization" value={{organization}}>
+		        	<div class="profile-info-img">
+			            <img src="man.png">
+		            </div>
+		            <div class="info-panel-text profile-font">
+						<p class="entry-title">Name   </p>
+						<input class="entry-request detail-entry" type="text" name="name" placeholder="Name" value={{name}}>
+	        				<hr style="position:relative; width: 100%">
+						<p class="entry-title">Gender   </p>
+						<input class="entry-request detail-entry" type="text" name="gender" placeholder="Fender" value={{gender}}>
+	        				<hr style="position:relative; width: 100%">
+						<p style="float:left">Email</p><p style="float:right"> {{email}}</p>
+	        				<hr style="position:relative; width: 100%">
+						<p class="entry-title">Phone   </p>
+						<input class="entry-request detail-entry" type="text" name="phone" placeholder="Phone" value={{phone}}>
+	        				<hr style="position:relative; width: 100%">
+						<p class="entry-title">Ethnicity   </p>
+						<input class="entry-request detail-entry" type="text" name="ethnicity" placeholder="Ethnicity" value={{ethnicity}}>
+	        				<hr style="position:relative; width: 100%">
+						<p class="entry-title">Organization   </p>
+						<input class="entry-request detail-entry" type="text" name="organization" placeholder="Organization" value={{organization}}>
+					</div>
 				</div>
 			</div>
-			<button type="submit" class="update btn next-button create-field next-button-1st">Update Profile</button>
+			<button type="submit" class="btn update update-btn">Update Profile</button>
 		</form>
 		{{else}}
 		<form class="profile-form">
-			    <div class="upper-bar">
-			        <img id="back" src="back.png">
-			        <img id="more" src="more.png">
-			        <h3>{{name}}</h3>			        
-			    </div>
-			<!--<div class="row ">
-	            <div  class="col-xs-12 event-title-bar">
-	                <div id="container-profile">
-	                    <div id='cover_container' style="background-color: #191970">
-	                        <div class="col-xs-offset-6 col-xs-6">
-	                            <h3 id="profile-name"> 
-	                            	{{name}}
-	                            </h3>
-	                        </div>
-	                        <div id='info_box'>
-	                            <div id="profile_img">Image will go here: image with class='avatar_img'/></div>
-	                            <div style='clear:both'></div>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>-->
-			<br><br>
+		    <div class="upper-bar">
+		        <img id="back" src="back.png">
+		        <h3>{{name}}</h3>			        
+		    </div>
 		    <div class="panel panel-default">
 		        <div class="panel-body">
 		        	<div class="profile-info-img">
 			            <img src="man.png">
 		            </div> 
-		            <div class='info-panel-text'>
-		                <p>Name: {{name}}</p>
-		                <hr class="info-list">
-		                <p>Gender: {{gender}}</p>
-		                <hr class="info-list">
-		                <p>Email: {{email}}</p>
-		                <hr class="info-list">
-		                <p>Phone: {{phone}}</p>
-		                <hr class="info-list">
-		                <p>Ethnicity: {{ethnicity}}</p>
-		                <hr class="info-list">
-		                <p>Organization {{organization}}</p>
+		            <div class="info-panel-text profile-font">
+		                <p class="entry-title">Name </p>
+		                <p class="entry-request detail-entry">{{name}}</p>
+		                <hr style="position:relative; width: 100%">
+
+		                <p class="entry-title">Gender </p>
+		                <p class="entry-request detail-entry">{{gender}}</p>
+		                <hr style="position:relative; width: 100%">
+
+		                <p class="entry-title">Email </p>
+		                <p class="entry-request detail-entry">{{email}}</p>
+		                <hr style="position:relative; width: 100%">
+
+		                <p class="entry-title">Phone </p>
+		                <p class="entry-request detail-entry">{{phone}}</p>
+		                <hr style="position:relative; width: 100%">
+
+		                <p class="entry-title">Ethnicity </p>
+		                <p class="entry-request detail-entry">{{ethnicity}}</p>
+		                <hr style="position:relative; width: 100%">
+
+		                <p class="entry-title">Organization </p>
+		                <p class="entry-request detail-entry">{{organization}}</p>
 		            </div>
 		        </div>
 		    </div>
