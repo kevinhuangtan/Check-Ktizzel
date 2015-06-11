@@ -67,6 +67,9 @@ Template.event.events({
 	},
 	'click .learn-more' : function(){
 
+	},
+	'click #back':function(){
+		Router.go('splash')
 	}
 })
 
