@@ -22,6 +22,8 @@ MONTH[9] = "OCT"
 MONTH[10] = "NOV"
 MONTH[11] = "DEC"
 
+
+
 Template.eventTitle.onRendered(function(){
 	document.title = "Create Event"
 	Session.set('currentPage', 'createEvent')
@@ -121,7 +123,7 @@ Template.eventLocation.events({
 	'submit form': function(event){
 		event.preventDefault()
 		var eventPlace = event.target.eventPlace.value;
-		var location = {lat: Number(event.target.latFld.value), lng: Number(event.target.lngFld.value)}
+		var location = Session.get('createEventLocation');
 		var eventSession = Session.get('eventSession')
 		var id = checkEvents.insert({
 			name: eventSession['name'],
@@ -138,7 +140,7 @@ Template.eventLocation.events({
 		Session.set("currentEvent", id);
 		Router.go('event');
 	},
-	'click #map-canvas':function(event){
+	'click .map-container':function(event){
 		event.preventDefault()
 		var lat = Number(document.getElementById("latFld").value)
 		var lng = Number(document.getElementById("lngFld").value)
@@ -166,55 +168,109 @@ Template.eventLocation.events({
 	}
 });
 
-Template.eventLocation.onRendered(function(){
-	Session.set('address', "Locate On Map")
-	var map;
-    var markersArray = [];
-    var geoLocation = Session.get('geoLocation') || { lat: 40.7, lng: -74 };
-	function initialize() {
-        var mapCanvas = document.getElementById('map-canvas');
-        var mapOptions = {
+// Template.eventLocation.onRendered(function(){
+// 	Session.set('address', "Locate On Map")
+// 	var map;
+//     var markersArray = [];
+//     var geoLocation = Session.get('geoLocation') || { lat: 40.7, lng: -74 };
+// 	function initialize() {
+//         var mapCanvas = document.getElementById('map-canvas');
+//         var mapOptions = {
+//           center: new google.maps.LatLng(geoLocation.lat,geoLocation.lng),
+//           zoom: 15,
+//           mapTypeId: google.maps.MapTypeId.ROADMAP,
+//            disableDefaultUI: true,
+//         }
+//         map = new google.maps.Map(mapCanvas, mapOptions)
+//     	google.maps.event.addListener(map, "click", function(event)
+//         {
+//             // place a marker
+//             placeMarker(event.latLng);
+
+//             // display the lat/lng in your form's lat/lng fields
+//             document.getElementById("latFld").value = event.latLng.lat();
+//             document.getElementById("lngFld").value = event.latLng.lng();
+//         });
+// 	}
+
+//     function placeMarker(location) {
+//         // first remove all markers if there are any
+//         deleteOverlays();
+
+//         var marker = new google.maps.Marker({
+//             position: location, 
+//             map: map
+//         });
+
+//         // add marker in markers array
+//         markersArray.push(marker);
+//     }
+
+//     // Deletes all markers in the array by removing references to them
+//     function deleteOverlays() {
+//         if (markersArray) {
+//             for (i in markersArray) {
+//                 markersArray[i].setMap(null);
+//             }
+//         markersArray.length = 0;
+//         }
+//     }
+//     initialize();
+// });
+
+if (Meteor.isClient) {
+  Meteor.startup(function() {
+    GoogleMaps.load();
+  });
+
+  Template.eventLocation.helpers({
+    exampleMapOptions: function() {
+      // Make sure the maps API has loaded
+      if (GoogleMaps.loaded()) {
+        // Map initialization options
+        geoLocation = Session.get('geoLocation') || {lat: 0, lng: 0};
+
+        return {
+          // center: new google.maps.LatLng(-37.8136, 144.9631),
           center: new google.maps.LatLng(geoLocation.lat,geoLocation.lng),
           zoom: 15,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
-           disableDefaultUI: true,
-        }
-        map = new google.maps.Map(mapCanvas, mapOptions)
-    	google.maps.event.addListener(map, "click", function(event)
-        {
-            // place a marker
-            placeMarker(event.latLng);
-
-            // display the lat/lng in your form's lat/lng fields
-            document.getElementById("latFld").value = event.latLng.lat();
-            document.getElementById("lngFld").value = event.latLng.lng();
-        });
-	}
-
-    function placeMarker(location) {
-        // first remove all markers if there are any
-        deleteOverlays();
-
-        var marker = new google.maps.Marker({
-            position: location, 
-            map: map
-        });
-
-        // add marker in markers array
-        markersArray.push(marker);
+          disableDefaultUI: true,
+        };
+      }
+    },
+    devGeolocation:function(){
+      return Session.get('devGeolocation');
     }
+  });
+  Template.eventLocation.onRendered(function(){
+      var location = Session.get('geoLocation');
+      Session.set('devGeolocation', location)
+  })
 
-    // Deletes all markers in the array by removing references to them
-    function deleteOverlays() {
-        if (markersArray) {
-            for (i in markersArray) {
-                markersArray[i].setMap(null);
-            }
-        markersArray.length = 0;
-        }
-    }
-    initialize();
-});
+  Template.eventLocation.onCreated(function() {
+    // We can use the `ready` callback to interact with the map API once the map is ready.
+    GoogleMaps.ready('exampleMap', function(map) {
+      // Add a marker to the map once it's ready
+      var marker = new google.maps.Marker({
+        position: map.options.center,
+        map: map.instance
+      });
+      // Session.set('currentMarker', marker);
+
+      google.maps.event.addListener(map.instance, 'click', function(event) {
+      	document.getElementById("latFld").value = event.latLng.lat();
+        document.getElementById("lngFld").value = event.latLng.lng();
+        Session.set('createEventLocation', { lat: event.latLng.lat(), lng: event.latLng.lng() })
+        marker.setMap(null);
+        marker = new google.maps.Marker({
+          position: { lat: event.latLng.lat(), lng: event.latLng.lng() },
+          map: map.instance
+        });
+      });
+    });
+  });
+}
 
 Template.eventLocation.helpers({
 	address: function(){

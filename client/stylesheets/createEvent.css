@@ -129,6 +129,9 @@
 	color: #575757;
 	line-height: 2em;
 }
+.next-button:focus{
+	outline:none!important;
+}
 
 .next-button-1st{
 	top: -20px;

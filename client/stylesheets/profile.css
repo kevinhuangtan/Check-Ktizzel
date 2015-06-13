@@ -10,7 +10,6 @@
   border: none;
   color:white;
   font-family: HelveticaNeue-Light; 
-  letter-spacing: .2em;
   font-weight: 450;
 }
 .update-btn:focus{
@@ -35,19 +34,10 @@
   outline: 0;
 }
 
-
-.profile-info-img{
-  position: absolute;
-  width: .9em
-}
-
-.info-panel-text{
-  margin-left: 2em;
-}
-
-.profile-font{
-  font: sans-serif;
-  font-size: 15px;
+.profile-form .panel{
+  width: 95%;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
 }
 
 .profile-font p{

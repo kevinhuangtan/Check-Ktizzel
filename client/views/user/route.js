@@ -7,5 +7,6 @@ Router.map(function() {
 	this.route("checkIn", {path: '/checkIn'});
 	this.route("scrollEvents", {path: '/scrollEvents'});
 	this.route("profile", {path: '/profile'});
+	this.route("mapDemo", {path: '/mapdemo'});
 
 });

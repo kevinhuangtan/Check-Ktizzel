@@ -1,3 +1,26 @@
+
+Template.event.onRendered(function(){
+	var result = checkEvents.findOne({_id: Session.get("currentEvent")})
+	var map;
+    var geoLocation = result.geoLocation || { lat: 40.7, lng: -74 };
+    Session.set('eventLocation', geoLocation);
+    var mapCanvas = document.getElementById('map-canvas');
+   
+    var mapOptions = {
+      center: new google.maps.LatLng(geoLocation.lat,geoLocation.lng),
+      zoom: 14,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      disableDefaultUI: true
+    }
+    map = new google.maps.Map(mapCanvas, mapOptions)
+	var marker = new google.maps.Marker({
+	  position: geoLocation,
+	  map: map,
+	  title: result.name
+	});
+});
+
+
 Template.event.helpers({
 	currentEvent : function(){
 		var id = Session.get("currentEvent")
@@ -72,26 +95,5 @@ Template.event.events({
 		Router.go('splash')
 	}
 })
-
-Template.event.onRendered(function(){
-	var result = checkEvents.findOne({_id: Session.get("currentEvent")})
-	var map;
-    var geoLocation = result.geoLocation || { lat: 40.7, lng: -74 };
-    Session.set('eventLocation', geoLocation);
-    var mapCanvas = document.getElementById('map-canvas');
-   
-    var mapOptions = {
-      center: new google.maps.LatLng(geoLocation.lat,geoLocation.lng),
-      zoom: 14,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      disableDefaultUI: true
-    }
-    map = new google.maps.Map(mapCanvas, mapOptions)
-	var marker = new google.maps.Marker({
-	  position: geoLocation,
-	  map: map,
-	  title: result.name
-	});
-});
 
 

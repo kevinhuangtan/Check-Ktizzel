@@ -1,0 +1,8 @@
+<template name="mapDemo">
+	<div class="status-bar"></div>
+<!-- 	<p class="development">{{devGeolocation.lat}}</p> -->
+  <div class="map-container">
+    {{> googleMap name="exampleMap" options=exampleMapOptions}}
+  </div>
+  {{>checkNavigation}}
+</template>
