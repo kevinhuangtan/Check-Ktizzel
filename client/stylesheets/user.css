@@ -35,10 +35,10 @@
 }
 .upcoming-past li{
   margin: 0;
-  font-size: 10px;
-   vertical-align: middle;
-  font-weight: 200;
-  line-height: 2em;
+  font-size: .7em;
+  vertical-align: middle;
+/*  font-weight: 200;*/
+/*  line-height: 2.3em;*/
 }
 
 .underline {
@@ -63,11 +63,14 @@
   border-radius: 0;
 }
 .panel-user ul{
-  padding-left: 10px;
+  padding-left: .5em;
   margin-bottom: 0;
 }
 .panel-user .distance{
   float:right
+}
+.event-name{
+  font-weight: 600;
 }
 .not-hover{
   background-color: #929292

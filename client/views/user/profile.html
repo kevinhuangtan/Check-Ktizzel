@@ -1,11 +1,10 @@
 <template name = "profile">
-	<div class="mainDiv">
         {{#if editme}}
+   		<div class="upper-bar">
+	        <img id="back" src="back.png">
+	        <p>My Profile</p>			        
+	    </div>
 		<form class="profile-form">
-			<div class="upper-bar">
-		        <img id="back" src="back.png">
-		        <h3>My Profile</h3>			        
-		    </div>
 			<div class="panel panel-default">
                 <div class="panel-body">
 		        	<div class="profile-info-img">
@@ -31,14 +30,14 @@
 					</div>
 				</div>
 			</div>
-			<button type="submit" class="btn update update-btn">Update Profile</button>
+			<button type="submit" class="update-btn">Update Profile</button>
 		</form>
 		{{else}}
+	    <div class="upper-bar">
+	        <img id="back" src="back.png">
+	        <p>{{name}}</p>			        
+	    </div>
 		<form class="profile-form">
-		    <div class="upper-bar">
-		        <img id="back" src="back.png">
-		        <h3>{{name}}</h3>			        
-		    </div>
 		    <div class="panel panel-default">
 		        <div class="panel-body">
 		        	<div class="profile-info-img">
@@ -71,10 +70,9 @@
 		        </div>
 		    </div>
         </form>	
-    	<button  class = "edit">EDIT</button>
+    	<button  class = "edit-btn">EDIT</button>
 		{{/if}}
 
 
-	</div>
 	{{>checkNavigation}}
 </template>

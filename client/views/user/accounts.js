@@ -10,18 +10,13 @@ checkPasswordIsValid = function (aString) {
 
 
 
-Template.splash.helpers({
+Template.signin.helpers({
 	accounts_error: function(){
 		document.title = "Welcome";
 		return Session.get('error') || ""
 	}
 });
-
-Template.splash.events({
-	'click .event-li': function(event){
-		Session.set("currentEvent", this._id);
-		Router.go('event');
-	},
+Template.signin.events({
 	'submit .signin': function(event){
 		event.preventDefault()
 		var user = {'email':event.target.email.value, 'password' :event.target.password.value}
@@ -48,4 +43,5 @@ Template.splash.events({
 		});
 
 	}
-});
+})
+

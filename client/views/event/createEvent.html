@@ -1,14 +1,14 @@
 <template name="eventTitle">
 	{{#if currentUser}}
 	<div class="upper-bar">
-		<div class="title-format">
-			<a href="/"><img style="float:left" class="bar-icon" src="Delete-50.png"/></a>
-			<p class="page-title" style="vertical-align: middle"><b>New Event</b></p>
+			<img id="delete" src="Delete-50.png"/>
+			<img id="next" src="next.png"/>
+			<p class="page-title">New Event</p>
+
 			<!--<img style="float:right" class="bar-icon" src="Forward-50.png"/> next button removes need for this-->
-		</div>
 	</div>
 	<div class="mainDiv">
-		<p class="create-field create-text" style="margin-top: 20px"><b>Event Details</b></p>
+
 		<form class="new-event">
             <div class="panel panel-default create-field" style="margin-top: -15px">
                 <div class="panel-body">
@@ -32,14 +32,11 @@
 
 <template name="eventDateAndTime">
 	<div class="upper-bar">
-		<div class="title-format">
-			<a href="/"><img style="float:left" class="bar-icon" src="Delete-50.png"/></a>
-			<p class="page-title" style="vertical-align: middle"><b>New Event</b></p>
-			<!--<img style="float:right" class="bar-icon" src="Forward-50.png"/> next button removes need for this-->
-		</div>
+			<img id="back" src="back.png"/>
+			<img id="next" src="next.png"/>
+			<p class="page-title" >Date & Time</p>
 	</div>
 	<div class="mainDiv">
-		<p class="create-field create-text" style="top: 20px"><b>Event Date and Time</b></p>
 		<form class="new-event">
 			<div class="panel panel-event panel-default create-field" style="top: -15px">
                 <div class="panel-body">
@@ -82,11 +79,8 @@
 
 <template name="eventLocation">
 	<div class="upper-bar">
-		<div class="title-format">
-			<a href="/"><img style="float:left" class="bar-icon" src="Delete-50.png"/></a>
-			<p class="page-title" style="vertical-align: middle"><b>New Event</b></p>
-			<!--<img style="float:right" class="bar-icon" src="Forward-50.png"/> next button removes need for this-->
-		</div>
+			<img id="back" src="back.png"/>
+			<p class="page-title" >Location</p>
 	</div>
 	<div id="map-canvas" class="map-container"></div>
 

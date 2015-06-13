@@ -59,7 +59,14 @@ Template.eventTitle.events({
 		var eventSession = {'name': eventName, 'host': Meteor.userId(), 'host_info':eventHost, 'attending': attending, 'description': eventDescription}
 		Session.set('eventSession', eventSession)
 		Router.go('eventDateAndTime');
+	},
+	'click #delete':function(){
+		Router.go('splash')
+	},
+	'click #next':function(){
+		Router.go('eventDateAndTime')
 	}
+
 });
 Template.eventDateAndTime.events({
 	'submit form': function(event){
@@ -101,6 +108,13 @@ Template.eventDateAndTime.events({
 		eventSession['endDate'] = endDate;
 		Session.set('eventSession', eventSession)
 		Router.go('eventLocation');
+	},
+	'click #back':function(){
+		Router.go('eventTitle')
+	}
+	,
+	'click #next':function(){
+		Router.go('eventLocation')
 	}
 });
 Template.eventLocation.events({
@@ -146,6 +160,9 @@ Template.eventLocation.events({
 		
 		Session.set('address', result)
 
+	},
+	'click #back':function(){
+		Router.go('eventDateAndTime')
 	}
 });
 

@@ -6,14 +6,18 @@
   margin-right: 5%;
   height:1.8em;
   bottom: 3.5em;
-  background-color: rgba(208,2,27,.85);
+ background-color: rgba(245,166,35,.85);
   border: none;
   color:white;
   font-family: HelveticaNeue-Light; 
   letter-spacing: .2em;
   font-weight: 450;
 }
-.edit{
+.update-btn:focus{
+  outline:none
+}
+
+.edit-btn{
   font-size: 1.7em;
   position:absolute;
   width:90%;
@@ -21,19 +25,16 @@
   margin-right: 5%;
   height:1.8em;
   bottom: 3.5em;
-  background-color: rgba(208,2,27,.85);
+  background-color: rgba(245,166,35,.85);
   border: none;
   color:white;
   font-family: HelveticaNeue-Light; 
-  letter-spacing: .2em;
   font-weight: 450;
 }
-.edit{
+.edit-btn{
   outline: 0;
 }
-.update-btn{
-    outline: 0;
-}
+
 
 .profile-info-img{
   position: absolute;

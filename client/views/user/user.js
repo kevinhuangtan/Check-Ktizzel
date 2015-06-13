@@ -19,6 +19,9 @@ if (typeof(Number.prototype.toRad) === "undefined") {
   }
 }
 
+var colors = ['#003169', '#D0021B', '#F5A623','#50E3C2', '#003169', '#B8E986']
+var colorIndex = 0;
+
 var closeByDistance = 3 //miles
 var eventYoureAtDistance = .1 //miles
 ////////
@@ -45,7 +48,20 @@ Template.splash.helpers({
 	eventYoureAt : function(){
 		return Session.get('eventYoureAt')
 	},
+	borderColor:function(){
+		console.log(colorIndex)
+		var color = colors[colorIndex]
+		if(colorIndex < colors.length - 1){
+			colorIndex = colorIndex + 1
+		}
+		else{
+			colorIndex = 0
+		}
+			
+		return color
+	},
 	past: function(){
+		colorIndex = 0
 		return Session.get('past')
 	},
 	// MON, MAR 9, 9:00AM - 11:15AM
@@ -122,9 +138,11 @@ Template.splash.events({
 		Router.go('event');
 	},
 	'click .upcoming' : function(event){
+		colorIndex = 0
 		Session.set('past', false)
 	},
 	'click .past' : function(event){
+		colorIndex = 0
 		Session.set('past', true)
 	},
 
