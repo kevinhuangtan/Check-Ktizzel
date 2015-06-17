@@ -34,7 +34,10 @@ Meteor.subscribe("events");
 Template.splash.helpers({
 	myLocation: function () {
 		// return 0, 0 if the location isn't ready
-		Session.set('geoLocation', Geolocation.latLng());
+		if(Geolocation.latLng()){
+			Session.set('geoLocation', Geolocation.latLng());
+		}
+		console.log(Geolocation.latLng())
 		return Geolocation.latLng() || { lat: 0, lng: 0 };
 	}
 })
