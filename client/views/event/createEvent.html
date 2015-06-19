@@ -141,7 +141,9 @@
 			<p class="page-title" >Location</p>
 	</div>
 	<div class="map-container">
-    {{> googleMap name="exampleMap" options=exampleMapOptions}}
+		<!--<div id="map-canvas">-->
+		    {{> googleMap name="exampleMap" options=exampleMapOptions}}
+		<!--</div>-->
   	</div>
 
 	<form class="new-event">
@@ -149,13 +151,14 @@
 		<div class="panel panel-eventLocation panel-default">
             <div class="panel-body building-panel">
             	<p class="entry-title col-xs-6">Building & Room  </p>
-            	<input class="entry-request" type="text" style="width: 50%" name="eventPlace" placeholder="e.g (Woolsey Hall)">
-
+            	<div id="locationField">
+	            	<input class="entry-request" id='autocomplete' type="text" style="width: 50%" name="eventPlace" placeholder="e.g (Woolsey Hall)">
+	            </div>
 			</div>
 			<div class="divider"></div>
 			<div class="panel-body">
             	<p class="entry-title col-xs-6">Address</p>
-            	<input disabled class="entry-request" type="text" style="width: 50%" placeholder={{address}} >
+	            <input disabled class="entry-request" type="text" style="width: 50%" placeholder={{address}} >
 			</div>
 		</div>
 		
