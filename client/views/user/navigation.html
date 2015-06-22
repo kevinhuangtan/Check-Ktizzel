@@ -20,16 +20,20 @@
 				{{else}}
 					<img src="recent.png"/>
 				{{/if}}
-				<p>Recent</p>
+				<p>Event List</p>
 
 			</li>
 		</a>
 		
-					<a href="/">
-			<li>
-				<img src="switch.png"/>
+		
+		<li class='userMode'>
+				{{#if attendee}}
+					<p>Using as Attendee</p>
+				{{else}}
+					<p>Using as Host</p>
+				{{/if}}
+				
 		</li>	
-			</a>
 		
 		
 		<a href="/profile">

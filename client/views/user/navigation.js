@@ -8,6 +8,13 @@ Template.checkNavigation.helpers({
 	},
 	profile: function(){
 		return (Session.get('currentPage')=='profile')
+	},
+	attendee: function(){
+		// console.log(Session.get('userMode'))
+		if(!Session.get('userMode')){
+			Session.set('userMode', 'attendee')
+		}
+		return (Session.get('userMode')=='attendee')
 	}
 
 })
@@ -24,5 +31,15 @@ Template.checkNavigation.events({
 			}
 			
 		});
+	},
+	'click .userMode': function(event){
+		if(Session.get('userMode')=='attendee') {
+			Session.set('userMode', 'host')
+			Router.go('host')
+		}
+		else {
+			Session.set('userMode', 'attendee')
+			Router.go('splash')
+		}
 	}
 })

@@ -40,6 +40,13 @@ Template.eventLocation.onRendered(function(){
 
 
 Template.eventTitle.events({
+	myLocation: function () {
+		// return 0, 0 if the location isn't ready
+		if(Geolocation.latLng()){
+			Session.set('geoLocation', Geolocation.latLng());
+		}
+		return;
+	},
 	'submit form': function(event){
 		event.preventDefault()
 		var eventName = event.target.eventName.value;
@@ -70,6 +77,19 @@ Template.eventTitle.events({
 	}
 
 });
+Template.eventDateAndTime.helpers({
+	myLocation: function () {
+		// return 0, 0 if the location isn't ready
+		if(Geolocation.latLng()){
+			geoLocation = Geolocation.latLng()
+			Session.set('geoLocation', geoLocation);
+			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.geoLocation": geoLocation}});
+		}
+		// console.log(Geolocation.latLng())
+		return Geolocation.latLng() || { lat: 0, lng: 0 };
+	}
+})
+
 Template.eventDateAndTime.events({
 	'submit form': function(event){
 		var target = event.target
@@ -136,7 +156,16 @@ Template.eventLocation.events({
 			endDate: eventSession['endDate'],
 			place: eventPlace,
 			geoLocation: location
-		});			
+		});
+		var hostEvents = []
+		if(Meteor.user().profile.hostEvents){
+			hostEvents = Meteor.user().profile.hostEvents
+
+		}
+		hostEvents.push(id)
+
+		Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.hostEvents": hostEvents}});
+			
 		Session.set("currentEvent", id);
 		Router.go('event');
 	},
@@ -168,55 +197,6 @@ Template.eventLocation.events({
 	}
 });
 
-// Template.eventLocation.onRendered(function(){
-// 	Session.set('address', "Locate On Map")
-// 	var map;
-//     var markersArray = [];
-//     var geoLocation = Session.get('geoLocation') || { lat: 40.7, lng: -74 };
-// 	function initialize() {
-//         var mapCanvas = document.getElementById('map-canvas');
-//         var mapOptions = {
-//           center: new google.maps.LatLng(geoLocation.lat,geoLocation.lng),
-//           zoom: 15,
-//           mapTypeId: google.maps.MapTypeId.ROADMAP,
-//            disableDefaultUI: true,
-//         }
-//         map = new google.maps.Map(mapCanvas, mapOptions)
-//     	google.maps.event.addListener(map, "click", function(event)
-//         {
-//             // place a marker
-//             placeMarker(event.latLng);
-
-//             // display the lat/lng in your form's lat/lng fields
-//             document.getElementById("latFld").value = event.latLng.lat();
-//             document.getElementById("lngFld").value = event.latLng.lng();
-//         });
-// 	}
-
-//     function placeMarker(location) {
-//         // first remove all markers if there are any
-//         deleteOverlays();
-
-//         var marker = new google.maps.Marker({
-//             position: location, 
-//             map: map
-//         });
-
-//         // add marker in markers array
-//         markersArray.push(marker);
-//     }
-
-//     // Deletes all markers in the array by removing references to them
-//     function deleteOverlays() {
-//         if (markersArray) {
-//             for (i in markersArray) {
-//                 markersArray[i].setMap(null);
-//             }
-//         markersArray.length = 0;
-//         }
-//     }
-//     initialize();
-// });
 
 if (Meteor.isClient) {
   Meteor.startup(function() {
@@ -224,6 +204,16 @@ if (Meteor.isClient) {
   });
 
   Template.eventLocation.helpers({
+	myLocation: function () {
+		// return 0, 0 if the location isn't ready
+		if(Geolocation.latLng()){
+			geoLocation = Geolocation.latLng()
+			Session.set('geoLocation', geoLocation);
+			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.geoLocation": geoLocation}});
+		}
+		// console.log(Geolocation.latLng())
+		return Geolocation.latLng() || { lat: 0, lng: 0 };
+	},
     exampleMapOptions: function() {
       // Make sure the maps API has loaded
       if (GoogleMaps.loaded()) {
@@ -273,6 +263,7 @@ if (Meteor.isClient) {
 }
 
 Template.eventLocation.helpers({
+
 	address: function(){
 		return Session.get('address')
 

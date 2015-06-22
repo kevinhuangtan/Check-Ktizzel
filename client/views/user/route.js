@@ -1,5 +1,6 @@
 Router.map(function() {
 	this.route("splash", {path: '/'});
+	this.route("host", {path: '/host'});
 	this.route("event", {path: '/event'});
 	this.route("eventTitle", {path: '/createEvent'});
 	this.route("eventDateAndTime", {path: '/eventDateAndTime'});

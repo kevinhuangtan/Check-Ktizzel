@@ -1,5 +1,6 @@
 <template name="eventTitle">
 	{{#if currentUser}}
+	<p class="hidden">{{myLocation}}</p>
 	<div class="upper-bar">
 			<img id="delete" src="Delete-50.png"/>
 			<img id="next" src="next.png"/>
@@ -20,13 +21,13 @@
 			<button type="submit" class="btn next-button create-field next-button-1st">Next</button>
 			<br>
 		</form>
-	{{>checkNavigation}}
 	{{else}}
 	{{>signin}}
 	{{/if}}
 </template>
 
 <template name="eventDateAndTime">
+	<p class="hidden">{{myLocation}}</p>
 	<div class="upper-bar">
 			<img id="back" src="back.png"/>
 			<img id="next" src="next.png"/>
@@ -132,10 +133,10 @@
 			<br>
 			<button type="submit" class="btn next-button create-field next-button-1st">Next</button>
 		</form>
-	{{>checkNavigation}}
 </template>
 
 <template name="eventLocation">
+	<p class="hidden">{{myLocation}}</p>
 	<div class="upper-bar">
 			<img id="back" src="back.png"/>
 			<p class="page-title" >Location</p>
@@ -168,5 +169,4 @@
 		<button type="submit" class = "create-button">CREATE</button>
 
 	</form>
-	{{>checkNavigation}}
 </template>

@@ -1,32 +1,10 @@
-<template name = "splash">
+<template name = "host">
 
 		{{#if currentUser}}
 		<p class="hidden">{{myLocation}}</p>
-		<div class="upper-bar">
-			<!-- upcoming/past -->
-			{{#if past}}
-				<div class='upcoming-past'>
-					<div class="upcoming">
-						<li class="upcoming">Upcoming</li>
-					</div>
-					<div class="underline past">
-						<li class="past">Past</li>
-					</div>
-				</div>
-			{{else}}
-				<div class='upcoming-past'>
-					<div class="underline upcoming">
-						<li class="upcoming">Upcoming</li>
-					</div>
-					<div class="past">
-						<li class="past">Past</li>
-					</div>
-				</div>
-			{{/if}}
-		</div>
-
+		<div class="upper-bar"></div>
 		<div class="events-container">
-			{{#each nearbyEvents}}
+			{{#each myHostedEvents}}
 			<div class="panel panel-user panel-default" style="border-left-color: {{borderColor}}">
 	            <div class="panel-body">
 	                <li class="distance">{{distance}} mi</li>
@@ -39,6 +17,7 @@
 	        </div>
 			{{/each}}
        </div>     		
+
 
  		{{>checkNavigation}}
  		{{else}}

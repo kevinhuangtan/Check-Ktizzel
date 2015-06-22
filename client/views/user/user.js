@@ -27,20 +27,23 @@ var eventYoureAtDistance = .1 //miles
 ////////
 
 Meteor.subscribe("allUserData");
-Meteor.subscribe("events");
 
 
 // set for other views to access location
 Template.splash.helpers({
 	myLocation: function () {
-		// return 0, 0 if the location isn't ready
 		if(Geolocation.latLng()){
-			Session.set('geoLocation', Geolocation.latLng());
+			if(Geolocation.latLng()!=Meteor.user().profile.geoLocation){
+				Meteor.subscribe("events");
+				geoLocation = Geolocation.latLng()
+				Session.set('geoLocation', geoLocation);
+				Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.geoLocation": geoLocation}});
+			}
 		}
-		console.log(Geolocation.latLng())
-		return Geolocation.latLng() || { lat: 0, lng: 0 };
+		return Geolocation.latLng() || Meteor.user().profile.geoLocation;
 	}
-})
+});
+
 Template.splash.onRendered(function(){
 	document.title = "Home";
 	Session.set('past', false);
@@ -52,7 +55,7 @@ Template.splash.helpers({
 		return Session.get('eventYoureAt')
 	},
 	borderColor:function(){
-		console.log(colorIndex)
+		// console.log(colorIndex)
 		var color = colors[colorIndex]
 		if(colorIndex < colors.length - 1){
 			colorIndex = colorIndex + 1
@@ -70,7 +73,7 @@ Template.splash.helpers({
 	// MON, MAR 9, 9:00AM - 11:15AM
 	nearbyEvents : function(){
 		var locations = checkEvents.find().fetch(); 
-		var myGeolocation = Geolocation.latLng() || {'lat':0, 'lng':0};
+		var myGeolocation = Geolocation.latLng() || Meteor.user().profile.geoLocation;
 		var nearbyLocations = []
 		var atEvent = false
 		for (var i = 0; i < locations.length; i++ ){
@@ -101,8 +104,6 @@ Template.splash.helpers({
 		if(!atEvent){
 			delete Session.keys['eventYoureAt']
 		}
-		console.log('Nearby Events:')			
-		console.log(nearbyLocations)
 		return nearbyLocations; 
 	},
 	myCity : function(){
@@ -127,14 +128,7 @@ Template.splash.helpers({
 		return new Date();
 	}
 });
-// debug
-Template.splash.helpers({
-	myevents: function(){
-		console.log('All Events:')
-		console.log(checkEvents.find().fetch())
-		return checkEvents.find().fetch()
-	}
-})
+
 Template.splash.events({
 	'click .panel-user': function(event){
 		Session.set("currentEvent", this._id);
