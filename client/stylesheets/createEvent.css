@@ -12,6 +12,14 @@
 		border: none;
 		text-align:right;
 	}
+
+	.entry-request select{
+		vertical-align:center;
+	}
+
+	.entry-request input{
+		vertical-align:center;
+	}
 	.latlong{
 		width: 100%;
 	}
