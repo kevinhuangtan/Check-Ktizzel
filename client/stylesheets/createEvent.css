@@ -2,6 +2,19 @@
 	padding-top: 30px;
 }
 
+select {
+ /* border: 1px solid #111;*/
+  background: transparent;
+  border-radius:2px;
+  font-size: 16px;
+  /*border: 1px solid #ccc;*/
+ /* height: 34px;*/
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+ background: url(next.png) 99.5% / 15% no-repeat #F4F4F4;
+}
+
 @media screen and (max-width: 500px){
 	.entry-title{
 		float: left;
