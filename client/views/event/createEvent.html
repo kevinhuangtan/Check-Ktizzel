@@ -38,7 +38,7 @@
                 <div class="panel-body">
                    	<p class="entry-title" style="font: sans-serif">Date</p>
                    	<div class="entry-request">
-						<select class="newcol-xs-3" name="month">
+						<select class="newcol-xs-3 eventOption" name="month">
 							<option>1</option>
 							<option>2</option>
 							<option>3</option>
@@ -52,14 +52,52 @@
 							<option>11</option>
 							<option>12</option>
 						</select>
-						<input class="newcol-xs-3" size="3" type="text" name="date" placeholder="D">
-						<input class="newcol-xs-3" size="3" type="text" name="year" placeholder="Y">
+						<select class="newcol-xs-3 eventOption" name="date">
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+							<option>6</option>
+							<option>7</option>
+							<option>8</option>
+							<option>9</option>
+							<option>10</option>
+							<option>11</option>
+							<option>12</option>
+							<option>13</option>
+							<option>14</option>
+							<option>15</option>
+							<option>16</option>
+							<option>17</option>
+							<option>18</option>
+							<option>19</option>
+							<option>20</option>
+							<option>21</option>
+							<option>22</option>
+							<option>23</option>
+							<option>24</option>
+							<option>25</option>
+							<option>26</option>
+							<option>27</option>
+							<option>28</option>
+							<option>29</option>
+							<option>30</option>
+							<option>31</option>
+						</select>
+						<select class="newcol-xs-5" name="year">
+							<option>2015</option>
+							<option>2016</option>
+							<option>2017</option>
+							<option>2018</option>
+							<option>2019</option>
+						</select>
 					</div>
 					<hr style="position:relative; width: 100%">
 
 					<p class="entry-title" style="font: sans-serif">Start Time   </p>
 					<div class="entry-request">
-						<select class="newcol-xs-3" name="startHour">
+						<select class="newcol-xs-3 eventOption" name="startHour">
 							<option>1</option>
 							<option>2</option>
 							<option>3</option>
@@ -73,7 +111,7 @@
 							<option>11</option>
 							<option>12</option>
 						</select>
-						<select class="newcol-xs-3" name="startMinute">
+						<select class="newcol-xs-4 eventOption" name="startMinute">
 							<option>00</option>
 							<option>05</option>
 							<option>10</option>
@@ -87,7 +125,7 @@
 							<option>50</option>
 							<option>55</option>
 						</select>
-						<select class="newcol-xs-3" name="startAmpm">
+						<select class="newcol-xs-5" name="startAmpm">
 							<option> AM </option>
 							<option> PM </option>
 						</select>
@@ -95,7 +133,7 @@
 					<hr style="position:relative; width: 100%">
 					<p class="entry-title" style="font: sans-serif">End Time   </p>
 					<div class="entry-request">
-						<select class="newcol-xs-3" name="endHour">
+						<select class="newcol-xs-3 eventOption" name="endHour">
 							<option>1</option>
 							<option>2</option>
 							<option>3</option>
@@ -109,7 +147,7 @@
 							<option>11</option>
 							<option>12</option>
 						</select>
-						<select class="newcol-xs-3" name="endMinute">
+						<select class="newcol-xs-4 eventOption" name="endMinute">
 							<option>00</option>
 							<option>05</option>
 							<option>10</option>
@@ -123,7 +161,7 @@
 							<option>50</option>
 							<option>55</option>
 						</select>
-						<select class="newcol-xs-3" name="endAmpm">
+						<select class="newcol-xs-5" name="endAmpm">
 							<option> AM </option>
 							<option> PM </option>
 						</select>
@@ -142,7 +180,9 @@
 			<p class="page-title" >Location</p>
 	</div>
 	<div class="map-container">
-    {{> googleMap name="exampleMap" options=exampleMapOptions}}
+		<!--<div id="map-canvas">-->
+		    {{> googleMap name="exampleMap" options=exampleMapOptions}}
+		<!--</div>-->
   	</div>
 
 	<form class="new-event">
@@ -150,13 +190,14 @@
 		<div class="panel panel-eventLocation panel-default">
             <div class="panel-body building-panel">
             	<p class="entry-title col-xs-6">Building & Room  </p>
-            	<input class="entry-request" type="text" style="width: 50%" name="eventPlace" placeholder="e.g (Woolsey Hall)">
-
+            	<div id="locationField">
+	            	<input class="entry-request" id='autocomplete' type="text" style="width: 50%" name="eventPlace" placeholder="e.g (Woolsey Hall)">
+	            </div>
 			</div>
 			<div class="divider"></div>
 			<div class="panel-body">
             	<p class="entry-title col-xs-6">Address</p>
-            	<input disabled class="entry-request" type="text" style="width: 50%" placeholder={{address}} >
+	            <input disabled class="entry-request" type="text" style="width: 50%" placeholder={{address}} >
 			</div>
 		</div>
 		

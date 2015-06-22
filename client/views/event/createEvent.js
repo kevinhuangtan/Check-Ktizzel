@@ -1,3 +1,10 @@
+/*GoogleMaps.init({
+  'sensor': false, //optional
+  'key': 'AIzaSyA3IaCGmNfltsyk5fyATz-icw-D5VFhSYw',
+  'language': 'en',  //optional
+  'libraries': 'geometry,places'
+});*/
+
 // CONSTANTS////////
 var WEEKDAY = new Array(7);
 WEEKDAY[0]=  "SUN";
@@ -197,11 +204,122 @@ Template.eventLocation.events({
 	}
 });
 
+// Template.eventLocation.onRendered(function(){
+// 	Session.set('address', "Locate On Map")
+// 	var map;
+//     var markersArray = [];
+//     var geoLocation = Session.get('geoLocation') || { lat: 40.7, lng: -74 };
+// 	function initialize() {
+//         var mapCanvas = document.getElementById('map-canvas');
+//         var mapOptions = {
+//           center: new google.maps.LatLng(geoLocation.lat,geoLocation.lng),
+//           zoom: 15,
+//           mapTypeId: google.maps.MapTypeId.ROADMAP,
+//            disableDefaultUI: true,
+//         }
+//         map = new google.maps.Map(mapCanvas, mapOptions)
+//     	google.maps.event.addListener(map, "click", function(event)
+//         {
+//             // place a marker
+//             placeMarker(event.latLng);
+
+//             // display the lat/lng in your form's lat/lng fields
+//             document.getElementById("latFld").value = event.latLng.lat();
+//             document.getElementById("lngFld").value = event.latLng.lng();
+//         });
+// 	}
+
+//     function placeMarker(location) {
+//         // first remove all markers if there are any
+//         deleteOverlays();
+
+//         var marker = new google.maps.Marker({
+//             position: location, 
+//             map: map
+//         });
+
+//         // add marker in markers array
+//         markersArray.push(marker);
+//     }
+
+//     // Deletes all markers in the array by removing references to them
+//     function deleteOverlays() {
+//         if (markersArray) {
+//             for (i in markersArray) {
+//                 markersArray[i].setMap(null);
+//             }
+//         markersArray.length = 0;
+//         }
+//     }
+//     initialize();
+// });
+/*
+var map;
+var infowindow;
+>>>>>>> 3972bdf0287b61fbb54282cb85ed447a36e44e7e
+
+function initialize() {
+  var currentCenter = new google.maps.LatLng(geoLocation.lat,geoLocation.lng);
+
+  map = new google.maps.Map(document.getElementById('map-canvas'), {
+    center: currentCenter,
+    zoom: 15
+  });
+
+  var request = {
+    location: currentCenter,
+    radius: 500,
+    types: ['establishment']
+  };
+  infowindow = new google.maps.InfoWindow();
+  var service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, callback);
+}
+
+function callback(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      createMarker(results[i]);
+    }
+  }
+}
+
+function createMarker(place) {
+  var placeLoc = place.geometry.location;
+  var marker = new google.maps.Marker({
+    map: map,
+    position: place.geometry.location
+  });
+
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.setContent(place.name);
+    infowindow.open(map, this);
+  });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);*/
 
 if (Meteor.isClient) {
-  Meteor.startup(function() {
-    GoogleMaps.load();
-  });
+	Meteor.startup(function() {
+		GoogleMaps.load({v:'3', key:'AIzaSyA3IaCGmNfltsyk5fyATz-icw-D5VFhSYw', libraries:'places'});
+	});
+	window.onload = function() {
+		var autocomplete = new google.maps.places.Autocomplete(
+		  (document.getElementById('autocomplete')),{types: ['geocode'] }
+		);
+	};
+/*
+  var defaultBounds = new google.maps.LatLngBounds(
+    new google.maps.LatLng(geoLocation.lat-0.5,geoLocation.lng-0.5),
+    new google.maps.LatLng(geoLocation.lat+0.5,geoLocation.lng+0.5));
+
+  var input = document.getElementById('autocomplete');
+  var options = {
+    bounds: defaultBounds,
+    types: ['establishment']
+  };
+
+  autocomplete = new google.maps.places.Autocomplete(input, options);*/
 
   Template.eventLocation.helpers({
 	myLocation: function () {
