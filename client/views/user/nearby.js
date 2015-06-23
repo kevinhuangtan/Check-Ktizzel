@@ -24,34 +24,31 @@ var colorIndex = 0;
 
 var closeByDistance = 3 //miles
 var eventYoureAtDistance = .1 //miles
-////////
-
-Meteor.subscribe("allUserData");
-
 
 // set for other views to access location
-Template.splash.helpers({
+Template.nearby.helpers({
 	myLocation: function () {
-		if(Geolocation.latLng()){
-			if(Geolocation.latLng() != Meteor.user().profile.geoLocation){
-				Meteor.subscribe("events");
-				geoLocation = Geolocation.latLng()
-				Session.set('geoLocation', geoLocation);
-				Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.geoLocation": geoLocation}});
-			}
-			return Geolocation.latLng();
+		// console.log(Meteor.user().profile)
+		geoLocation = Geolocation.latLng()
+		if(geoLocation && (Math.abs(geoLocation.lat - Meteor.user().profile.geoLocation.lat > .00001))){
+			Session.set('geoLocation', geoLocation);
+			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.geoLocation": geoLocation}});
+			Meteor.subscribe("events"); //update events based on user location	
+			return Meteor.user().profile.geoLocation
 		}
-		return Meteor.user().profile.geoLocation;
+		else{
+			return Meteor.user().profile.geoLocation
+		}
 	}
 });
 
-Template.splash.onRendered(function(){
+Template.nearby.onRendered(function(){
 	document.title = "Home";
 	Session.set('past', false);
-	Session.set('currentPage', 'splash')
+	Session.set('currentPage', 'nearby')
 })
 
-Template.splash.helpers({
+Template.nearby.helpers({
 	eventYoureAt : function(){
 		return Session.get('eventYoureAt')
 	},
@@ -77,23 +74,22 @@ Template.splash.helpers({
 		var myGeolocation = Geolocation.latLng() || Meteor.user().profile.geoLocation;
 		var nearbyLocations = []
 		var atEvent = false
+		console.log(locations)
 		for (var i = 0; i < locations.length; i++ ){
 			var locGeolocation = locations[i].geoLocation || {'lat':0, 'lng':0}
 			locations[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);
 
 			// nearby events
 			if(locations[i].distance < closeByDistance){
-
-				// get past events
-				if(Session.get('past') && (new Date() > locations[i].startDate)){
-					nearbyLocations.push(locations[i]);
-					if(locations[i].distance < .1){
-						Session.set('eventYoureAt', locations[i])
-						atEvent = true
-					}
+			
+				if(locations[i].attending.indexOf(Meteor.userId()) > -1 ){
+						locations[i]['checkedIn'] = true
 				}
-				//get future events
-				else if(!Session.get('past') && (new Date() < locations[i].startDate)){
+				else{
+					locations[i]['checkedIn'] = false
+				}
+
+				if(new Date() < locations[i].startDate){
 					nearbyLocations.push(locations[i]);
 					if(locations[i].distance < eventYoureAtDistance){
 						Session.set('eventYoureAt', locations[i])
@@ -130,7 +126,7 @@ Template.splash.helpers({
 	}
 });
 
-Template.splash.events({
+Template.nearby.events({
 	'click .panel-user': function(event){
 		Session.set("currentEvent", this._id);
 		Router.go('event');
@@ -142,6 +138,17 @@ Template.splash.events({
 	'click .past' : function(event){
 		colorIndex = 0
 		Session.set('past', true)
+	},
+	'click .checkin-box':function(event){
+		var eventId = this._id
+		Session.set("currentEvent", eventId);
+		var thisEvent = checkEvents.findOne(eventId);
+		if(thisEvent.attending.indexOf(Meteor.userId()) > -1){ //in array
+			console.log('already in')
+		}
+		else{
+			checkEvents.update({_id: eventId}, {$push: {attending: Meteor.userId()}});
+		}
 	},
 
 })

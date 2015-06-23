@@ -31,7 +31,7 @@ Template.profile.events({
 		Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.fullname": event.target.name.value,"profile.gender": event.target.gender.value,"profile.phone": event.target.phone.value,"profile.organization": event.target.organization.value} });
 	},
 	'click #back':function(){
-		Router.go('splash')
+		Router.go('/')
 	}
 });
 

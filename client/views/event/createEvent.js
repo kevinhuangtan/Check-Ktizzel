@@ -77,7 +77,7 @@ Template.eventTitle.events({
 		Router.go('eventDateAndTime');
 	},
 	'click #delete':function(){
-		Router.go('splash')
+		Router.go('/')
 	},
 	'click #next':function(){
 		Router.go('eventDateAndTime')

@@ -1,5 +1,5 @@
 Router.map(function() {
-	this.route("splash", {path: '/'});
+	// this.route("splash", {path: '/'});
 	this.route("host", {path: '/host'});
 	this.route("event", {path: '/event'});
 	this.route("eventTitle", {path: '/createEvent'});
@@ -10,5 +10,8 @@ Router.map(function() {
 	this.route("profile", {path: '/profile'});
 	this.route("mapDemo", {path: '/mapdemo'});
 	this.route("attendeeList", {path: '/attendeeList'});
+	this.route("events", {path: '/events'});
+	this.route("nearby", {path: '/'});
 
 });
+

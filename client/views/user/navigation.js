@@ -39,7 +39,7 @@ Template.checkNavigation.events({
 		}
 		else {
 			Session.set('userMode', 'attendee')
-			Router.go('splash')
+			Router.go('/')
 		}
 	}
 })

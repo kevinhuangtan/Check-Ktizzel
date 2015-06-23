@@ -1,6 +1,5 @@
 <!-- View Event Page -->
 <template name = "event">
-
     <div class="upper-bar">
         <img id="back" src="back.png">
         <img id="more" src="more.png">
@@ -43,8 +42,10 @@
             </div>
         </div>
     </div>
-    <button  class = "morefacts-btn">More Facts</button>
-    <button  class = "remove-button">REMOVE</button>
-
+    {{#if checkedin}}
+        <button  class = "morefacts-btn">More Facts</button>
+    {{else}}
+        <button class = "check-btn">Check In</button>
+    {{/if}}
 </template>
 

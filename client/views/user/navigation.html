@@ -1,7 +1,7 @@
 <template name="checkNavigation">
 	<div class="navigation-bar">
 	<ul>
-		<a href="/createEvent">
+		<a href="/">
 			<li>
 				{{#if createEvent}}
 					<img src="nearby.png"/>
@@ -13,7 +13,7 @@
 		</a>
 		
 		
-		<a href="/">
+		<a href="/events">
 			<li>
 				{{#if splash}}
 					<img src="events.png"/>
@@ -24,17 +24,6 @@
 
 			</li>
 		</a>
-		
-		
-		<li class='userMode'>
-				{{#if attendee}}
-					<p>Using as Attendee</p>
-				{{else}}
-					<p>Using as Host</p>
-				{{/if}}
-				
-		</li>	
-		
 		
 		<a href="/profile">
 			<li>
@@ -48,7 +37,7 @@
 		</a>
 		
 		
-		<a  href="/mapdemo">
+		<a  href="/createEvent">
 			<li>
 				<img src="more.png"/>
 				<p>More</p>

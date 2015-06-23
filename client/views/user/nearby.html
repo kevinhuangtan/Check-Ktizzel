@@ -1,23 +1,32 @@
-<template name = "host">
+<template name = "nearby">
 
 		{{#if currentUser}}
 		<p class="hidden">{{myLocation}}</p>
-		<div class="upper-bar"></div>
+		<div class="upper-bar">
+			<p>Nearby Events</p>
+		</div>
+
 		<div class="events-container">
-			{{#each myHostedEvents}}
+			<p>{{myLocation.lat}}</p>
+			{{#each nearbyEvents}}
 			<div class="panel panel-user panel-default" style="border-left-color: {{borderColor}}">
 	            <div class="panel-body">
+<!-- 	            	{{#if checkedIn}}
+	            	{{else}}
+	            		<div class="checkin-box">check</div>
+	            	{{/if}} -->
 	                <li class="distance">{{distance}} mi</li>
 	                <li class="event-name">{{name}}</li>
 		       		<ul>
 		       			<li><img src="time.png"> &nbsp;&nbsp;{{dateParsed}}</li>
 	       				<li><img src="venue.png"> &nbsp;&nbsp;{{place}}</li>
+	       				
 		       		</ul>
+		       		
 	            </div>
 	        </div>
 			{{/each}}
        </div>     		
-
 
  		{{>checkNavigation}}
  		{{else}}

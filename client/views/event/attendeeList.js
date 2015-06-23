@@ -18,7 +18,7 @@ Template.attendeeList.helpers({
 
 Template.attendeeList.events({
 	'click #back': function(){
-		Router.go('splash')
+		Router.go('/')
 	}
 })
 
