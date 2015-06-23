@@ -24,10 +24,11 @@ var colorIndex = 0;
 
 var closeByDistance = 3 //miles
 var eventYoureAtDistance = .1 //miles
-
+Meteor.subscribe("events");
 // set for other views to access location
 Template.nearby.helpers({
 	myLocation: function () {
+		Meteor.subscribe("events");
 		// console.log(Meteor.user().profile)
 		geoLocation = Geolocation.latLng()
 		if(geoLocation && (Math.abs(geoLocation.lat - Meteor.user().profile.geoLocation.lat > .00001))){
