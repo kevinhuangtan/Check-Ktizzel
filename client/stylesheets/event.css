@@ -78,4 +78,17 @@
 #back{
 
 }
-
+.morefacts-btn{
+  font-size: 1.7em;
+  position:absolute;
+  width:50%;
+  margin-left: 55%;
+  /*margin-right: 5%;*/
+  height:1.8em;
+  bottom: 2em;
+  background-color: rgba(79, 227, 194,.85);
+  border: none;
+  color:white;
+  font-family: HelveticaNeue-Light; 
+  font-weight: 450;
+}

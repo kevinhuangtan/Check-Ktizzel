@@ -8,7 +8,7 @@ Template.host.onRendered(function(){
 Template.host.helpers({
 	myLocation: function () {
 		if(Geolocation.latLng()){
-			if(Geolocation.latLng()!=Meteor.user().profile.geoLocation){
+			if(Geolocation.latLng() != Meteor.user().profile.geoLocation){
 				Meteor.subscribe("events");
 				geoLocation = Geolocation.latLng()
 				Session.set('geoLocation', geoLocation);

@@ -13,9 +13,6 @@ Template.profile.helpers({
 	phone : function(){
 		return Meteor.user().profile.phone;
 	},
-	ethnicity : function(){
-		return Meteor.user().profile.ethnicity;
-	},
 	organization : function(){
 		return Meteor.user().profile.organization;
 	},
@@ -31,7 +28,7 @@ Template.profile.events({
         Session.set('edit', true);
     },
     'submit .profile-form': function(event){
-		Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.fullname": event.target.name.value,"profile.gender": event.target.gender.value,"profile.phone": event.target.phone.value,"profile.ethnicity": event.target.ethnicity.value,"profile.organization": event.target.organization.value} });
+		Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.fullname": event.target.name.value,"profile.gender": event.target.gender.value,"profile.phone": event.target.phone.value,"profile.organization": event.target.organization.value} });
 	},
 	'click #back':function(){
 		Router.go('splash')

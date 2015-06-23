@@ -93,6 +93,9 @@ Template.event.events({
 	},
 	'click #back':function(){
 		Router.go('splash')
+	},
+	'click .morefacts-btn':function(){
+		Router.go('attendeeList')
 	}
 })
 

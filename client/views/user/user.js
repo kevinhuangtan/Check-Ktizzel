@@ -33,14 +33,15 @@ Meteor.subscribe("allUserData");
 Template.splash.helpers({
 	myLocation: function () {
 		if(Geolocation.latLng()){
-			if(Geolocation.latLng()!=Meteor.user().profile.geoLocation){
+			if(Geolocation.latLng() != Meteor.user().profile.geoLocation){
 				Meteor.subscribe("events");
 				geoLocation = Geolocation.latLng()
 				Session.set('geoLocation', geoLocation);
 				Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.geoLocation": geoLocation}});
 			}
+			return Geolocation.latLng();
 		}
-		return Geolocation.latLng() || Meteor.user().profile.geoLocation;
+		return Meteor.user().profile.geoLocation;
 	}
 });
 
