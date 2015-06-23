@@ -1,18 +1,35 @@
 <template name ="signin">
-	<p>signup</p>
-			{{accounts_error}}
-					<form class="signin">
-						<input type="text" name="email" placeholder="Email">
-						<input type="password" name="password" placeholder="Password">
-						<button type="submit" class = "btn btn-lg btn-primary">Sign Up</button>
-					</form>
-
-			<p>login</p>
-
-			<form class="login">
-				<input type="text" name="email" placeholder="Email">
-				<input type="password" name="password" placeholder="Password">
-				<button type="submit" class = "btn btn-lg btn-primary">Log In</button>
-			</form>
-
+	{{accounts_error}}
+	<br>
+	<div class="upper-bar">
+			<img id="delete" src="Delete-50.png"/>
+			<p class="page-title">Log In</p>
+	</div>
+	<form class="login">
+        <div class="panel panel-default create-field">
+            <div class="panel-body">
+                <input class="signInEntry" type="text" name="email" placeholder="Email address">
+                <hr style="width: 100%">
+                <input class="signInEntry" type="password" name="password" placeholder="Password">
+            </div>
+        </div>
+		<button type="submit" class="btn next-button create-field next-button-1st">Log in</button>
+		<br>
+	</form>
+	<br>
+	<p style="margin-left: 20px; text-align: left; float: left; font: 4px; color: #0099CC">Forgot password?</p>
+	<hr class="or">
+	<p style="margin-left: 20px; text-align: left; float: left; font: 4px">No account?</p>
+	<br>
+	<form class="signin">
+	    <div class="panel panel-default create-field">
+	        <div class="panel-body">
+                <input class="signInEntry" type="text" name="email" placeholder="Email address">
+                <hr style="width: 100%">
+                <input class="signInEntry" type="password" name="password" placeholder="Password">
+	        </div>
+	    </div>
+		<button type="submit" class="btn next-button create-field next-button-1st">Sign up for free</button>
+		<br>
+	</form>
 </template>

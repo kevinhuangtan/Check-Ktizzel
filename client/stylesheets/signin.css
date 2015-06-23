@@ -1,0 +1,41 @@
+.signInEntry{
+	font: sans-serif;
+	border: none;
+	width: 100%
+}
+
+@media screen and (max-width: 500px){
+	.signInEntry{
+		float: left;
+	}
+}
+
+@media screen and (min-width: 500px){
+	.signInEntry{
+		float: left;
+	}
+}
+
+.signInEntry:focus{
+	border:none;
+	outline:none
+}
+
+hr.or {
+    padding: 0;
+    border: none;
+    border-top: medium double #333;
+    color: #333;
+    text-align: center;
+    width: 90%;
+}
+hr.or:after {
+    content: "OR";
+    display: inline-block;
+    position: relative;
+    top: -0.7em;
+    font-size: 1.0em;
+    font-style: italic;
+    padding: 0 0.25em;
+    background: #F4F4F4;
+}
