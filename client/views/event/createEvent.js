@@ -69,10 +69,9 @@ Template.eventTitle.events({
 			userName = ""
 			userOrganization = ""
 		}
-		var eventHost = {'name': (userName || ""), 'email':user.emails[0].address, 'organization': (userOrganization || "")}
 		var attending = [];
 		attending.push(Meteor.userId());
-		var eventSession = {'name': eventName, 'host': Meteor.userId(), 'host_info':eventHost, 'attending': attending, 'description': eventDescription}
+		var eventSession = {'name': eventName, 'host': Meteor.userId(),'attending': attending, 'description': eventDescription}
 		Session.set('eventSession', eventSession)
 		Router.go('eventDateAndTime');
 	},
@@ -111,7 +110,7 @@ Template.eventDateAndTime.events({
 			endPM = endPM + 12
 		}
 		var month = Number(target.month.value) - 1
-		var date = Number(target.date.value) + 1
+		var date = Number(target.date.value)
 		var startDate = new Date(target.year.value, month, date, Number(target.startHour.value) + startPM, target.startMinute.value);
 		var endDate = new Date(target.year.value, month, date, Number(target.endHour.value) + endPM, target.endMinute.value);
 		var eventSession = Session.get('eventSession');
@@ -147,6 +146,9 @@ Template.eventDateAndTime.events({
 		Router.go('eventLocation')
 	}
 });
+
+
+////////////////////
 Template.eventLocation.events({
 	'submit form': function(event){
 		event.preventDefault()
@@ -156,7 +158,6 @@ Template.eventLocation.events({
 		var id = checkEvents.insert({
 			name: eventSession['name'],
 			host: eventSession['host'],
-			host_info: eventSession['host_info'],
 			attending: eventSession['attending'],
 			dateParsed: eventSession['dateParsed'],
 			description: eventSession['description'],
@@ -205,6 +206,7 @@ Template.eventLocation.events({
 });
 
 if (Meteor.isClient) {
+
   Meteor.startup(function() {
     GoogleMaps.load();
   });
@@ -229,11 +231,14 @@ if (Meteor.isClient) {
       return Session.get('devGeolocation');
     }
   });
+
   Template.eventLocation.onRendered(function(){
       var location = Session.get('geoLocation');
-      Session.set('devGeolocation', location)
+      Session.set('devGeolocation', location);
+      Session.set('createEventLocation', location);
   })
  
+
   Template.eventLocation.onCreated(function() {
     // We can use the `ready` callback to interact with the map API once the map is ready.
     GoogleMaps.ready('exampleMap', function(map) {

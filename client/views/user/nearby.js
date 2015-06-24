@@ -77,22 +77,8 @@ Template.nearby.helpers({
 			locations[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);
 
 			// nearby events
-			if(locations[i].distance < closeByDistance){
-			
-				if(locations[i].attending.indexOf(Meteor.userId()) > -1 ){
-						locations[i]['checkedIn'] = true
-				}
-				else{
-					locations[i]['checkedIn'] = false
-				}
-
-				if(new Date() < locations[i].startDate){
-					nearbyLocations.push(locations[i]);
-					if(locations[i].distance < eventYoureAtDistance){
-						Session.set('eventYoureAt', locations[i])
-						atEvent = true
-					}
-				}
+			if(locations[i].distance < 10){
+				nearbyLocations.push(locations[i])	
 			}
 		}
 		return nearbyLocations; 

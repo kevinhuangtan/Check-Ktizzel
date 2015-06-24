@@ -1,13 +1,11 @@
 <template name = "nearby">
-
+	<p class="hidden">{{myLocation}}</p>
 		{{#if currentUser}}
-		<p class="hidden">{{myLocation}}</p>
 		<div class="upper-bar">
 			<p>Nearby Events</p>
 		</div>
 
 		<div class="events-container">
-			<p>{{myLocation.lng}}</p>
 			{{#each nearbyEvents}}
 			<div class="panel panel-user panel-default" style="border-left-color: {{borderColor}}">
 	            <div class="panel-body">

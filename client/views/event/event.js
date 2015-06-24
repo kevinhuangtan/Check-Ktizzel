@@ -1,5 +1,8 @@
 
 Template.event.onRendered(function(){
+	// Meteor.call('eventHost', eventId, function(error, result){
+	// 	Session.set('currentEventHost', result)
+	// });
 	var result = checkEvents.findOne({_id: Session.get("currentEvent")})
 	var map;
 	if(result){
@@ -27,17 +30,25 @@ Template.event.onRendered(function(){
 
 
 Template.event.helpers({
-	checkedin : function(){
+	checkedIn : function(){
 		var eventId = Session.get("currentEvent");
+		Meteor.call('eventHost', eventId, function(error, result){
+			Session.set('currentEventHost', result);
+			console.log(result)
+		});
+		
 		var thisEvent = checkEvents.findOne(eventId);
-		console.log(thisEvent)
+		// console.log(thisEvent)
 		if(thisEvent.attending.indexOf(Meteor.userId()) > -1){ //in array
 			return true
 		}
 		else{
 			return false
 		}
-		
+	},
+	eventHost : function(){
+		// console.log(Session.get('currentEventHost'))
+		return Session.get('currentEventHost')
 	},
 	currentEvent : function(){
 		var id = Session.get("currentEvent")
@@ -62,15 +73,6 @@ Template.event.helpers({
 			attendees.push(email2);
 		}
 		return attendees
-	},
-	checkedIn: function(){
-		var result = checkEvents.findOne({_id: Session.get("currentEvent")})
-		if(result.attending.indexOf(Meteor.userId())!=-1 && Meteor.user()){
-			return true
-		}
-		else{
-			return false
-		}
 	},
 	address : function(){
 		if(Session.get('eventLocation')){
