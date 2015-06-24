@@ -2,7 +2,8 @@ var colors = ['#003169', '#D0021B', '#F5A623','#50E3C2', '#003169', '#B8E986']
 var colorIndex = 0;
 
 Template.events.onRendered(function(){
-	Session.set('userMode', 'host')
+	Session.set('userMode', 'host');
+	Session.set('currentPage', 'events')
 })
 
 Template.events.helpers({

@@ -19,13 +19,13 @@ if (typeof(Number.prototype.toRad) === "undefined") {
   }
 }
 
-var colorsNearby = ['#003169', '#D0021B', '#F5A623','#50E3C2', '#003169', '#B8E986']
-var colorIndexNearby = 0;
+var colorsCheckIn = ['#003169', '#D0021B', '#F5A623','#50E3C2', '#003169', '#B8E986']
+var colorIndexCheckIn = 0;
 
-var closeByDistance = 3 //miles
-
+var eventYoureAtDistance = .1 //miles
+// Meteor.subscribe("events");
 // set for other views to access location
-Template.nearby.helpers({
+Template.checkIn.helpers({
 	myLocation: function () {
 		// Meteor.subscribe("events");
 		// console.log(Meteor.user().profile)
@@ -42,31 +42,34 @@ Template.nearby.helpers({
 	}
 });
 
-Template.nearby.onRendered(function(){
+Template.checkIn.onRendered(function(){
 	document.title = "Home";
 	Session.set('past', false);
-	Session.set('currentPage', 'nearby')
+	Session.set('currentPage', 'checkIn')
 })
 
-Template.nearby.helpers({
+Template.checkIn.helpers({
+	eventYoureAt : function(){
+		return Session.get('eventYoureAt')
+	},
 	borderColor:function(){
-		// console.log(colorIndexNearby)
-		var color = colorsNearby[colorIndexNearby]
-		if(colorIndexNearby < colorsNearby.length - 1){
-			colorIndexNearby = colorIndexNearby + 1
+		// console.log(colorIndexCheckIn)
+		var color = colorsCheckIn[colorIndexCheckIn]
+		if(colorIndexCheckIn < colorsCheckIn.length - 1){
+			colorIndexCheckIn = colorIndexCheckIn + 1
 		}
 		else{
-			colorIndexNearby = 0
+			colorIndexCheckIn = 0
 		}
 			
 		return color
 	},
 	past: function(){
-		colorIndexNearby = 0
+		colorIndexCheckIn = 0
 		return Session.get('past')
 	},
 	// MON, MAR 9, 9:00AM - 11:15AM
-	nearbyEvents : function(){
+	eventsYoureAt : function(){
 		var locations = checkEvents.find().fetch(); 
 		var myGeolocation = Geolocation.latLng() || Meteor.user().profile.geoLocation;
 		var nearbyLocations = []
@@ -77,7 +80,7 @@ Template.nearby.helpers({
 			locations[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);
 
 			// nearby events
-			if(locations[i].distance < closeByDistance){
+			if(locations[i].distance < eventYoureAtDistance){
 			
 				if(locations[i].attending.indexOf(Meteor.userId()) > -1 ){
 						locations[i]['checkedIn'] = true
@@ -94,6 +97,9 @@ Template.nearby.helpers({
 					}
 				}
 			}
+		}
+		if(!atEvent){
+			delete Session.keys['eventYoureAt']
 		}
 		return nearbyLocations; 
 	},
@@ -120,17 +126,17 @@ Template.nearby.helpers({
 	}
 });
 
-Template.nearby.events({
+Template.checkIn.events({
 	'click .panel-user': function(event){
 		Session.set("currentEvent", this._id);
 		Router.go('event');
 	},
 	'click .upcoming' : function(event){
-		colorIndexNearby = 0
+		colorIndexCheckIn = 0
 		Session.set('past', false)
 	},
 	'click .past' : function(event){
-		colorIndexNearby = 0
+		colorIndexCheckIn = 0
 		Session.set('past', true)
 	},
 	'click .checkin-box':function(event){

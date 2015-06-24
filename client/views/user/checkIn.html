@@ -1,20 +1,20 @@
-<template name = "nearby">
+<template name = "checkIn">
 
 		{{#if currentUser}}
 		<p class="hidden">{{myLocation}}</p>
 		<div class="upper-bar">
-			<p>Nearby Events</p>
+			<p>Check In</p>
 		</div>
 
 		<div class="events-container">
-			<p>{{myLocation.lng}}</p>
-			{{#each nearbyEvents}}
+			<p class="hidden"></p>
+			{{#each eventsYoureAt}}
 			<div class="panel panel-user panel-default" style="border-left-color: {{borderColor}}">
 	            <div class="panel-body">
-<!-- 	            	{{#if checkedIn}}
+	            	{{#if checkedIn}}
 	            	{{else}}
 	            		<div class="checkin-box">check</div>
-	            	{{/if}} -->
+	            	{{/if}}
 	                <li class="distance">{{distance}} mi</li>
 	                <li class="event-name">{{name}}</li>
 		       		<ul>

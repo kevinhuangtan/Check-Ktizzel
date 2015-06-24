@@ -1,30 +1,40 @@
 <template name="checkNavigation">
 	<div class="navigation-bar">
 	<ul>
-		<a href="/">
+		<a href="/createEvent">
 			<li>
 				{{#if createEvent}}
-					<img src="nearby.png"/>
+					<img src="check_green.png"/>
 				{{else}}
-					<img src="nearby.png"/>
+					<img src="check.png"/>
 				{{/if}}
-				<p>Nearby</p>
+				<p>Create</p>
 			</li>
 		</a>
-		
+
 		
 		<a href="/events">
 			<li>
-				{{#if splash}}
-					<img src="events.png"/>
+				{{#if events}}
+					<img src="events_green.png"/>
 				{{else}}
 					<img src="events.png"/>
 				{{/if}}
 				<p>Events</p>
-
 			</li>
 		</a>
-		
+
+		<a href="/checkIn">
+			<li>
+				{{#if checkIn}}
+					<img src="switch_green.png"/>
+				{{else}}
+					<img src="switch.png"/>
+				{{/if}}
+				<p>Check In</p>
+			</li>
+		</a>
+
 		<a href="/profile">
 			<li>
 				{{#if profile}}
@@ -36,13 +46,23 @@
 			</li>
 		</a>
 		
-		
-		<a  href="/createEvent">
+		<a href="/">
+			<li>
+				{{#if nearby}}
+					<img src="nearby_green.png"/>
+				{{else}}
+					<img src="nearby.png"/>
+				{{/if}}
+				<p>Nearby</p>
+			</li>
+		</a>
+			
+<!-- 		<a  href="/createEvent">
 			<li>
 				<img src="more.png"/>
 				<p>More</p>
 			</li>
-		</a>
+		</a> -->
 
 		<a  class="signout">
 			<li>
