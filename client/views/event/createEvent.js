@@ -93,6 +93,30 @@ Template.eventDateAndTime.helpers({
 		}
 		// console.log(Geolocation.latLng())
 		return Geolocation.latLng() || { lat: 0, lng: 0 };
+	},
+	dayOption :function(){
+		var days = []
+		var thisDay = new Date().getDate()
+		for (var i = 1; i <= 31; i++){
+			var day = {'index': i}
+			if(i == thisDay){
+				day['selected'] = true
+			}
+			days.push(day)
+		} 
+		return days
+	},
+	monthOption : function(){
+		var months = []
+		var thisMonth = new Date().getMonth() + 1
+		for (var i = 1; i <= 12; i++){
+			var month = {'index': i}
+			if(i == thisMonth){
+				month['selected'] = true
+			}
+			months.push(month)
+		} 
+		return months		
 	}
 })
 
@@ -109,6 +133,8 @@ Template.eventDateAndTime.events({
 		if (target.endAmpm.value == "PM"){
 			endPM = endPM + 12
 		}
+
+		
 		var month = Number(target.month.value) - 1
 		var date = Number(target.date.value)
 		var startDate = new Date(target.year.value, month, date, Number(target.startHour.value) + startPM, target.startMinute.value);

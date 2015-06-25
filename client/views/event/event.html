@@ -37,14 +37,18 @@
             <img src="venue.png">
             <div class='panel-text'>
                 <p>{{currentEvent.place}}</p>
-                 <p>{{address}}</p>
+                <p>{{address}}</p>
             </div>
         </div>
     </div>
-    {{#if checkedIn}}
+    {{#if checkedIn value="checkedIn"}}
         <button  class = "morefacts-btn">More Facts</button>
     {{else}}
-        <button class = "check-btn">Check In</button>
+        {{#if nearby}}
+            <button class = "check-btn">Check In</button>
+        {{else}}
+        {{/if}}
     {{/if}}
+
 </template>
 

@@ -38,22 +38,26 @@
                 <div class="panel-body">
                    	<p class="entry-title" style="font: sans-serif">Date</p>
                    	<div class="entry-request">
-						<select class="newcol-xs-3 eventOption" name="month">
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
-							<option>6</option>
-							<option>7</option>
-							<option>8</option>
-							<option>9</option>
-							<option>10</option>
-							<option>11</option>
-							<option>12</option>
+						<select class="newcol-xs-3 eventOption" value="3" name="month">
+							{{#each monthOption}}
+								{{#if selected}}
+									<option selected="selected">{{index}}</option>
+								{{else}}
+									<option>{{index}}</option>
+								{{/if}}
+
+							{{/each}}
 						</select>
 						<select class="newcol-xs-3 eventOption" name="date">
-							<option>1</option>
+							{{#each dayOption}}
+								{{#if selected}}
+									<option selected="selected">{{index}}</option>
+								{{else}}
+									<option>{{index}}</option>
+								{{/if}}
+
+							{{/each}}
+<!-- 							<option>1</option>
 							<option>2</option>
 							<option>3</option>
 							<option>4</option>
@@ -83,7 +87,7 @@
 							<option>28</option>
 							<option>29</option>
 							<option>30</option>
-							<option>31</option>
+							<option>31</option> -->
 						</select>
 						<select class="newcol-xs-5" name="year">
 							<option>2015</option>

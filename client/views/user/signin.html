@@ -1,18 +1,42 @@
 <template name ="signin">
-	<p>signup</p>
-			{{accounts_error}}
-					<form class="signin">
-						<input type="text" name="email" placeholder="Email">
-						<input type="password" name="password" placeholder="Password">
-						<button type="submit" class = "btn btn-lg btn-primary">Sign Up</button>
-					</form>
+	<div class="upper-bar">
+        <p>Log In</p>
+        
+    </div>
+	<div class="signin-container">
+		<form class="login">
+			<div class="panel panel-default create-field">
+                <div class="panel-body">
+                    <input class="entry-request" type="text" name="email" placeholder="Email">
+                    <hr style="width: 100%">
+                    <input class="entry-request" type="text" name="password" placeholder="Password">
+                </div>
+            </div>
+			<button type="submit" class = "">Log In</button>
+			<br>
+		</form>
 
-			<p>login</p>
+		<br>
+		<p><i>OR</i></p>
 
-			<form class="login">
-				<input type="text" name="email" placeholder="Email">
-				<input type="password" name="password" placeholder="Password">
-				<button type="submit" class = "btn btn-lg btn-primary">Log In</button>
-			</form>
+		<form class="signin">
+<!-- 			<input type="text" name="email" placeholder="Email">
+			<br>
+			<input type="password" name="password" placeholder="Password">
+			<br><br>
+			 -->
+			<div class="panel panel-default create-field">
+                <div class="panel-body">
 
+                    <input class="entry-request" type="text" name="email" placeholder="Email">
+                    <hr style="width: 100%">
+
+                    <input class="entry-request" type="text" name="password" placeholder="Password">
+                </div>
+            </div>
+			<button type="submit" class = "">Sign Up</button>
+		</form>
+		{{accounts_error}}
+
+	</div>
 </template>
