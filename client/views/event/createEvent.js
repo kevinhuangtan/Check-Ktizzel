@@ -117,6 +117,55 @@ Template.eventDateAndTime.helpers({
 			months.push(month)
 		} 
 		return months		
+	},
+	hourOption : function(){
+		var hours = []
+		var thisHour = new Date().getHours()%12
+		for (var i = 1; i <= 12; i++){
+			var hour = {'index': i}
+			if(i == thisHour){
+				hour['selected'] = true
+			}
+			hours.push(hour)
+		} 
+		return hours		
+	},
+	endHourOption : function(){
+		var hours = []
+		var thisHour = new Date().getHours()%12
+		thisHour+=1
+		for (var i = 1; i <= 12; i++){
+			var hour = {'index': i}
+			if(i == thisHour){
+				hour['selected'] = true
+			}
+			hours.push(hour)
+		} 
+		return hours		
+	},
+	amOption : function(){
+		var AMPM = [{'value':'AM'},{'value':'PM'}]
+		var thisHour = new Date().getHours()
+		var ampm = Math.floor(thisHour/12)
+		if(ampm==0){ //AM
+			AMPM[0]['selected'] = true
+		}
+		else{ //PM
+			AMPM[1]['selected'] = true
+		}
+		return AMPM		
+	},
+	minuteOption : function(){
+		var minutes = []
+		var thisMinute = new Date().getMinute() + 1
+		for (var i = 1; i <= 12; i++){
+			var minute = {'index': i}
+			if(i == thisMinute){
+				minute['selected'] = true
+			}
+			minutes.push(minute)
+		} 
+		return minutes		
 	}
 })
 
@@ -255,6 +304,9 @@ if (Meteor.isClient) {
     },
     devGeolocation:function(){
       return Session.get('devGeolocation');
+    },
+    address: function(){
+    	return Session.get('address')
     }
   });
 
