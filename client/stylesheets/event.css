@@ -63,6 +63,21 @@
   letter-spacing: .2em;
   font-weight: 450;
 }
+.check-btn{
+  font-size: 1.7em;
+  position:absolute;
+  width:90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  height:1.8em;
+  bottom: 0;
+  background-color: rgba(0, 190, 59,.85);
+  border: none;
+  color:white;
+  font-family: HelveticaNeue-Light; 
+  letter-spacing: .2em;
+  font-weight: 450;
+}
 .remove-button:focus {
     outline: 0;
 }
@@ -78,4 +93,17 @@
 #back{
 
 }
-
+.morefacts-btn{
+  font-size: 1.7em;
+  position:absolute;
+  width:90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  height:1.8em;
+  bottom: 0;
+  background-color: rgba(79, 227, 194,.85);
+  border: none;
+  color:white;
+  font-family: HelveticaNeue-Light; 
+  font-weight: 450;
+}

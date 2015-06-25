@@ -51,6 +51,11 @@
   width: 100%;
 }
 
+.panel-body{
+  cursor: pointer;
+  position: relative;
+}
+
 .panel-user img{
   margin-bottom: .3em;
   width: .9em
@@ -58,7 +63,6 @@
 .panel-user{
   border-left: solid blue;
   border-left-width: 3px;
-  cursor:pointer;
   font-family: "Avenir Next";
   border-radius: 0;
 }
@@ -67,11 +71,21 @@
   margin-bottom: 0;
 }
 .panel-user .distance{
-  float:right
+  float:right;
+  /*margin-right: 0em;*/
 }
 .event-name{
   font-weight: 600;
 }
 .not-hover{
   background-color: #929292
+}
+
+.checkin-box{
+	position: absolute;
+	background-color: #00BE3B;
+	width: 3.5em;
+	height: 100%;
+	top: 0;
+	right:0;
 }

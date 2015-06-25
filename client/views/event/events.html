@@ -1,0 +1,44 @@
+<template name = "events">
+
+		{{#if currentUser}}
+		<p class="hidden">{{myLocation}}</p>
+	    <div class="upper-bar">
+	        <p>My Events</p>
+	        
+	    </div>
+		<div class="events-container">
+			<p>My Hosted Events</p>
+			{{#each myHostedEvents}}
+			<div class="panel panel-user panel-default" style="border-left-color: {{borderColor}}">
+	            <div class="panel-body">
+	                <li class="event-name">{{name}}</li>
+		       		<ul>
+		       			<li><img src="time.png"> &nbsp;&nbsp;{{dateParsed}}</li>
+	       				<li><img src="venue.png"> &nbsp;&nbsp;{{place}}</li>
+		       		</ul>
+	            </div>
+	        </div>
+			{{/each}}
+			<p>Checked In</p>
+			{{#each myCheckedInEvents}}
+			<div class="panel panel-user panel-default" style="border-left-color: {{borderColor}}">
+	            <div class="panel-body">
+	                <li class="event-name">{{name}}</li>
+		       		<ul>
+		       			<li><img src="time.png"> &nbsp;&nbsp;{{dateParsed}}</li>
+	       				<li><img src="venue.png"> &nbsp;&nbsp;{{place}}</li>
+		       		</ul>
+	            </div>
+	        </div>
+			{{/each}}
+       </div>     		
+
+
+ 		{{>checkNavigation}}
+ 		{{else}}
+ 			{{>signin}}
+ 		{{/if}}
+ 		
+</template>
+
+

@@ -3,19 +3,19 @@ Template.checkNavigation.helpers({
 	createEvent : function(){
 		return (Session.get('currentPage')=='createEvent')
 	},
-	splash : function(){
-		return (Session.get('currentPage')=='splash')
-	},
 	profile: function(){
 		return (Session.get('currentPage')=='profile')
 	},
-	attendee: function(){
-		// console.log(Session.get('userMode'))
-		if(!Session.get('userMode')){
-			Session.set('userMode', 'attendee')
-		}
-		return (Session.get('userMode')=='attendee')
-	}
+	nearby: function(){
+		return (Session.get('currentPage')=='nearby')
+	},
+	events:function(){
+		return (Session.get('currentPage')=='events')
+	},
+	checkIn:function(){
+		return (Session.get('currentPage')=='checkIn')
+	},
+
 
 })
 
@@ -39,7 +39,7 @@ Template.checkNavigation.events({
 		}
 		else {
 			Session.set('userMode', 'attendee')
-			Router.go('splash')
+			Router.go('/')
 		}
 	}
 })

@@ -19,15 +19,22 @@ Template.signin.helpers({
 Template.signin.events({
 	'submit .signin': function(event){
 		event.preventDefault()
+		geoLocation = Geolocation.latLng()
+		if(!geoLocation){
+			geoLocation = {'lat':0, 'lng':0}
+		}
 		var user = {'email':event.target.email.value, 'password' :event.target.password.value}
-		Accounts.createUser({
+		var id = Accounts.createUser({
 			email: user['email'],
-			password: user['password']
+			password: user['password'],
+			profile: {
+          		geoLocation: geoLocation
+        	}
 		}, function(err) { 
 		// only calls back if error
-			Session.set('error', err.reason)
+			Session.set('error', err)
 		});
-
+		Meteor.subscribe("events");
 		Accounts.onLogin(function(){
 			console.log('success')
 		})

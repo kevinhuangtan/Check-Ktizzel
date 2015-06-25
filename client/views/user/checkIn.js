@@ -19,59 +19,52 @@ if (typeof(Number.prototype.toRad) === "undefined") {
   }
 }
 
-var colors = ['#003169', '#D0021B', '#F5A623','#50E3C2', '#003169', '#B8E986']
-var colorIndex = 0;
+var colorsCheckIn = ['#003169', '#D0021B', '#F5A623','#50E3C2', '#003169', '#B8E986']
+var colorIndexCheckIn = 0;
 
-var closeByDistance = 3 //miles
 var eventYoureAtDistance = .1 //miles
-////////
 
-Meteor.subscribe("allUserData");
-
-
-// set for other views to access location
-Template.splash.helpers({
+Template.checkIn.helpers({
 	myLocation: function () {
-		if(Geolocation.latLng()){
-			if(Geolocation.latLng()!=Meteor.user().profile.geoLocation){
-				Meteor.subscribe("events");
-				geoLocation = Geolocation.latLng()
-				Session.set('geoLocation', geoLocation);
-				Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.geoLocation": geoLocation}});
-			}
+
+		geoLocation = Geolocation.latLng()
+		if(geoLocation){
+			Session.set('geoLocation', geoLocation);
+			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.geoLocation": geoLocation}});
+			return Meteor.user().profile.geoLocation
 		}
-		return Geolocation.latLng() || Meteor.user().profile.geoLocation;
+		else{
+			return Meteor.user().profile.geoLocation
+		}
 	}
 });
 
-Template.splash.onRendered(function(){
+Template.checkIn.onRendered(function(){
 	document.title = "Home";
 	Session.set('past', false);
-	Session.set('currentPage', 'splash')
+	Session.set('currentPage', 'checkIn')
 })
 
-Template.splash.helpers({
+Template.checkIn.helpers({
 	eventYoureAt : function(){
 		return Session.get('eventYoureAt')
 	},
 	borderColor:function(){
-		// console.log(colorIndex)
-		var color = colors[colorIndex]
-		if(colorIndex < colors.length - 1){
-			colorIndex = colorIndex + 1
+		var color = colorsCheckIn[colorIndexCheckIn]
+		if(colorIndexCheckIn < colorsCheckIn.length - 1){
+			colorIndexCheckIn = colorIndexCheckIn + 1
 		}
 		else{
-			colorIndex = 0
+			colorIndexCheckIn = 0
 		}
 			
 		return color
 	},
 	past: function(){
-		colorIndex = 0
+		colorIndexCheckIn = 0
 		return Session.get('past')
 	},
-	// MON, MAR 9, 9:00AM - 11:15AM
-	nearbyEvents : function(){
+	eventsYoureAt : function(){
 		var locations = checkEvents.find().fetch(); 
 		var myGeolocation = Geolocation.latLng() || Meteor.user().profile.geoLocation;
 		var nearbyLocations = []
@@ -81,18 +74,16 @@ Template.splash.helpers({
 			locations[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);
 
 			// nearby events
-			if(locations[i].distance < closeByDistance){
-
-				// get past events
-				if(Session.get('past') && (new Date() > locations[i].startDate)){
-					nearbyLocations.push(locations[i]);
-					if(locations[i].distance < .1){
-						Session.set('eventYoureAt', locations[i])
-						atEvent = true
-					}
+			if(locations[i].distance < eventYoureAtDistance){
+			
+				if(locations[i].attending.indexOf(Meteor.userId()) > -1 ){
+						locations[i]['checkedIn'] = true
 				}
-				//get future events
-				else if(!Session.get('past') && (new Date() < locations[i].startDate)){
+				else{
+					locations[i]['checkedIn'] = false
+				}
+
+				if(new Date() < locations[i].startDate){
 					nearbyLocations.push(locations[i]);
 					if(locations[i].distance < eventYoureAtDistance){
 						Session.set('eventYoureAt', locations[i])
@@ -129,18 +120,29 @@ Template.splash.helpers({
 	}
 });
 
-Template.splash.events({
+Template.checkIn.events({
 	'click .panel-user': function(event){
 		Session.set("currentEvent", this._id);
 		Router.go('event');
 	},
 	'click .upcoming' : function(event){
-		colorIndex = 0
+		colorIndexCheckIn = 0
 		Session.set('past', false)
 	},
 	'click .past' : function(event){
-		colorIndex = 0
+		colorIndexCheckIn = 0
 		Session.set('past', true)
+	},
+	'click .checkin-box':function(event){
+		var eventId = this._id
+		Session.set("currentEvent", eventId);
+		var thisEvent = checkEvents.findOne(eventId);
+		if(thisEvent.attending.indexOf(Meteor.userId()) > -1){ //in array
+			console.log('already in')
+		}
+		else{
+			checkEvents.update({_id: eventId}, {$push: {attending: Meteor.userId()}});
+		}
 	},
 
 })

@@ -1,7 +1,7 @@
 <template name = "profile">
         {{#if editme}}
    		<div class="upper-bar">
-	        <img id="back" src="back.png">
+	        <!-- <img id="back" src="back.png"> -->
 	        <p>My Profile</p>			        
 	    </div>
 		<form class="profile-form">
@@ -18,9 +18,6 @@
 	        				<hr style="position:relative; width: 100%">
 						<p class="entry-title">Phone   </p>
 						<input class="entry-request detail-entry" type="text" name="phone" placeholder="Phone" value={{phone}}>
-	        				<hr style="position:relative; width: 100%">
-						<p class="entry-title">Ethnicity   </p>
-						<input class="entry-request detail-entry" type="text" name="ethnicity" placeholder="Ethnicity" value={{ethnicity}}>
 	        				<hr style="position:relative; width: 100%">
 						<p class="entry-title">Organization   </p>
 						<input class="entry-request detail-entry" type="text" name="organization" placeholder="Organization" value={{organization}}>
@@ -52,10 +49,6 @@
 
 		                <p class="entry-title">Phone </p>
 		                <p class="entry-request detail-entry">{{phone}}</p>
-		                <hr style="position:relative; width: 100%">
-
-		                <p class="entry-title">Ethnicity </p>
-		                <p class="entry-request detail-entry">{{ethnicity}}</p>
 		                <hr style="position:relative; width: 100%">
 
 		                <p class="entry-title">Organization </p>

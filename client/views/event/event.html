@@ -1,19 +1,17 @@
 <!-- View Event Page -->
 <template name = "event">
-
     <div class="upper-bar">
         <img id="back" src="back.png">
-        <img id="more" src="more.png">
         <p>{{currentEvent.name}}</p>
         
     </div>
-<br>
+    <br>
     <div class="panel panel-default event-hostinfo">
         <div class="panel-body">
             <img src="man.png"> 
             <div class='panel-text'>
-                <p class="main">{{currentEvent.host_info.name}}</p>
-                <p>{{currentEvent.host_info.organization}}</p>
+                <p class="main">{{eventHost.name}}</p>
+                <p>{{eventHost.organization}}</p>
             </div>
         </div>
     </div>
@@ -39,11 +37,18 @@
             <img src="venue.png">
             <div class='panel-text'>
                 <p>{{currentEvent.place}}</p>
-                 <p>{{address}}</p>
+                <p>{{address}}</p>
             </div>
         </div>
     </div>
-    <button  class = "remove-button">REMOVE</button>
+    {{#if checkedIn value="checkedIn"}}
+        <button  class = "morefacts-btn">More Facts</button>
+    {{else}}
+        {{#if nearby}}
+            <button class = "check-btn">Check In</button>
+        {{else}}
+        {{/if}}
+    {{/if}}
 
 </template>
 

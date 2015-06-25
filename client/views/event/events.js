@@ -1,21 +1,26 @@
 var colors = ['#003169', '#D0021B', '#F5A623','#50E3C2', '#003169', '#B8E986']
 var colorIndex = 0;
 
-Template.host.onRendered(function(){
-	Session.set('userMode', 'host')
+Template.events.onRendered(function(){
+	Session.set('userMode', 'host');
+	Session.set('currentPage', 'events')
 })
 
-Template.host.helpers({
+Template.events.helpers({
 	myLocation: function () {
-		if(Geolocation.latLng()){
-			if(Geolocation.latLng()!=Meteor.user().profile.geoLocation){
-				Meteor.subscribe("events");
-				geoLocation = Geolocation.latLng()
+		geoLocation = Geolocation.latLng()
+		if(geoLocation){
+			if(Math.abs(geoLocation.lat + geoLocation.lng - Meteor.user().profile.geoLocation.lat - Meteor.user().profile.geoLocation.lng) > .00001){
+				console.log(Meteor.user().profile)
 				Session.set('geoLocation', geoLocation);
 				Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.geoLocation": geoLocation}});
+				Meteor.subscribe("events"); //update events based on user location	
 			}
+			return Meteor.user().profile.geoLocation
 		}
-		return Geolocation.latLng() || { lat: 0, lng: 0 };
+		else{
+			return {'lat':0,"lng":0}
+		}
 	},
 	borderColor:function(){
 		var color = colors[colorIndex]
@@ -41,19 +46,23 @@ Template.host.helpers({
 	},
 	today : function(){
 		return new Date();
+	},
+	myCheckedInEvents : function(){
+		var events = checkEvents.find().fetch(); 
+		var checkedInEvents = []
+		for (var i = 0; i < events.length; i++ ){
+			if(events[i].attending.indexOf(Meteor.userId())> -1 && events[i].host != Meteor.userId()){
+				checkedInEvents.push(events[i]);
+			}
+		}
+		return checkedInEvents
 	}
 });
 
-Template.host.events({
+Template.events.events({
 	'click .panel-user': function(event){
 		Session.set("currentEvent", this._id);
 		Router.go('event');
-	},
-	'click .methods':function(){
-		Meteor.call("setChecked", function(error, result){
-			console.log(result)
-		});	
 	}
-
 })
 

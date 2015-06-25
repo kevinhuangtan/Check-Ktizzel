@@ -11,31 +11,30 @@
 				<p>Create</p>
 			</li>
 		</a>
-		
-		
-		<a href="/">
-			<li>
-				{{#if splash}}
-					<img src="recent_green.png"/>
-				{{else}}
-					<img src="recent.png"/>
-				{{/if}}
-				<p>Event List</p>
 
+		
+		<a href="/events">
+			<li>
+				{{#if events}}
+					<img src="events_green.png"/>
+				{{else}}
+					<img src="events.png"/>
+				{{/if}}
+				<p>Events</p>
 			</li>
 		</a>
-		
-		
-		<li class='userMode'>
-				{{#if attendee}}
-					<p>Using as Attendee</p>
+
+		<a href="/">
+			<li>
+				{{#if checkIn}}
+					<img src="switch_green.png"/>
 				{{else}}
-					<p>Using as Host</p>
+					<img src="switch.png"/>
 				{{/if}}
-				
-		</li>	
-		
-		
+				<p>Check In</p>
+			</li>
+		</a>
+
 		<a href="/profile">
 			<li>
 				{{#if profile}}
@@ -47,13 +46,23 @@
 			</li>
 		</a>
 		
-		
-		<a  href="/mapdemo">
+		<a href="/nearby">
+			<li>
+				{{#if nearby}}
+					<img src="nearby_green.png"/>
+				{{else}}
+					<img src="nearby.png"/>
+				{{/if}}
+				<p>Nearby</p>
+			</li>
+		</a>
+			
+<!-- 		<a  href="/createEvent">
 			<li>
 				<img src="more.png"/>
 				<p>More</p>
 			</li>
-		</a>
+		</a> -->
 
 		<a  class="signout">
 			<li>

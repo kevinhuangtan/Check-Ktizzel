@@ -69,15 +69,14 @@ Template.eventTitle.events({
 			userName = ""
 			userOrganization = ""
 		}
-		var eventHost = {'name': userName, 'email':user.emails[0].address, 'organization': userOrganization}
 		var attending = [];
 		attending.push(Meteor.userId());
-		var eventSession = {'name': eventName, 'host': Meteor.userId(), 'host_info':eventHost, 'attending': attending, 'description': eventDescription}
+		var eventSession = {'name': eventName, 'host': Meteor.userId(),'attending': attending, 'description': eventDescription}
 		Session.set('eventSession', eventSession)
 		Router.go('eventDateAndTime');
 	},
 	'click #delete':function(){
-		Router.go('splash')
+		Router.go('/')
 	},
 	'click #next':function(){
 		Router.go('eventDateAndTime')
@@ -94,8 +93,82 @@ Template.eventDateAndTime.helpers({
 		}
 		// console.log(Geolocation.latLng())
 		return Geolocation.latLng() || { lat: 0, lng: 0 };
+	},
+	dayOption :function(){
+		var days = []
+		var thisDay = new Date().getDate()
+		for (var i = 1; i <= 31; i++){
+			var day = {'index': i}
+			if(i == thisDay){
+				day['selected'] = true
+			}
+			days.push(day)
+		} 
+		return days
+	},
+	monthOption : function(){
+		var months = []
+		var thisMonth = new Date().getMonth() + 1
+		for (var i = 1; i <= 12; i++){
+			var month = {'index': i}
+			if(i == thisMonth){
+				month['selected'] = true
+			}
+			months.push(month)
+		} 
+		return months		
+	},
+	hourOption : function(){
+		var hours = []
+		var thisHour = new Date().getHours()%12
+		for (var i = 1; i <= 12; i++){
+			var hour = {'index': i}
+			if(i == thisHour){
+				hour['selected'] = true
+			}
+			hours.push(hour)
+		} 
+		return hours		
+	},
+	endHourOption : function(){
+		var hours = []
+		var thisHour = new Date().getHours()%12
+		thisHour+=1
+		for (var i = 1; i <= 12; i++){
+			var hour = {'index': i}
+			if(i == thisHour){
+				hour['selected'] = true
+			}
+			hours.push(hour)
+		} 
+		return hours		
+	},
+	amOption : function(){
+		var AMPM = [{'value':'AM'},{'value':'PM'}]
+		var thisHour = new Date().getHours()
+		var ampm = Math.floor(thisHour/12)
+		if(ampm==0){ //AM
+			AMPM[0]['selected'] = true
+		}
+		else{ //PM
+			AMPM[1]['selected'] = true
+		}
+		return AMPM		
+	},
+	minuteOption : function(){
+		var minutes = []
+		var thisMinute = new Date().getMinute() + 1
+		for (var i = 1; i <= 12; i++){
+			var minute = {'index': i}
+			if(i == thisMinute){
+				minute['selected'] = true
+			}
+			minutes.push(minute)
+		} 
+		return minutes		
 	}
 })
+
 
 Template.eventDateAndTime.events({
 	'submit form': function(event){
@@ -109,8 +182,10 @@ Template.eventDateAndTime.events({
 		if (target.endAmpm.value == "PM"){
 			endPM = endPM + 12
 		}
+
+		
 		var month = Number(target.month.value) - 1
-		var date = Number(target.date.value) + 1
+		var date = Number(target.date.value)
 		var startDate = new Date(target.year.value, month, date, Number(target.startHour.value) + startPM, target.startMinute.value);
 		var endDate = new Date(target.year.value, month, date, Number(target.endHour.value) + endPM, target.endMinute.value);
 		var eventSession = Session.get('eventSession');
@@ -146,6 +221,9 @@ Template.eventDateAndTime.events({
 		Router.go('eventLocation')
 	}
 });
+
+
+////////////////////
 Template.eventLocation.events({
 	'submit form': function(event){
 		event.preventDefault()
@@ -155,7 +233,6 @@ Template.eventLocation.events({
 		var id = checkEvents.insert({
 			name: eventSession['name'],
 			host: eventSession['host'],
-			host_info: eventSession['host_info'],
 			attending: eventSession['attending'],
 			dateParsed: eventSession['dateParsed'],
 			description: eventSession['description'],
@@ -167,7 +244,6 @@ Template.eventLocation.events({
 		var hostEvents = []
 		if(Meteor.user().profile.hostEvents){
 			hostEvents = Meteor.user().profile.hostEvents
-
 		}
 		hostEvents.push(id)
 
@@ -204,134 +280,13 @@ Template.eventLocation.events({
 	}
 });
 
-// Template.eventLocation.onRendered(function(){
-// 	Session.set('address', "Locate On Map")
-// 	var map;
-//     var markersArray = [];
-//     var geoLocation = Session.get('geoLocation') || { lat: 40.7, lng: -74 };
-// 	function initialize() {
-//         var mapCanvas = document.getElementById('map-canvas');
-//         var mapOptions = {
-//           center: new google.maps.LatLng(geoLocation.lat,geoLocation.lng),
-//           zoom: 15,
-//           mapTypeId: google.maps.MapTypeId.ROADMAP,
-//            disableDefaultUI: true,
-//         }
-//         map = new google.maps.Map(mapCanvas, mapOptions)
-//     	google.maps.event.addListener(map, "click", function(event)
-//         {
-//             // place a marker
-//             placeMarker(event.latLng);
-
-//             // display the lat/lng in your form's lat/lng fields
-//             document.getElementById("latFld").value = event.latLng.lat();
-//             document.getElementById("lngFld").value = event.latLng.lng();
-//         });
-// 	}
-
-//     function placeMarker(location) {
-//         // first remove all markers if there are any
-//         deleteOverlays();
-
-//         var marker = new google.maps.Marker({
-//             position: location, 
-//             map: map
-//         });
-
-//         // add marker in markers array
-//         markersArray.push(marker);
-//     }
-
-//     // Deletes all markers in the array by removing references to them
-//     function deleteOverlays() {
-//         if (markersArray) {
-//             for (i in markersArray) {
-//                 markersArray[i].setMap(null);
-//             }
-//         markersArray.length = 0;
-//         }
-//     }
-//     initialize();
-// });
-/*
-var map;
-var infowindow;
->>>>>>> 3972bdf0287b61fbb54282cb85ed447a36e44e7e
-
-function initialize() {
-  var currentCenter = new google.maps.LatLng(geoLocation.lat,geoLocation.lng);
-
-  map = new google.maps.Map(document.getElementById('map-canvas'), {
-    center: currentCenter,
-    zoom: 15
-  });
-
-  var request = {
-    location: currentCenter,
-    radius: 500,
-    types: ['establishment']
-  };
-  infowindow = new google.maps.InfoWindow();
-  var service = new google.maps.places.PlacesService(map);
-  service.nearbySearch(request, callback);
-}
-
-function callback(results, status) {
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      createMarker(results[i]);
-    }
-  }
-}
-
-function createMarker(place) {
-  var placeLoc = place.geometry.location;
-  var marker = new google.maps.Marker({
-    map: map,
-    position: place.geometry.location
-  });
-
-  google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(place.name);
-    infowindow.open(map, this);
-  });
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);*/
-
 if (Meteor.isClient) {
-	Meteor.startup(function() {
-		GoogleMaps.load({v:'3', key:'AIzaSyA3IaCGmNfltsyk5fyATz-icw-D5VFhSYw', libraries:'places'});
-	});
-	window.onload = function() {
-		var autocomplete = new google.maps.places.Autocomplete(
-		  (document.getElementById('autocomplete')),{types: ['geocode'] }
-		);
-	};
-/*
-  var defaultBounds = new google.maps.LatLngBounds(
-    new google.maps.LatLng(geoLocation.lat-0.5,geoLocation.lng-0.5),
-    new google.maps.LatLng(geoLocation.lat+0.5,geoLocation.lng+0.5));
 
-  var input = document.getElementById('autocomplete');
-  var options = {
-    bounds: defaultBounds,
-    types: ['establishment']
-  };
-
-  autocomplete = new google.maps.places.Autocomplete(input, options);*/
+  Meteor.startup(function() {
+    GoogleMaps.load();
+  });
 
   Template.eventLocation.helpers({
-	myLocation: function () {
-		// return 0, 0 if the location isn't ready
-		if(Geolocation.latLng()){
-			geoLocation = Geolocation.latLng()
-			Session.set('geoLocation', geoLocation);
-			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.geoLocation": geoLocation}});
-		}
-		// console.log(Geolocation.latLng())
-		return Geolocation.latLng() || { lat: 0, lng: 0 };
-	},
     exampleMapOptions: function() {
       // Make sure the maps API has loaded
       if (GoogleMaps.loaded()) {
@@ -340,21 +295,27 @@ if (Meteor.isClient) {
 
         return {
           // center: new google.maps.LatLng(-37.8136, 144.9631),
-          center: new google.maps.LatLng(geoLocation.lat,geoLocation.lng),
-          zoom: 15,
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
+           center: new google.maps.LatLng(geoLocation.lat,geoLocation.lng),
+           zoom: 15,
+           mapTypeId: google.maps.MapTypeId.ROADMAP,
           disableDefaultUI: true,
         };
       }
     },
     devGeolocation:function(){
       return Session.get('devGeolocation');
+    },
+    address: function(){
+    	return Session.get('address')
     }
   });
+
   Template.eventLocation.onRendered(function(){
       var location = Session.get('geoLocation');
-      Session.set('devGeolocation', location)
+      Session.set('devGeolocation', location);
+      Session.set('createEventLocation', location);
   })
+ 
 
   Template.eventLocation.onCreated(function() {
     // We can use the `ready` callback to interact with the map API once the map is ready.
@@ -365,6 +326,7 @@ if (Meteor.isClient) {
         map: map.instance
       });
       // Session.set('currentMarker', marker);
+ 
 
       google.maps.event.addListener(map.instance, 'click', function(event) {
       	document.getElementById("latFld").value = event.latLng.lat();
@@ -374,20 +336,12 @@ if (Meteor.isClient) {
         marker = new google.maps.Marker({
           position: { lat: event.latLng.lat(), lng: event.latLng.lng() },
           map: map.instance
-        });
+         });
+
       });
     });
   });
 }
-
-Template.eventLocation.helpers({
-
-	address: function(){
-		return Session.get('address')
-
-	}
-})
-
 
 
 

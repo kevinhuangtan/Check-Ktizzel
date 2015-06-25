@@ -1,0 +1,23 @@
+<!-- View Event Page -->
+<template name = "attendeeList">
+
+    <div class="upper-bar">
+        <img id="back" src="back.png">
+        <img id="more" src="more.png">
+        <p>Attendee List</p>   
+    </div>
+    <div class="events-container">
+        {{#each attendees}}
+        <div class="panel panel-user panel-default" style="border-left-color: {{borderColor}}">
+            <div class="panel-body">
+                <li class="event-name">{{fullname}}</li>
+                <ul>
+                    <li>{{organization}}</li>
+                    <li>{{email}}</li>
+                </ul>
+            </div>
+        </div>
+        {{/each}}
+    </div>     
+</template>
+
