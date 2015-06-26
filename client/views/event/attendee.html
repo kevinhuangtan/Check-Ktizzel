@@ -1,0 +1,35 @@
+<template name = "attendee">
+
+    <div class="upper-bar">
+        <img id="back" src="back.png">
+        <img id="more" src="more.png">
+        <p>{{name}}</p>
+    </div>
+    <form class="profile-form">
+	    <div class="panel panel-default">
+	        <div class="panel-body">
+	            <div class="info-panel-text profile-font">
+	                <p class="entry-title">Name </p>
+	                <p class="entry-request detail-entry">{{name}}</p>
+	                <hr style="position:relative; width: 100%">
+
+	                <p class="entry-title">Gender </p>
+	                <p class="entry-request detail-entry">{{gender}}</p>
+	                <hr style="position:relative; width: 100%">
+
+	                <p class="entry-title">Email </p>
+	                <p class="entry-request detail-entry">{{email}}</p>
+	                <hr style="position:relative; width: 100%">
+
+	                <p class="entry-title">Phone </p>
+	                <p class="entry-request detail-entry">{{phone}}</p>
+	                <hr style="position:relative; width: 100%">
+
+	                <p class="entry-title">Organization </p>
+	                <p class="entry-request detail-entry">{{organization}}</p>
+	            </div>
+	        </div>
+	    </div>
+    </form>	
+
+</template>
