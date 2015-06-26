@@ -130,8 +130,13 @@
 							<option>55</option>
 						</select>
 						<select class="newcol-xs-5" name="endAmpm">
-							<option> AM </option>
-							<option> PM </option>
+							{{#each amOption}}
+								{{#if selected}}
+									<option selected="selected">{{value}}</option>
+								{{else}}
+									<option>{{value}}</option>
+								{{/if}}
+							{{/each}}
 						</select>
 					</div>
                 </div>
