@@ -21,6 +21,7 @@ if (typeof(Number.prototype.toRad) === "undefined") {
 
 var colorsCheckIn = ['#003169', '#D0021B', '#F5A623','#50E3C2', '#003169', '#B8E986']
 var colorIndexCheckIn = 0;
+var timeBufferMilliseconds = 1800000; 
 
 var eventYoureAtDistance = .1 //miles
 
@@ -83,7 +84,7 @@ Template.checkIn.helpers({
 					locations[i]['checkedIn'] = false
 				}
 
-				if(new Date() < locations[i].startDate){
+				if( (locations[i].endDate - new Date()) >  -timeBufferMilliseconds && (new Date() - locations[i].startDate) >  -timeBufferMilliseconds){
 					nearbyLocations.push(locations[i]);
 					if(locations[i].distance < eventYoureAtDistance){
 						Session.set('eventYoureAt', locations[i])
