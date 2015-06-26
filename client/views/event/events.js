@@ -63,6 +63,7 @@ Template.events.events({
 	'click .panel-user': function(event){
 		Session.set("currentEvent", this._id);
 		Router.go('event');
+		console.log(Session.get("currentEvent"))
 	}
 })
 

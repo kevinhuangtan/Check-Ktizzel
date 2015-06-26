@@ -12,5 +12,7 @@ Router.map(function() {
 	this.route("attendeeList", {path: '/attendeeList'});
 	this.route("events", {path: '/events'});
 	this.route("nearby", {path: '/nearby'});
+	this.route("attendee", {path: '/attendee'});
+	this.route("nearby", {path: '/nearby'});
 });
 

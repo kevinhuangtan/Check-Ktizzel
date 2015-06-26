@@ -19,6 +19,10 @@ Template.attendeeList.helpers({
 Template.attendeeList.events({
 	'click #back': function(){
 		Router.go('/')
+	},
+	'click .panel-user': function(){
+		Session.set("attendeeEmail", this.email);
+		Router.go('attendee');
 	}
 })
 
