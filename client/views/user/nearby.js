@@ -30,13 +30,10 @@ var timeBufferMillisecs = timeBuffer * 1000 * 60
 // set for other views to access location
 Template.nearby.helpers({
 	myLocation: function () {
-		// Meteor.subscribe("events");
-		// console.log(Meteor.user().profile)
 		geoLocation = Geolocation.latLng()
 		if(geoLocation){
 			Session.set('geoLocation', geoLocation);
 			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.geoLocation": geoLocation}});
-			// Meteor.subscribe("events"); //update events based on user location	
 			return Meteor.user().profile.geoLocation
 		}
 		else{
@@ -53,7 +50,6 @@ Template.nearby.onRendered(function(){
 
 Template.nearby.helpers({
 	borderColor:function(){
-		// console.log(colorIndexNearby)
 		var color = colorsNearby[colorIndexNearby]
 		if(colorIndexNearby < colorsNearby.length - 1){
 			colorIndexNearby = colorIndexNearby + 1
@@ -68,7 +64,6 @@ Template.nearby.helpers({
 		colorIndexNearby = 0
 		return Session.get('past')
 	},
-	// MON, MAR 9, 9:00AM - 11:15AM
 	nearbyEvents : function(){
 		var locations = checkEvents.find().fetch(); 
 		var myGeolocation = Geolocation.latLng() || Meteor.user().profile.geoLocation;
@@ -97,6 +92,12 @@ Template.nearby.helpers({
 						atEvent = true
 					}
 				}
+			}
+		for (var i = 0; i < locations.length; i++ ){
+			var locGeolocation = locations[i].geoLocation || {'lat':0, 'lng':0}
+			locations[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);
+			if(locations[i].distance < 10){
+				nearbyLocations.push(locations[i])	
 			}
 		}
 		return nearbyLocations; 

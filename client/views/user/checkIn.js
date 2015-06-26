@@ -23,17 +23,14 @@ var colorsCheckIn = ['#003169', '#D0021B', '#F5A623','#50E3C2', '#003169', '#B8E
 var colorIndexCheckIn = 0;
 
 var eventYoureAtDistance = .1 //miles
-// Meteor.subscribe("events");
-// set for other views to access location
+
 Template.checkIn.helpers({
 	myLocation: function () {
-		// Meteor.subscribe("events");
-		// console.log(Meteor.user().profile)
+
 		geoLocation = Geolocation.latLng()
 		if(geoLocation){
 			Session.set('geoLocation', geoLocation);
 			Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.geoLocation": geoLocation}});
-			// Meteor.subscribe("events"); //update events based on user location	
 			return Meteor.user().profile.geoLocation
 		}
 		else{
@@ -53,7 +50,6 @@ Template.checkIn.helpers({
 		return Session.get('eventYoureAt')
 	},
 	borderColor:function(){
-		// console.log(colorIndexCheckIn)
 		var color = colorsCheckIn[colorIndexCheckIn]
 		if(colorIndexCheckIn < colorsCheckIn.length - 1){
 			colorIndexCheckIn = colorIndexCheckIn + 1
@@ -68,7 +64,6 @@ Template.checkIn.helpers({
 		colorIndexCheckIn = 0
 		return Session.get('past')
 	},
-	// MON, MAR 9, 9:00AM - 11:15AM
 	eventsYoureAt : function(){
 		var locations = checkEvents.find().fetch(); 
 		var myGeolocation = Geolocation.latLng() || Meteor.user().profile.geoLocation;

@@ -38,7 +38,7 @@ select {
 	}
 }
 
-@media screen and (min-width: 500px){
+@media screen and (min-width: 600px){
 	.entry-title{
 		float: left;
 	}
@@ -144,7 +144,6 @@ select {
 	background: #E6E6E6;
 	border: 1px solid #979797;
 	border-radius: 8px;
-	/* Next: */
 	font-family: AvenirNext-Regular;
 	font-size: 1em;
 	color: #575757;

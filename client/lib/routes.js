@@ -5,13 +5,14 @@ Router.map(function() {
 	this.route("eventTitle", {path: '/createEvent'});
 	this.route("eventDateAndTime", {path: '/eventDateAndTime'});
 	this.route("eventLocation", {path: '/eventLocation'});
-	this.route("checkIn", {path: '/checkIn'});
+	this.route("checkIn", {path: '/'});
 	this.route("scrollEvents", {path: '/scrollEvents'});
 	this.route("profile", {path: '/profile'});
 	this.route("mapDemo", {path: '/mapdemo'});
 	this.route("attendeeList", {path: '/attendeeList'});
 	this.route("events", {path: '/events'});
-	this.route("nearby", {path: '/'});
+	this.route("nearby", {path: '/nearby'});
 	this.route("attendee", {path: '/attendee'});
+	this.route("nearby", {path: '/nearby'});
 });
 

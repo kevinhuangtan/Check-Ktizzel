@@ -1,4 +1,25 @@
 
+function distance(lon1, lat1, lon2, lat2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = (lat2-lat1).toRad();  // Javascript functions in radians
+  var dLon = (lon2-lon1).toRad(); 
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * 
+          Math.sin(dLon/2) * Math.sin(dLon/2); 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c; // Distance in km
+  d = d*.62137 //to miles
+  return d.toFixed(1);
+}
+
+/** Converts numeric degrees to radians */
+if (typeof(Number.prototype.toRad) === "undefined") {
+  Number.prototype.toRad = function() {
+    return this * Math.PI / 180;
+  }
+}
+
+
 Template.event.onRendered(function(){
 	var result = checkEvents.findOne({_id: Session.get("currentEvent")})
 	var map;
@@ -27,50 +48,40 @@ Template.event.onRendered(function(){
 
 
 Template.event.helpers({
-	checkedin : function(){
+	checkedIn : function(){
 		var eventId = Session.get("currentEvent");
+		Meteor.call('eventHost', eventId, function(error, result){
+			Session.set('currentEventHost', result);
+		});
+		
 		var thisEvent = checkEvents.findOne(eventId);
-		console.log(thisEvent)
+		var myGeolocation = Geolocation.latLng() || Meteor.user().profile.geoLocation;
+		var locGeolocation = thisEvent.geoLocation
 		if(thisEvent.attending.indexOf(Meteor.userId()) > -1){ //in array
 			return true
 		}
 		else{
 			return false
 		}
-		
+	},
+	nearby : function(){
+		if(distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat) > .01){
+			return true
+		}
+		else{
+			return false
+		}
+	},
+	eventHost : function(){
+		// console.log(Session.get('currentEventHost'))
+		return Session.get('currentEventHost')
 	},
 	currentEvent : function(){
 		var id = Session.get("currentEvent")
 
 		var result = checkEvents.findOne({_id: Session.get("currentEvent")})
 		document.title = result.name;
-		// console.log(result)
 		return result		
-	},
-	attendees : function(){
-		var result = checkEvents.findOne({_id: Session.get("currentEvent")})
-		var attendees = []
-		var attendee;
-		var email;
-		var email2;
-		for (var i = 0; i < result.attending.length; i++){
-			attendee = result.attending[i];
-			// attend.ees.push(attendee);   
-			email = Meteor.users.findOne({_id: attendee});
-			email2 = email.emails[0].address
-
-			attendees.push(email2);
-		}
-		return attendees
-	},
-	checkedIn: function(){
-		var result = checkEvents.findOne({_id: Session.get("currentEvent")})
-		if(result.attending.indexOf(Meteor.userId())!=-1 && Meteor.user()){
-			return true
-		}
-		else{
-			return false
-		}
 	},
 	address : function(){
 		if(Session.get('eventLocation')){
@@ -105,9 +116,6 @@ Template.event.events({
 	'click .check-btn':function(){
 		var eventId = Session.get("currentEvent")
 		var thisEvent = checkEvents.findOne(eventId);
-		console.log( Meteor.userId())
-		console.log(thisEvent.attending)
-		// arrValues.indexOf('Sam') > -1
 		if(thisEvent.attending.indexOf(Meteor.userId()) > -1){ //in array
 			console.log('already in')
 		}

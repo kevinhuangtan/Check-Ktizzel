@@ -45,7 +45,7 @@ Template.signin.events({
 		var user = {'email':event.target.email.value, 'password' :event.target.password.value}
 		Meteor.loginWithPassword(user['email'], user['password'], 
 		function(error){
-			Session.set('error', error)
+			Session.set('error', error.reason)
 
 		});
 

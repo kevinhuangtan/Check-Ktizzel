@@ -69,10 +69,9 @@ Template.eventTitle.events({
 			userName = ""
 			userOrganization = ""
 		}
-		var eventHost = {'name': (userName || ""), 'email':user.emails[0].address, 'organization': (userOrganization || "")}
 		var attending = [];
 		attending.push(Meteor.userId());
-		var eventSession = {'name': eventName, 'host': Meteor.userId(), 'host_info':eventHost, 'attending': attending, 'description': eventDescription}
+		var eventSession = {'name': eventName, 'host': Meteor.userId(),'attending': attending, 'description': eventDescription}
 		Session.set('eventSession', eventSession)
 		Router.go('eventDateAndTime');
 	},
@@ -94,6 +93,79 @@ Template.eventDateAndTime.helpers({
 		}
 		// console.log(Geolocation.latLng())
 		return Geolocation.latLng() || { lat: 0, lng: 0 };
+	},
+	dayOption :function(){
+		var days = []
+		var thisDay = new Date().getDate()
+		for (var i = 1; i <= 31; i++){
+			var day = {'index': i}
+			if(i == thisDay){
+				day['selected'] = true
+			}
+			days.push(day)
+		} 
+		return days
+	},
+	monthOption : function(){
+		var months = []
+		var thisMonth = new Date().getMonth() + 1
+		for (var i = 1; i <= 12; i++){
+			var month = {'index': i}
+			if(i == thisMonth){
+				month['selected'] = true
+			}
+			months.push(month)
+		} 
+		return months		
+	},
+	hourOption : function(){
+		var hours = []
+		var thisHour = new Date().getHours()%12
+		for (var i = 1; i <= 12; i++){
+			var hour = {'index': i}
+			if(i == thisHour){
+				hour['selected'] = true
+			}
+			hours.push(hour)
+		} 
+		return hours		
+	},
+	endHourOption : function(){
+		var hours = []
+		var thisHour = new Date().getHours()%12
+		thisHour+=1
+		for (var i = 1; i <= 12; i++){
+			var hour = {'index': i}
+			if(i == thisHour){
+				hour['selected'] = true
+			}
+			hours.push(hour)
+		} 
+		return hours		
+	},
+	amOption : function(){
+		var AMPM = [{'value':'AM'},{'value':'PM'}]
+		var thisHour = new Date().getHours()
+		var ampm = Math.floor(thisHour/12)
+		if(ampm==0){ //AM
+			AMPM[0]['selected'] = true
+		}
+		else{ //PM
+			AMPM[1]['selected'] = true
+		}
+		return AMPM		
+	},
+	minuteOption : function(){
+		var minutes = []
+		var thisMinute = new Date().getMinute() + 1
+		for (var i = 1; i <= 12; i++){
+			var minute = {'index': i}
+			if(i == thisMinute){
+				minute['selected'] = true
+			}
+			minutes.push(minute)
+		} 
+		return minutes		
 	}
 })
 
@@ -110,8 +182,10 @@ Template.eventDateAndTime.events({
 		if (target.endAmpm.value == "PM"){
 			endPM = endPM + 12
 		}
+
+		
 		var month = Number(target.month.value) - 1
-		var date = Number(target.date.value) + 1
+		var date = Number(target.date.value)
 		var startDate = new Date(target.year.value, month, date, Number(target.startHour.value) + startPM, target.startMinute.value);
 		var endDate = new Date(target.year.value, month, date, Number(target.endHour.value) + endPM, target.endMinute.value);
 		var eventSession = Session.get('eventSession');
@@ -147,6 +221,9 @@ Template.eventDateAndTime.events({
 		Router.go('eventLocation')
 	}
 });
+
+
+////////////////////
 Template.eventLocation.events({
 	'submit form': function(event){
 		event.preventDefault()
@@ -156,7 +233,6 @@ Template.eventLocation.events({
 		var id = checkEvents.insert({
 			name: eventSession['name'],
 			host: eventSession['host'],
-			host_info: eventSession['host_info'],
 			attending: eventSession['attending'],
 			dateParsed: eventSession['dateParsed'],
 			description: eventSession['description'],
@@ -205,6 +281,7 @@ Template.eventLocation.events({
 });
 
 if (Meteor.isClient) {
+
   Meteor.startup(function() {
     GoogleMaps.load();
   });
@@ -227,13 +304,19 @@ if (Meteor.isClient) {
     },
     devGeolocation:function(){
       return Session.get('devGeolocation');
+    },
+    address: function(){
+    	return Session.get('address')
     }
   });
+
   Template.eventLocation.onRendered(function(){
       var location = Session.get('geoLocation');
-      Session.set('devGeolocation', location)
+      Session.set('devGeolocation', location);
+      Session.set('createEventLocation', location);
   })
  
+
   Template.eventLocation.onCreated(function() {
     // We can use the `ready` callback to interact with the map API once the map is ready.
     GoogleMaps.ready('exampleMap', function(map) {
