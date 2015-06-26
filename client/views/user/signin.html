@@ -1,4 +1,37 @@
 <template name ="signin">
+	{{accounts_error}}
+	<br>
+	<div class="upper-bar">
+			<img id="delete" src="Delete-50.png"/>
+			<p class="page-title">Log In</p>
+	</div>
+	<form class="login">
+        <div class="panel panel-default create-field">
+            <div class="panel-body">
+                <input class="signInEntry" type="text" name="email" placeholder="Email address">
+                <hr style="width: 100%">
+                <input class="signInEntry" type="password" name="password" placeholder="Password">
+            </div>
+        </div>
+		<button type="submit" class="btn next-button create-field next-button-1st">Log in</button>
+		<br>
+	</form>
+	<br>
+	<p style="margin-left: 20px; text-align: left; float: left; font: 4px; color: #0099CC">Forgot password?</p>
+	<hr class="or">
+	<p style="margin-left: 20px; text-align: left; float: left; font: 4px">No account?</p>
+	<br>
+	<form class="signin">
+	    <div class="panel panel-default create-field">
+	        <div class="panel-body">
+                <input class="signInEntry" type="text" name="email" placeholder="Email address">
+                <hr style="width: 100%">
+                <input class="signInEntry" type="password" name="password" placeholder="Password">
+	        </div>
+	    </div>
+		<button type="submit" class="btn next-button create-field next-button-1st">Sign up for free</button>
+		<br>
+	</form>
 	<div class="upper-bar">
         <p>Log In</p>
         
