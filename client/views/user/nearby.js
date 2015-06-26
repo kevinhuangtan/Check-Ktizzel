@@ -70,29 +70,6 @@ Template.nearby.helpers({
 		var nearbyLocations = []
 		var atEvent = false
 		var currentDate = new Date();
-		console.log(locations)
-		for (var i = 0; i < locations.length; i++ ){
-			var locGeolocation = locations[i].geoLocation || {'lat':0, 'lng':0}
-			locations[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);
-
-			// nearby events
-			if(locations[i].distance < closeByDistance){
-			
-				if(locations[i].attending.indexOf(Meteor.userId()) > -1 ){
-						locations[i]['checkedIn'] = true
-				}
-				else{
-					locations[i]['checkedIn'] = false
-				}
-
-				if(currentDate < locations[i].endDate){
-					nearbyLocations.push(locations[i]);
-					if((locations[i].distance < eventYoureAtDistance) && (locations[i].startDate - currentDate < timeBufferMillisecs)) {
-						Session.set('eventYoureAt', locations[i])
-						atEvent = true
-					}
-				}
-			}
 		for (var i = 0; i < locations.length; i++ ){
 			var locGeolocation = locations[i].geoLocation || {'lat':0, 'lng':0}
 			locations[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);

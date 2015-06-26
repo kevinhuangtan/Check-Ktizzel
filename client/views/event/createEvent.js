@@ -5,7 +5,7 @@
   'libraries': 'geometry,places'
 });*/
 
-// CONSTANTS////////
+////////////////////////// CONSTANTS//////////////////////////
 var WEEKDAY = new Array(7);
 WEEKDAY[0]=  "SUN";
 WEEKDAY[1] = "MON";
@@ -28,7 +28,6 @@ MONTH[8] = "SEP"
 MONTH[9] = "OCT"
 MONTH[10] = "NOV"
 MONTH[11] = "DEC"
-
 
 
 Template.eventTitle.onRendered(function(){
@@ -222,8 +221,7 @@ Template.eventDateAndTime.events({
 	}
 });
 
-
-////////////////////
+//////////////////////////////////////////////////
 Template.eventLocation.events({
 	'submit form': function(event){
 		event.preventDefault()
