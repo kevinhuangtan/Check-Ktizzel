@@ -74,6 +74,7 @@ Template.checkIn.helpers({
 		var myGeolocation = Geolocation.latLng() || Meteor.user().profile.geoLocation;
 		var nearbyLocations = []
 		var atEvent = false
+		var currentDate = new Date();
 		console.log(locations)
 		for (var i = 0; i < locations.length; i++ ){
 			var locGeolocation = locations[i].geoLocation || {'lat':0, 'lng':0}
