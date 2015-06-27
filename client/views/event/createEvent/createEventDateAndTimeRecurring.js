@@ -56,6 +56,8 @@ Template.eventDateAndTimeRecurring.onRendered(function(){
 		var endAmpm = $('#endAmpm').val()
 		var timeSlot = {'dayOfWeek': dayOfWeek, 'startHour': startHour, 'startMinute': startMinute,'startAmpm': startAmpm, 'endHour':endHour, 'endMinute':endMinute, 'endAmpm': endAmpm}
 		Session.set('timeSlot', timeSlot)
+		Session.set('selectedStartYear', new Date().getYear())
+		Session.set('selectedStartMonth', new Date().getMonth())
 		
 })
 

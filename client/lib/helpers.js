@@ -18,6 +18,33 @@ if (typeof(Number.prototype.toRad) === "undefined") {
   }
 }
 
+nextStartEndDates = function(eventTimes)
+
+  var numTimes = eventTimes.length
+  var nextStartDate = eventTimes[numTimes - 1][0]
+  var nextEndDate = eventTimes[numTimes - 1][1]
+  var dates = []
+
+  for (var j = 0; j < numTimes; j++) {
+    if(j > 0) {
+      if((eventTimes[j][0] > currentDate) && (eventTimes[j-1][1] < currentDate)) {
+        nextStartDate = eventTimes[j][0];
+        nextEndDate = eventTimes[j][1];
+      } else if((eventTimes[j][0] < currentDate) && (eventTimes[j][1] > currentDate)) {
+        nextStartDate = eventTimes[j][0];
+        nextEndDate = eventTimes[j][1];
+      }
+    } else if(eventTimes[0][1] > currentDate) {
+      nextStartDate = eventTimes[0][0];
+      nextEndDate = eventTimes[0][1];
+    }
+  }
+  dates.push(nextStartDate)
+  dates.push(nextEndDate)
+
+  return dates
+}
+
 
 parseDate = function (startDate,endDate){
     var WEEKDAY = new Array(7);

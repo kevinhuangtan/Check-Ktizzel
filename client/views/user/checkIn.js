@@ -85,28 +85,11 @@ Template.checkIn.helpers({
 			// console.log(myEvent)
 			// nearby events
 			if(myEvent.distance < eventYoureAtDistance){
-				console.log(myEvent)
+				
 				var eventTimes = myEvent['eventTimes']
-				var numTimes = eventTimes.length
-				var nextStartDate = eventTimes[numTimes - 1][0]
-				var nextEndDate = eventTimes[numTimes - 1][1]
-
-				for (var j = 0; j < numTimes; j++) {
-					if(j > 0) {
-						if((eventTimes[j][0] > currentDate) && (eventTimes[j-1][1] < currentDate)) {
-							nextStartDate = eventTimes[j][0];
-							nextEndDate = eventTimes[j][1];
-						} else if((eventTimes[j][0] < currentDate) && (eventTimes[j][1] > currentDate)) {
-							nextStartDate = eventTimes[j][0];
-							nextEndDate = eventTimes[j][1];
-						}
-					} else if(eventTimes[0][0] > currentDate) {
-						nextStartDate = eventTimes[0][0];
-						nextEndDate = eventTimes[0][1];
-					}
-				}
-				console.log(nextStartDate)
-				console.log(nextEndDate)
+				nextDates = nextStartEndDates(eventTimes)
+				nextStartDate = nextDates[0]
+				nextEndDate = nextDates[1]
 
 				if(events[i].attending.indexOf(Meteor.userId()) > -1 ){
 					events[i]['checkedIn'] = true
@@ -115,7 +98,7 @@ Template.checkIn.helpers({
 					events[i]['checkedIn'] = false
 				}
 
-				if((currentDate - nextEndDate) > timeBufferMilliseconds && (nextStartDate - currentDate) > timeBufferMilliseconds){
+				if((currentDate < nextEndDate) && (nextStartDate - currentDate) < timeBufferMilliseconds){
 					nearbyEvents.push(events[i]);
 					if(events[i].distance < eventYoureAtDistance){
 						Session.set('eventYoureAt', events[i])
