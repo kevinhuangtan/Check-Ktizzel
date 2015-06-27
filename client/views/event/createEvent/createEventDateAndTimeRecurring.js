@@ -62,10 +62,20 @@ Template.eventDateAndTimeRecurring.onRendered(function(){
 Template.eventDateAndTimeRecurring.events({
 	'submit form': function(event){
 		event.preventDefault()
+		var timeSlot = Session.get('timeSlot')
+		var startPM = 0;
+		var endPM = 0;
+		if (timeSlot['startAmpm'] == "PM"){
+			startPM = startPM + 12
+		}
+		if (timeSlot['endAmpm'] == "PM"){
+			endPM = endPM + 12
+		}
 		var startDate = new Date(event.target.startYear.value,event.target.startMonth.value,event.target.startDate.value)
 		var endDate = new Date(event.target.endYear.value,event.target.endMonth.value,event.target.endDate.value)
 		var dateArray = getDates(startDate, endDate)
-		var time1 = {'day': event.target.day.value, 'startHour': event.target.startHour.value,'startMinute': event.target.startMinute.value, 'endHour': event.target.endHour.value,'endMinute':event.target.endMinute.value}
+		var time1 = {'day': event.target.day.value, 'startHour': event.target.startHour.value + startPM,'startMinute': event.target.startMinute.value, 'endHour': event.target.endHour.value + endPM,'endMinute':event.target.endMinute.value}
+		console.log(time1)
 		var times = [time1]
 		var eventTimes = createEventTimes(dateArray, times)
 		for(var i = 0; i < eventTimes.length; i++){

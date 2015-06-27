@@ -145,7 +145,7 @@ if (Meteor.isClient) {
       // Make sure the maps API has loaded
       if (GoogleMaps.loaded()) {
         // Map initialization options
-        geoLocation = Session.get('geoLocation') || {lat: 0, lng: 0};
+        geoLocation = Session.get('geoLocation') || Meteor.user().profile.geoLocation;
 
         return {
           // center: new google.maps.LatLng(-37.8136, 144.9631),

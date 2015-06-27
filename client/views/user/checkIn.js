@@ -19,6 +19,10 @@ if (typeof(Number.prototype.toRad) === "undefined") {
   }
 }
 
+getNextDates = function(){
+
+}
+
 var colorsCheckIn = ['#003169', '#D0021B', '#F5A623','#50E3C2', '#003169', '#B8E986']
 var colorIndexCheckIn = 0;
 var timeBufferMilliseconds = 1800000; 
@@ -71,33 +75,37 @@ Template.checkIn.helpers({
 		var nearbyEvents = []
 		var atEvent = false
 		var currentDate = new Date();
-		// console.log(locations)
-		// for (var i = 0; i < locations.length; i++ ){
-		// 	var locGeolocation = locations[i].geoLocation || {'lat':0, 'lng':0}
-		// 	locations[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);
-		// console.log(events)
+
 		for (var i = 0; i < events.length; i++ ){
-			var locGeolocation = events[i].geoLocation || {'lat':0, 'lng':0}
+			var locGeolocation = events[i].geoLocation ||  Meteor.user().profile.geoLocation
 			events[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);
 
-			myEvent = events[i]
+			var myEvent = events[i]
+
 			// nearby events
 			if(myEvent < eventYoureAtDistance){
 			
-				eventTimes = myEvent['eventTimes']
+				var eventTimes = myEvent['eventTimes']
+				var numTimes = eventTimes.length
+				var nextStartDate = eventTimes[numTimes][0]
+				var nextEndDate = eventTimes[numTimes][1]
 
-				for (var j = 0; j < eventTimes.length; j++) {
+				for (var j = 0; j < numTimes; j++) {
 					if(j > 0) {
-						if((eventTimes[j][1] > currentDate) && (eventTimes[j-1][2] < currentDate)) {
-							nextStartDate = eventTimes[j][1];
-							nextEndDate = eventTimes[j][2];
+						if((eventTimes[j][0] > currentDate) && (eventTimes[j-1][1] < currentDate)) {
+							nextStartDate = eventTimes[j][0];
+							nextEndDate = eventTimes[j][1];
+						} else if((eventTimes[j][0] < currentDate) && (eventTimes[j][1] > currentDate)) {
+							nextStartDate = eventTimes[j][0];
+							nextEndDate = eventTimes[j][1];
 						}
-					}
-					else {
-						nextStartDate = eventTimes[0][1];
-						nextEndDate = eventTimes[0][2];
+					} else if(eventTimes[0][0] > currentDate) {
+						nextStartDate = eventTimes[0][0];
+						nextEndDate = eventTimes[0][1];
 					}
 				}
+				console.log(nextStartDate)
+				console.log(nextEndDate)
 
 				if(events[i].attending.indexOf(Meteor.userId()) > -1 ){
 					events[i]['checkedIn'] = true

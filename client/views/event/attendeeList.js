@@ -1,9 +1,3 @@
-// Template.attendeeList.onRendered(function(){
-// 	Meteor.call('attendeeList', Session.get("currentEvent"), function(error, result){
-// 	    Session.set('attendees', result);
-// 	});
-// })
-
 
 Template.attendeeList.helpers({
 	attendees : function(){
