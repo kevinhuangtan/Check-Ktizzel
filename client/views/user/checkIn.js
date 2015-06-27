@@ -107,9 +107,10 @@ Template.checkIn.helpers({
 				}
 			}
 		}
-		if(!atEvent){
-			delete Session.keys['eventYoureAt']
-		}
+		// if(!atEvent){
+		// 	delete Session.keys['eventYoureAt']
+		// }
+		console.log(nearbyEvents)
 		return nearbyEvents; 
 	},
 	myCity : function(){
