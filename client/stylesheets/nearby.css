@@ -63,7 +63,8 @@
 .panel-user{
   border-left: solid blue;
   border-left-width: 3px;
-  font-family: "Avenir Next";
+  /*font-family: "Avenir Next";*/
+  font-family: 'Source Sans Pro', sans-serif;
   border-radius: 0;
 }
 .panel-user ul{

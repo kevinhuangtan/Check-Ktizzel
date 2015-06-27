@@ -9,7 +9,8 @@
  background-color: rgba(245,166,35,.85);
   border: none;
   color:white;
-  font-family: HelveticaNeue-Light; 
+  /*font-family: HelveticaNeue-Light; */
+  font-family: 'Source Sans Pro', sans-serif;
   font-weight: 450;
 }
 .update-btn:focus{
@@ -27,7 +28,8 @@
   background-color: rgba(245,166,35,.85);
   border: none;
   color:white;
-  font-family: HelveticaNeue-Light; 
+  /*font-family: HelveticaNeue-Light; */
+  font-family: 'Source Sans Pro', sans-serif;
   font-weight: 450;
 }
 .edit-btn{
