@@ -82,7 +82,7 @@ Template.eventDateAndTimeRecurring.onRendered(function(){
 
 Template.eventDateAndTimeRecurring.events({
 	'submit form': function(event){
-		event.preventDefault()
+		// event.preventDefault()
 		var timeSlots = Session.get('timeSlots')
 		// console.log(timeSlots)
 		var startDate = new Date(event.target.startYear.value, event.target.startMonth.value,event.target.startDate.value)
@@ -99,14 +99,14 @@ Template.eventDateAndTimeRecurring.events({
 		// var times = [time1]
 
 		var eventTimes = createEventTimes(dateArray, timeSlots)
-		for(var i = 0; i < eventTimes.length; i++){
-			// console.log(eventTimes[i])
-		}
+		// for(var i = 0; i < eventTimes.length; i++){
+		// 	// console.log(eventTimes[i])
+		// }
 
-		// var eventSession = Session.get('eventSession');
-		// eventSession['eventTimes'] = eventTimes
-		// Session.set('eventSession', eventSession)
-		// Router.go('eventLocation');
+		var eventSession = Session.get('eventSession');
+		eventSession['eventTimes'] = eventTimes
+		Session.set('eventSession', eventSession)
+		Router.go('eventLocation');
 	},
 	'change .timeslot' : function(){
 
