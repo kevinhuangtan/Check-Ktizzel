@@ -71,7 +71,7 @@ parseDate = function (startDate,endDate){
     MONTH[10] = "NOV"
     MONTH[11] = "DEC"
     
-    var month = startDate.getMonth() - 1
+    var month = startDate.getMonth()
     var date = startDate.getDate()
     var date2 = endDate.getDate()
     ///parsing
