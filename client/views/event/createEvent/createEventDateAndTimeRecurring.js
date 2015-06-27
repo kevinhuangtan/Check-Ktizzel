@@ -150,9 +150,22 @@ Template.eventDateAndTimeRecurring.events({
 		var dayOfWeek = $('#dayOfWeek').val()
 		var startAmpm = $('#startAmpm').val()
 		var endAmpm = $('#endAmpm').val()
-<<<<<<< HEAD
-		var timeSlot = {'dayOfWeek': dayOfWeek, 'startHour': startHour, 'startMinute': startMinute,'startAmpm': startAmpm, 'endHour':endHour, 'endMinute':endMinute, 'endAmpm': endAmpm}
-		Session.set('timeSlot', timeSlot)
+		var timeSlots = Session.get('timeSlots')
+		var startPM = 0
+		var endPM = 0
+		if (startAmpm == "PM"){
+			startPM = startPM + 12
+		}
+		if (endAmpm == "PM"){
+			endPM = endPM + 12
+		}
+		var timeSlot = {'_id': timeSlots.length, 'dayOfWeek': dayOfWeek, 'startHour': startHour + startPM, 'startMinute': startMinute,'startAmpm': startAmpm, 'endHour':endHour + endPM, 'endMinute':endMinute, 'endAmpm': endAmpm}
+		
+		timeSlots.push(timeSlot)
+		Session.set('timeSlots', timeSlots)
+
+		var lengthSlots = timeSlots.length
+		Session.set('activeTimeSlot', lengthSlots - 1)
 
 	},
 	'change #startMonth' : function(event){
@@ -179,24 +192,6 @@ Template.eventDateAndTimeRecurring.events({
 		var date = Number(event.target.value)
 		Session.set('selectedEndDate', date)
 	},
-=======
-		var timeSlots = Session.get('timeSlots')
-		var startPM = 0
-		var endPM = 0
-		if (startAmpm == "PM"){
-			startPM = startPM + 12
-		}
-		if (endAmpm == "PM"){
-			endPM = endPM + 12
-		}
-		var timeSlot = {'_id': timeSlots.length, 'dayOfWeek': dayOfWeek, 'startHour': startHour + startPM, 'startMinute': startMinute,'startAmpm': startAmpm, 'endHour':endHour + endPM, 'endMinute':endMinute, 'endAmpm': endAmpm}
-		
-		timeSlots.push(timeSlot)
-		Session.set('timeSlots', timeSlots)
-
-		var lengthSlots = timeSlots.length
-		Session.set('activeTimeSlot', lengthSlots - 1)
-	},
 	'click .remove-timeslot':function(){
 		var timeSlots = Session.get('timeSlots')
 		timeSlots.pop()
@@ -205,7 +200,6 @@ Template.eventDateAndTimeRecurring.events({
 		var lengthSlots = timeSlots.length
 		Session.set('activeTimeSlot', lengthSlots - 1)
 	}
->>>>>>> origin/development
 });
 Template.eventDateAndTimeRecurring.helpers({
 	myLocation: function () {
