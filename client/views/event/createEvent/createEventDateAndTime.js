@@ -40,6 +40,7 @@ function createEventTimes(dateArray, times){
 Template.eventDateAndTime.onRendered(function(){
 	Session.set('selectedYear', new Date().getYear())
 	Session.set('selectedMonth', new Date().getMonth())
+	Session.set('selectedDate', new Date().getDate())
 })
 
 Template.eventDateAndTime.helpers({
@@ -57,25 +58,17 @@ Template.eventDateAndTime.helpers({
 
 		var selectedYear = Session.get('selectedYear')
 		var selectedMonth = Session.get('selectedMonth')
+		var selectedDate = Session.get('selectedDate')
 		var days = []
-
-		if ((selectedMonth==new Date().getMonth()) && (selectedYear==new Date().getYear())) {			
-			var thisDay = new Date()
-			var numDaysInMonth = new Date(thisDay.getYear(), thisDay.getMonth()+1, 0).getDate();
- 			for (var i = 1; i <= numDaysInMonth; i++){
-				var day = {'index': i}
-				if(i == thisDay.getDate()){
-					day['selected'] = true
-				}
-				days.push(day)
+		var numDaysInMonth = new Date(selectedYear, selectedMonth+1, 0).getDate();
+		for (var i = 1; i <= numDaysInMonth; i++){
+			var day = {'index': i}
+			if(i == selectedDate){
+				day['selected'] = true
 			}
-		} else {
-			var numDaysInMonth = new Date(selectedYear, selectedMonth+1, 0).getDate();
- 			for (var i = 1; i <= numDaysInMonth; i++){
-				var day = {'index': i}
-				days.push(day)
-			}
+			days.push(day)
 		}
+
 		return days
 	},
 	monthOption : function(){
@@ -174,6 +167,10 @@ Template.eventDateAndTime.events({
 	'change #year': function(event){
 		var year = Number(event.target.value)
 		Session.set('selectedYear', year)
+	},
+	'change #date': function(event){
+		var date = Number(event.target.value)
+		Session.set('selectedDate', date)
 	},
 	'click #back':function(){
 		Router.go('eventTitle')

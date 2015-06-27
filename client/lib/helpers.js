@@ -19,10 +19,12 @@ if (typeof(Number.prototype.toRad) === "undefined") {
 }
 
 nextStartEndDates = function(eventTimes){
+
   var numTimes = eventTimes.length
   var nextStartDate = eventTimes[numTimes - 1][0]
   var nextEndDate = eventTimes[numTimes - 1][1]
   var dates = []
+  var currentDate = new Date()
 
   for (var j = 0; j < numTimes; j++) {
     if(j > 0) {

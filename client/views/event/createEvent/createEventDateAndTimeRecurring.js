@@ -75,9 +75,14 @@ Template.eventDateAndTimeRecurring.onRendered(function(){
 		Session.set('activeTimeSlot', 0)
 
 		var timeSlot = {'dayOfWeek': dayOfWeek, 'startHour': startHour, 'startMinute': startMinute,'startAmpm': startAmpm, 'endHour':endHour, 'endMinute':endMinute, 'endAmpm': endAmpm}
-		Session.set('selectedStartYear', new Date().getYear())
-		Session.set('selectedStartMonth', new Date().getMonth())
-		
+		Session.set('timeSlot', timeSlot)
+		var currentDate = new Date()
+		Session.set('selectedStartYear', currentDate.getYear())
+		Session.set('selectedStartMonth', currentDate.getMonth())
+		Session.set('selectedStartDate', currentDate.getDate())
+		Session.set('selectedEndYear', currentDate.getYear())
+		Session.set('selectedEndMonth', currentDate.getMonth())
+		Session.set('selectedEndDate', currentDate.getDate())		
 })
 
 Template.eventDateAndTimeRecurring.events({
@@ -161,6 +166,31 @@ Template.eventDateAndTimeRecurring.events({
 
 		var lengthSlots = timeSlots.length
 		Session.set('activeTimeSlot', lengthSlots - 1)
+
+	},
+	'change #startMonth' : function(event){
+		var month = Number(event.target.value) - 1
+		Session.set('selectedStartMonth', month)
+	},
+	'change #endMonth' : function(event){
+		var month = Number(event.target.value) - 1
+		Session.set('selectedEndMonth', month)
+	},
+	'change #startYear': function(event){
+		var year = Number(event.target.value)
+		Session.set('selectedStartYear', year)
+	},
+	'change #endYear': function(event){
+		var year = Number(event.target.value)
+		Session.set('selectedEndYear', year)
+	},
+	'change #startDate': function(event){
+		var date = Number(event.target.value)
+		Session.set('selectedStartDate', date)
+	},
+	'change #endDate': function(event){
+		var date = Number(event.target.value)
+		Session.set('selectedEndDate', date)
 	},
 	'click .remove-timeslot':function(){
 		var timeSlots = Session.get('timeSlots')
@@ -181,16 +211,38 @@ Template.eventDateAndTimeRecurring.helpers({
 		}
 		return Geolocation.latLng() || { lat: 0, lng: 0 };
 	},
-	dayOption :function(){
+	startDayOption : function(){
+		var selectedYear = Session.get('selectedStartYear')
+		var selectedMonth = Session.get('selectedStartMonth')
+		var selectedDate = Session.get('selectedStartDate')
 		var days = []
-		var thisDay = new Date().getDate()
-		for (var i = 1; i <= 31; i++){
+		var numDaysInMonth = new Date(selectedYear, selectedMonth+1, 0).getDate();
+		console.log(numDaysInMonth)
+		for (var i = 1; i <= numDaysInMonth; i++){
 			var day = {'index': i}
-			if(i == thisDay){
+			if(i == selectedDate){
 				day['selected'] = true
 			}
 			days.push(day)
-		} 
+		}
+
+		return days
+	},
+	endDayOption : function(){
+		var selectedYear = Session.get('selectedEndYear')
+		var selectedMonth = Session.get('selectedEndMonth')
+		var selectedDate = Session.get('selectedEndDate')
+		var days = []
+		var numDaysInMonth = new Date(selectedYear, selectedMonth+1, 0).getDate();
+		console.log(numDaysInMonth)
+		for (var i = 1; i <= numDaysInMonth; i++){
+			var day = {'index': i}
+			if(i == selectedDate){
+				day['selected'] = true
+			}
+			days.push(day)
+		}
+
 		return days
 	},
 	endDayOption:function(){

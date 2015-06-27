@@ -10,7 +10,7 @@
                 <div class="panel-body">
                    	<p class="entry-title">Start Date</p>
                    	<div class="entry-request">
-						<select class="newcol-xs-3 eventOption" value="3" name="startMonth">
+						<select id="startMonth" class="newcol-xs-3 eventOption" value="3" name="startMonth">
 							{{#each monthOption}}
 								{{#if selected}}
 									<option selected="selected">{{index}}</option>
@@ -20,8 +20,8 @@
 
 							{{/each}}
 						</select>
-						<select class="newcol-xs-3 eventOption" name="startDate">
-							{{#each dayOption}}
+						<select id="startDate" class="newcol-xs-3 eventOption" name="startDate">
+							{{#each startDayOption}}
 								{{#if selected}}
 									<option selected="selected">{{index}}</option>
 								{{else}}
@@ -30,7 +30,7 @@
 
 							{{/each}}
 						</select>
-						<select class="newcol-xs-5" name="startYear">
+						<select id="startYear" class="newcol-xs-5" name="startYear">
 							<option>2015</option>
 							<option>2016</option>
 							<option>2017</option>
@@ -41,7 +41,7 @@
 					<hr style="position:relative; width: 100%">
 					<p class="entry-title">End Date</p>
                    	<div class="entry-request">
-						<select class="newcol-xs-3 eventOption" value="3" name="endMonth">
+						<select id="endMonth" class="newcol-xs-3 eventOption" value="3" name="endMonth">
 							{{#each monthOption}}
 								{{#if selected}}
 									<option selected="selected">{{index}}</option>
@@ -61,7 +61,7 @@
 
 							{{/each}}
 						</select>
-						<select class="newcol-xs-5" name="endYear">
+						<select id="endYear" class="newcol-xs-5" name="endYear">
 							<option>2015</option>
 							<option>2016</option>
 							<option>2017</option>

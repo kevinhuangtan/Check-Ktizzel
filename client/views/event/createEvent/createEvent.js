@@ -54,7 +54,8 @@ Template.eventTitle.events({
 		}
 		var attending = [];
 		attending.push(Meteor.userId());
-		var eventSession = {'name': eventName, 'host': Meteor.userId(),'attending': attending, 'description': eventDescription}
+		var eventSession = {'name': eventName, 'host': Meteor.userId(),'attending': attending, 'description': eventDescription, 'recurring': Session.get('recurring')}
+		console.log(Session.get('recurring'))
 		Session.set('eventSession', eventSession)
 		
 		if(Session.get('recurring')){
@@ -92,6 +93,7 @@ Template.eventLocation.events({
 			description: eventSession['description'],
 			eventTimes: eventSession['eventTimes'],
 			endDate: eventSession['endDate'],
+			recurring: eventSession['recurring'],
 			place: eventPlace,
 			geoLocation: location
 		});

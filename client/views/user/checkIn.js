@@ -23,6 +23,7 @@ Template.checkIn.onRendered(function(){
 	document.title = "Home";
 	Session.set('past', false);
 	Session.set('currentPage', 'checkIn')
+	Session.set('atEvent', true)
 })
 
 Template.checkIn.helpers({
@@ -47,6 +48,7 @@ Template.checkIn.helpers({
 		var nearbyEvents = []
 		var atEvent = false
 		var currentDate = new Date();
+		Session.set('atEvent', false)
 
 		for (var i = 0; i < events.length; i++ ){
 			var locGeolocation = events[i].geoLocation ||  Meteor.user().profile.geoLocation
@@ -63,37 +65,27 @@ Template.checkIn.helpers({
 				var nextStartDate = eventTimes[numTimes - 1][0]
 				var nextEndDate = eventTimes[numTimes - 1][1]
 
-				for (var j = 0; j < numTimes; j++) {
-					if(j > 0) {
-						if((eventTimes[j][0] > currentDate) && (eventTimes[j-1][1] < currentDate)) {
-							nextStartDate = eventTimes[j][0];
-							nextEndDate = eventTimes[j][1];
-						} else if((eventTimes[j][0] < currentDate) && (eventTimes[j][1] > currentDate)) {
-							nextStartDate = eventTimes[j][0];
-							nextEndDate = eventTimes[j][1];
-						}
-					} else if(eventTimes[0][1] > currentDate) {
-						nextStartDate = eventTimes[0][0];
-						nextEndDate = eventTimes[0][1];
-					}
-				}
-				nextDates = nextStartEndDates(eventTimes)
-				nextStartDate = nextDates[0]
-				nextEndDate = nextDates[1]
-
 				if(events[i].attending.indexOf(Meteor.userId()) > -1 ){
 					events[i]['checkedIn'] = true
-				}
-				else{
+				} else {
 					events[i]['checkedIn'] = false
 				}
 
 				if((currentDate < nextEndDate) && (nextStartDate - currentDate) < timeBufferMilliseconds){
+					myEvent['dateParsed'] = parseDate(nextStartDate, nextEndDate)
+					nearbyEvents.push(myEvent);
+					if(events[i].distance < eventYoureAtDistance){
+						Session.set('eventYoureAt', events[i])
+						Session.set('atEvent', true)
+					}
 					nearbyEvents.push(events[i]);
 				}
 			}
 		}
 		return nearbyEvents; 
+	},
+	atEvent : function(){
+		return Session.get('atEvent')
 	},
 	myCity : function(){
 		var js;
