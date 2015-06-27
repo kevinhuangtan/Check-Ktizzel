@@ -30,14 +30,14 @@ function createEventTimes(dateArray, times){
 	for (var i = 0; i < times.length; i++){
 		daysOfWeek.push(WEEKDAY_DICT[times[i]['dayOfWeek']])
 	}
-	// console.log(dateArray)
+	console.log(dateArray)
 	for(var i = 0; i < dateArray.length; i++){
 		var day_index = daysOfWeek.indexOf(dateArray[i].getDay())
 		
 		if(day_index > -1){
 			// console.log(times)
 			var year = dateArray[i].getYear() + 1900
-			var month = dateArray[i].getMonth() - 1
+			var month = dateArray[i].getMonth()
 			var date = dateArray[i].getDate()
 			var startDate = new Date(year, month, date, times[day_index]['startHour'], times[day_index]['startMinute'])
 			var endDate = new Date(year, month, date, times[day_index]['endHour'], times[day_index]['endMinute'])
@@ -212,7 +212,7 @@ Template.eventDateAndTimeRecurring.helpers({
 		var selectedDate = Session.get('selectedStartDate')
 		var days = []
 		var numDaysInMonth = new Date(selectedYear, selectedMonth+1, 0).getDate();
-		console.log(numDaysInMonth)
+		// console.log(numDaysInMonth)
 		for (var i = 1; i <= numDaysInMonth; i++){
 			var day = {'index': i}
 			if(i == selectedDate){
@@ -229,7 +229,7 @@ Template.eventDateAndTimeRecurring.helpers({
 		var selectedDate = Session.get('selectedEndDate')
 		var days = []
 		var numDaysInMonth = new Date(selectedYear, selectedMonth+1, 0).getDate();
-		console.log(numDaysInMonth)
+		// console.log(numDaysInMonth)
 		for (var i = 1; i <= numDaysInMonth; i++){
 			var day = {'index': i}
 			if(i == selectedDate){
