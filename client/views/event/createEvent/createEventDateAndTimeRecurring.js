@@ -73,6 +73,10 @@ Template.eventDateAndTimeRecurring.onRendered(function(){
 		timeSlots = [timeSlot]
 		Session.set('timeSlots', timeSlots)
 		Session.set('activeTimeSlot', 0)
+
+		var timeSlot = {'dayOfWeek': dayOfWeek, 'startHour': startHour, 'startMinute': startMinute,'startAmpm': startAmpm, 'endHour':endHour, 'endMinute':endMinute, 'endAmpm': endAmpm}
+		Session.set('selectedStartYear', new Date().getYear())
+		Session.set('selectedStartMonth', new Date().getMonth())
 		
 })
 

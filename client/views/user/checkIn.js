@@ -57,7 +57,7 @@ Template.checkIn.helpers({
 			// console.log(myEvent)
 			// nearby events
 			if(myEvent.distance < eventYoureAtDistance){
-				// console.log(myEvent)
+				
 				var eventTimes = myEvent['eventTimes']
 				var numTimes = eventTimes.length
 				var nextStartDate = eventTimes[numTimes - 1][0]
@@ -77,6 +77,10 @@ Template.checkIn.helpers({
 						nextEndDate = eventTimes[0][1];
 					}
 				}
+				nextDates = nextStartEndDates(eventTimes)
+				nextStartDate = nextDates[0]
+				nextEndDate = nextDates[1]
+
 				if(events[i].attending.indexOf(Meteor.userId()) > -1 ){
 					events[i]['checkedIn'] = true
 				}
