@@ -27,7 +27,7 @@ var colorsCheckIn = ['#003169', '#D0021B', '#F5A623','#50E3C2', '#003169', '#B8E
 var colorIndexCheckIn = 0;
 var timeBufferMilliseconds = 1800000; 
 
-var eventYoureAtDistance = .1 //miles
+var eventYoureAtDistance = .2 //miles
 
 Template.checkIn.helpers({
 	myLocation: function () {
@@ -82,13 +82,14 @@ Template.checkIn.helpers({
 
 			var myEvent = events[i]
 
+			// console.log(myEvent)
 			// nearby events
-			if(myEvent < eventYoureAtDistance){
-			
+			if(myEvent.distance < eventYoureAtDistance){
+				console.log(myEvent)
 				var eventTimes = myEvent['eventTimes']
 				var numTimes = eventTimes.length
-				var nextStartDate = eventTimes[numTimes][0]
-				var nextEndDate = eventTimes[numTimes][1]
+				var nextStartDate = eventTimes[numTimes - 1][0]
+				var nextEndDate = eventTimes[numTimes - 1][1]
 
 				for (var j = 0; j < numTimes; j++) {
 					if(j > 0) {

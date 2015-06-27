@@ -74,7 +74,7 @@ Template.eventDateAndTimeRecurring.events({
 		var startDate = new Date(event.target.startYear.value,event.target.startMonth.value,event.target.startDate.value)
 		var endDate = new Date(event.target.endYear.value,event.target.endMonth.value,event.target.endDate.value)
 		var dateArray = getDates(startDate, endDate)
-		var time1 = {'day': event.target.day.value, 'startHour': event.target.startHour.value + startPM,'startMinute': event.target.startMinute.value, 'endHour': event.target.endHour.value + endPM,'endMinute':event.target.endMinute.value}
+		var time1 = {'day': event.target.day.value, 'startHour': Number(event.target.startHour.value) + startPM,'startMinute': event.target.startMinute.value, 'endHour': Number(event.target.endHour.value) + endPM,'endMinute':event.target.endMinute.value}
 		console.log(time1)
 		var times = [time1]
 		var eventTimes = createEventTimes(dateArray, times)
