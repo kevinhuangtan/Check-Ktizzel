@@ -85,7 +85,7 @@ Template.checkIn.helpers({
 			// console.log(myEvent)
 			// nearby events
 			if(myEvent.distance < eventYoureAtDistance){
-				console.log(myEvent)
+				// console.log(myEvent)
 				var eventTimes = myEvent['eventTimes']
 				var numTimes = eventTimes.length
 				var nextStartDate = eventTimes[numTimes - 1][0]
@@ -100,7 +100,7 @@ Template.checkIn.helpers({
 							nextStartDate = eventTimes[j][0];
 							nextEndDate = eventTimes[j][1];
 						}
-					} else if(eventTimes[0][0] > currentDate) {
+					} else if(eventTimes[0][1] > currentDate) {
 						nextStartDate = eventTimes[0][0];
 						nextEndDate = eventTimes[0][1];
 					}
@@ -115,7 +115,7 @@ Template.checkIn.helpers({
 					events[i]['checkedIn'] = false
 				}
 
-				if((currentDate - nextEndDate) > timeBufferMilliseconds && (nextStartDate - currentDate) > timeBufferMilliseconds){
+				if((currentDate < nextEndDate) && (nextStartDate - currentDate) < timeBufferMilliseconds){
 					nearbyEvents.push(events[i]);
 					if(events[i].distance < eventYoureAtDistance){
 						Session.set('eventYoureAt', events[i])
@@ -124,9 +124,10 @@ Template.checkIn.helpers({
 				}
 			}
 		}
-		if(!atEvent){
-			delete Session.keys['eventYoureAt']
-		}
+		// if(!atEvent){
+		// 	delete Session.keys['eventYoureAt']
+		// }
+		console.log(nearbyEvents)
 		return nearbyEvents; 
 	},
 	myCity : function(){
