@@ -18,8 +18,7 @@ if (typeof(Number.prototype.toRad) === "undefined") {
   }
 }
 
-nextStartEndDates = function(eventTimes)
-
+nextStartEndDates = function(eventTimes){
   var numTimes = eventTimes.length
   var nextStartDate = eventTimes[numTimes - 1][0]
   var nextEndDate = eventTimes[numTimes - 1][1]
