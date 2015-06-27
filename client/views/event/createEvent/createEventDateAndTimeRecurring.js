@@ -87,7 +87,7 @@ Template.eventDateAndTimeRecurring.onRendered(function(){
 
 Template.eventDateAndTimeRecurring.events({
 	'submit form': function(event){
-		// event.preventDefault()
+		event.preventDefault()
 		var timeSlots = Session.get('timeSlots')
 		// console.log(timeSlots)
 		var startDate = new Date(event.target.startYear.value, event.target.startMonth.value,event.target.startDate.value)
