@@ -1,28 +1,3 @@
-
-function distance(lon1, lat1, lon2, lat2) {
-  var R = 6371; // Radius of the earth in km
-  var dLat = (lat2-lat1).toRad();  // Javascript functions in radians
-  var dLon = (lon2-lon1).toRad(); 
-  var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-          Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * 
-          Math.sin(dLon/2) * Math.sin(dLon/2); 
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-  var d = R * c; // Distance in km
-  d = d*.62137 //to miles
-  return d.toFixed(1);
-}
-
-/** Converts numeric degrees to radians */
-if (typeof(Number.prototype.toRad) === "undefined") {
-  Number.prototype.toRad = function() {
-    return this * Math.PI / 180;
-  }
-}
-
-getNextDates = function(){
-
-}
-
 var colorsCheckIn = ['#003169', '#D0021B', '#F5A623','#50E3C2', '#003169', '#B8E986']
 var colorIndexCheckIn = 0;
 var timeBufferMilliseconds = 1800000; 
@@ -52,9 +27,6 @@ Template.checkIn.onRendered(function(){
 })
 
 Template.checkIn.helpers({
-	eventYoureAt : function(){
-		return Session.get('eventYoureAt')
-	},
 	borderColor:function(){
 		var color = colorsCheckIn[colorIndexCheckIn]
 		if(colorIndexCheckIn < colorsCheckIn.length - 1){
@@ -89,6 +61,24 @@ Template.checkIn.helpers({
 			if(myEvent.distance < eventYoureAtDistance){
 				
 				var eventTimes = myEvent['eventTimes']
+				var numTimes = eventTimes.length
+				var nextStartDate = eventTimes[numTimes - 1][0]
+				var nextEndDate = eventTimes[numTimes - 1][1]
+
+				for (var j = 0; j < numTimes; j++) {
+					if(j > 0) {
+						if((eventTimes[j][0] > currentDate) && (eventTimes[j-1][1] < currentDate)) {
+							nextStartDate = eventTimes[j][0];
+							nextEndDate = eventTimes[j][1];
+						} else if((eventTimes[j][0] < currentDate) && (eventTimes[j][1] > currentDate)) {
+							nextStartDate = eventTimes[j][0];
+							nextEndDate = eventTimes[j][1];
+						}
+					} else if(eventTimes[0][1] > currentDate) {
+						nextStartDate = eventTimes[0][0];
+						nextEndDate = eventTimes[0][1];
+					}
+				}
 				nextDates = nextStartEndDates(eventTimes)
 				nextStartDate = nextDates[0]
 				nextEndDate = nextDates[1]
@@ -106,13 +96,10 @@ Template.checkIn.helpers({
 						Session.set('eventYoureAt', events[i])
 						Session.set('atEvent', true)
 					}
+					nearbyEvents.push(events[i]);
 				}
 			}
 		}
-		// if(!atEvent){
-		// 	delete Session.keys['eventYoureAt']
-		// }
-		console.log(nearbyEvents)
 		return nearbyEvents; 
 	},
 	atEvent : function(){

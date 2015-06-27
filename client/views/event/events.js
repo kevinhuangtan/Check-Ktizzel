@@ -14,7 +14,6 @@ Template.events.helpers({
 		geoLocation = Geolocation.latLng()
 		if(geoLocation){
 			if(Math.abs(geoLocation.lat + geoLocation.lng - Meteor.user().profile.geoLocation.lat - Meteor.user().profile.geoLocation.lng) > .00001){
-				console.log(Meteor.user().profile)
 				Session.set('geoLocation', geoLocation);
 				Meteor.users.update({_id:Meteor.userId()}, { $set: {"profile.geoLocation": geoLocation}});
 				Meteor.subscribe("events"); //update events based on user location	
@@ -81,7 +80,6 @@ Template.events.events({
 	'click .panel-user': function(event){
 		Session.set("currentEvent", this._id);
 		Router.go('event');
-		console.log(Session.get("currentEvent"))
 	}
 })
 

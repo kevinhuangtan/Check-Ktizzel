@@ -51,12 +51,13 @@ Template.event.helpers({
 		}
 	},
 	eventHost : function(){
-		// console.log(Session.get('currentEventHost'))
 		return Session.get('currentEventHost')
 	},
 	isHost : function(){
-		if (Meteor.userId() == Session.get('currentEventHost')._id){
-			return true
+		if(Session.get('currentEventHost')){
+			if (Meteor.userId() == Session.get('currentEventHost')._id){
+				return true
+			}
 		}
 		else{
 			return false
@@ -95,6 +96,15 @@ Template.event.helpers({
 		else{
 			return ""
 		}
+	},
+	editDescription :function(){
+		return Session.get('editDescription')
+	},
+	eventDescription:function(){
+		var id = Session.get("currentEvent")
+		var result = checkEvents.findOne({_id: Session.get("currentEvent")})
+		var description = result['description']
+		return description
 	}
 });
 
@@ -126,8 +136,20 @@ Template.event.events({
 	'click .morefacts-btn':function(){
 		Router.go('attendeeList')
 	},
+	'click .edit-description':function(){
+		console.log('edit');
+		Session.set('editDescription', !Session.get('editDescription'));
+	},
+	'submit .event-description':function(event){
+		event.preventDefault()
+		checkEvents.update({_id:Session.get('currentEvent')}, { $set: {"description": event.target.eventDescription.value} });
+		Session.set('editDescription', !Session.get('editDescription'));
+	}
 })
 
+Template.event.onRendered(function(){
+	Session.set('editDescription', false);
+})
 
 
 

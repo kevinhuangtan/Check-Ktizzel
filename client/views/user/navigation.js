@@ -49,7 +49,6 @@ Template.checkNavigation.events({
 		}
 	},
 	'click .more-btn' : function(event){
-
 		Session.set('more', !Session.get('more'));
 	}
 })
