@@ -14,6 +14,9 @@ select {
   appearance: none;
  background: url(next.png) 99.5% / 15% no-repeat #F4F4F4;
 }
+.entry-title{
+	font: sans-serif
+}
 
 @media screen and (max-width: 500px){
 	.entry-title{

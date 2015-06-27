@@ -1,5 +1,6 @@
 <!-- View Event Page -->
 <template name = "event">
+    {{#if currentEvent}}
     <div class="upper-bar">
         <img id= "back" src="back.png">
         <p>{{currentEvent.name}}</p>
@@ -25,10 +26,18 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-body event-description">
+            {{#if editDescription}}
+            <form class="description-form">
+                <input class="" type="text" name="eventDescription" placeholder="Event Description" value={{eventDescription}}>
+                <button type="submit">Update</button>
+            </form>
+            {{else}}
                 {{currentEvent.description}}
+            {{/if}}
+
             <hr>
             {{#if isHost}}
-            <p class="learn-more">Edit Description</p>
+            <p class="learn-more edit-description">Edit Description</p>
             {{else}}
             <p class="learn-more">Learn More</p>
             {{/if}}
@@ -52,6 +61,11 @@
             <button class = "check-btn">Check In</button>
         {{else}}
         {{/if}}
+    {{/if}}
+
+    {{else}}
+    <br><br><br>
+    <h1>No event</h1>
     {{/if}}
 
 </template>

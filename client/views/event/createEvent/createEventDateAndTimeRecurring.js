@@ -28,15 +28,18 @@ function createEventTimes(dateArray, times){
 	daysOfWeek= []
 	eventTimes = []
 	for (var i = 0; i < times.length; i++){
-		daysOfWeek.push(WEEKDAY_DICT[times[i]['day']])
+		daysOfWeek.push(WEEKDAY_DICT[times[i]['dayOfWeek']])
 	}
+	console.log(daysOfWeek)
 	for(var i = 0; i < dateArray.length; i++){
 		var day_index = daysOfWeek.indexOf(dateArray[i].getDay())
+		
 		if(day_index > -1){
+			console.log(dateArray[i])
+			// console.log(times)
 			var year = dateArray[i].getYear() + 1900
-			var month = dateArray[i].getMonth()
+			var month = dateArray[i].getMonth() - 1
 			var date = dateArray[i].getDate()
-			var day = dateArray[i].getDay()
 			var startDate = new Date(year, month, date, times[day_index]['startHour'], times[day_index]['startMinute'])
 			var endDate = new Date(year, month, date, times[day_index]['endHour'], times[day_index]['endMinute'])
 			var  newTime = [startDate, endDate]
@@ -47,47 +50,90 @@ function createEventTimes(dateArray, times){
 
 }
 Template.eventDateAndTimeRecurring.onRendered(function(){
-		var startHour = $('#startHour').val()
+
+		var startHour = Number($('#startHour').val())
 		var startMinute = $('#startMinute').val()
-		var endHour = $('#endHour').val()
+		var endHour = Number($('#endHour').val())
 		var endMinute = $('#endMinute').val()
 		var dayOfWeek = $('#dayOfWeek').val()
 		var startAmpm = $('#startAmpm').val()
 		var endAmpm = $('#endAmpm').val()
-		var timeSlot = {'dayOfWeek': dayOfWeek, 'startHour': startHour, 'startMinute': startMinute,'startAmpm': startAmpm, 'endHour':endHour, 'endMinute':endMinute, 'endAmpm': endAmpm}
-		Session.set('timeSlot', timeSlot)
+		var startPM = 0;
+		var endPM = 0;
+		if (startAmpm == "PM"){
+			startPM = startPM + 12
+			startHour += startPM
+		}
+		if (endAmpm == "PM"){
+			endPM = endPM + 12
+			endHour += endPM
+		}
+		var timeSlot = {'_id': 0, 'dayOfWeek': dayOfWeek, 'startHour': startHour, 'startMinute': startMinute, 'endHour': endHour, 'endMinute':endMinute}
+		var timeSlots = []
+		timeSlots = [timeSlot]
+		Session.set('timeSlots', timeSlots)
+		Session.set('activeTimeSlot', 0)
 		
 })
 
 Template.eventDateAndTimeRecurring.events({
 	'submit form': function(event){
 		event.preventDefault()
-		var timeSlot = Session.get('timeSlot')
-		var startPM = 0;
-		var endPM = 0;
-		if (timeSlot['startAmpm'] == "PM"){
-			startPM = startPM + 12
-		}
-		if (timeSlot['endAmpm'] == "PM"){
-			endPM = endPM + 12
-		}
-		var startDate = new Date(event.target.startYear.value,event.target.startMonth.value,event.target.startDate.value)
+		var timeSlots = Session.get('timeSlots')
+		// console.log(timeSlots)
+		var startDate = new Date(event.target.startYear.value, event.target.startMonth.value,event.target.startDate.value)
 		var endDate = new Date(event.target.endYear.value,event.target.endMonth.value,event.target.endDate.value)
 		var dateArray = getDates(startDate, endDate)
-		var time1 = {'day': event.target.day.value, 'startHour': Number(event.target.startHour.value) + startPM,'startMinute': event.target.startMinute.value, 'endHour': Number(event.target.endHour.value) + endPM,'endMinute':event.target.endMinute.value}
-		console.log(time1)
-		var times = [time1]
-		var eventTimes = createEventTimes(dateArray, times)
+
+		// var times
+
+		// for(var i = 0; i < timeSlots.length; i++){
+		// 	var time = {'day': timeSlots[i].day, 'startHour': timeSlots[i].startHour,'startMinute': timeSlots[i].startMinute, 'endHour': timeSlots[i].endHour,'endMinute':timeSlots[i].endMinute}
+		// 	times.push(time)
+		// }
+		// console.log(time1)
+		// var times = [time1]
+
+		var eventTimes = createEventTimes(dateArray, timeSlots)
 		for(var i = 0; i < eventTimes.length; i++){
-			console.log(eventTimes[i])
+			// console.log(eventTimes[i])
 		}
-		var eventSession = Session.get('eventSession');
-		eventSession['eventTimes'] = eventTimes
-		Session.set('eventSession', eventSession)
-		Router.go('eventLocation');
+
+		// var eventSession = Session.get('eventSession');
+		// eventSession['eventTimes'] = eventTimes
+		// Session.set('eventSession', eventSession)
+		// Router.go('eventLocation');
 	},
 	'change .timeslot' : function(){
-		console.log('changed')
+
+		var startHour = Number($('#startHour').val())
+		var startMinute = $('#startMinute').val()
+		var endHour = Number($('#endHour').val())
+		var endMinute = $('#endMinute').val()
+		var dayOfWeek = $('#dayOfWeek').val()
+		var startAmpm = $('#startAmpm').val()
+		var endAmpm = $('#endAmpm').val()
+		var startPM = 0;
+		var endPM = 0;
+		if (startAmpm == "PM"){
+			startPM = startPM + 12
+			startHour += startPM
+		}
+		if (endAmpm == "PM"){
+			endPM = endPM + 12
+			endHour +=endPM
+		}
+		var timeSlot = {'_id': 0, 'dayOfWeek': dayOfWeek, 'startHour': startHour, 'startMinute': startMinute, 'endHour':endHour, 'endMinute':endMinute}
+
+		var timeSlots = Session.get('timeSlots')
+		timeSlots[Session.get('activeTimeSlot')] = timeSlot
+		Session.set('timeSlots', timeSlots)
+		
+	},
+	'click .timeslot-row':function(event){
+		Session.set('activeTimeSlot', this._id)
+	},
+	'click .add-timeslot' : function(){
 		var startHour = $('#startHour').val()
 		var startMinute = $('#startMinute').val()
 		var endHour = $('#endHour').val()
@@ -95,9 +141,30 @@ Template.eventDateAndTimeRecurring.events({
 		var dayOfWeek = $('#dayOfWeek').val()
 		var startAmpm = $('#startAmpm').val()
 		var endAmpm = $('#endAmpm').val()
-		var timeSlot = {'dayOfWeek': dayOfWeek, 'startHour': startHour, 'startMinute': startMinute,'startAmpm': startAmpm, 'endHour':endHour, 'endMinute':endMinute, 'endAmpm': endAmpm}
-		Session.set('timeSlot', timeSlot)
+		var timeSlots = Session.get('timeSlots')
+		var startPM = 0
+		var endPM = 0
+		if (startAmpm == "PM"){
+			startPM = startPM + 12
+		}
+		if (endAmpm == "PM"){
+			endPM = endPM + 12
+		}
+		var timeSlot = {'_id': timeSlots.length, 'dayOfWeek': dayOfWeek, 'startHour': startHour + startPM, 'startMinute': startMinute,'startAmpm': startAmpm, 'endHour':endHour + endPM, 'endMinute':endMinute, 'endAmpm': endAmpm}
 		
+		timeSlots.push(timeSlot)
+		Session.set('timeSlots', timeSlots)
+
+		var lengthSlots = timeSlots.length
+		Session.set('activeTimeSlot', lengthSlots - 1)
+	},
+	'click .remove-timeslot':function(){
+		var timeSlots = Session.get('timeSlots')
+		timeSlots.pop()
+		Session.set('timeSlots', timeSlots)	
+
+		var lengthSlots = timeSlots.length
+		Session.set('activeTimeSlot', lengthSlots - 1)
 	}
 });
 Template.eventDateAndTimeRecurring.helpers({
@@ -113,6 +180,19 @@ Template.eventDateAndTimeRecurring.helpers({
 	dayOption :function(){
 		var days = []
 		var thisDay = new Date().getDate()
+		for (var i = 1; i <= 31; i++){
+			var day = {'index': i}
+			if(i == thisDay){
+				day['selected'] = true
+			}
+			days.push(day)
+		} 
+		return days
+	},
+	endDayOption:function(){
+		var days = []
+		var thisDay = new Date().getDate()
+		thisDay+=1
 		for (var i = 1; i <= 31; i++){
 			var day = {'index': i}
 			if(i == thisDay){
@@ -184,37 +264,46 @@ Template.eventDateAndTimeRecurring.helpers({
 		return minutes		
 	},
 	timeParsed : function(){
-		var times = []
-		var timeSlot = Session.get('timeSlot')
-		if(timeSlot){
-			times.push(timeSlot)
-			var timesParsed = []
-			for (var i = 0; i < times.length; i++){
+		// var times = []
+		var timeSlots = Session.get('timeSlots')
+		if(timeSlots){
+
+			for(var j = 0; j < timeSlots.length; j++){
+				var timeSlot = timeSlots[j]
+				// times.push(timeSlot)				
+				// console.log(times.length)
+				// for (var i = 0; i < times.length; i++){
 				var startPM = 0;
 				var endPM = 0;
-				if (times[i]['startAmpm'] == "PM"){
+				if (timeSlot['startAmpm'] == "PM"){
 					startPM = startPM + 12
 				}
-				if (times[i]['endAmpm'] == "PM"){
+				if (timeSlot['endAmpm'] == "PM"){
 					endPM = endPM + 12
 				}
-				var startDate = new Date(0, 0, 0, Number(times[i]['startHour']) + startPM, Number(times[i]['startMinute']));
-				var endDate = new Date(0, 0, 0, Number(times[i]['endHour']) + endPM, Number(times[i]['endMinute']));
+				var startDate = new Date(0, 0, 0, Number(timeSlot['startHour'] + startPM), Number(timeSlot['startMinute']));
+				var endDate = new Date(0, 0, 0, Number(timeSlot['endHour'] + endPM), Number(timeSlot['endMinute']));
 
-				var weekday = times[i]['dayOfWeek']
+				var weekday = timeSlot['dayOfWeek']
 				var options = {hour:'2-digit', minute:'2-digit'};
 				var startTime = startDate.toLocaleTimeString('en-US',options).toString();
 				var endTime = endDate.toLocaleTimeString('en-US',options).toString();
-			
-				timesParsed.push(weekday + ', ' + startTime + ' - ' + endTime)
+				timeSlots[j]['parsed'] = weekday + ', ' + startTime + ' - ' + endTime
+				timeSlots[j]['idPlusOne'] = timeSlot._id + 1
+				// }
 			}
 		}
 		else{
 			timesParsed = ""
 		}
 
-		return timesParsed
+		return timeSlots
+	},
+	activeTimeSlot:function(){
+		// console.log(Session.get('activeTimeSlot'))
+		return Session.get('activeTimeSlot') + 1
 	}
+
 })
 
 
