@@ -39,7 +39,9 @@ Template.events.helpers({
 	myHostedEvents : function(){
 		var events = checkEvents.find().fetch(); 
 		var hostedEvents = []
+		console.log(events)
 		for (var i = 0; i < events.length; i++ ){
+			console.log(events[i])
 			var nextDates = nextStartEndDates(events[i]['eventTimes'])
 			if(events[i].host == Meteor.userId()){
 				events[i]['dateParsed'] = parseDate(nextDates[0], nextDates[1])
@@ -64,14 +66,12 @@ Template.events.helpers({
 			}
 		}
 		Session.set('haveCheckedIn', (checkedInEvents.length > 0))
-		console.log(checkedInEvents.length)
 		return checkedInEvents
 	},
 	noHostedEvents : function() {
 		return !Session.get('haveHosted')
 	},
 	noCheckedInEvents : function() {
-		console.log(!Session.get('haveCheckedIn'))
 		return !Session.get('haveCheckedIn')
 	}
 });
