@@ -1,3 +1,47 @@
+Date.prototype.addDays = function(days) {
+    var dat = new Date(this.valueOf())
+    dat.setDate(dat.getDate() + days);
+    return dat;
+}
+
+function getDates(startDate, stopDate) {
+    var dateArray = new Array();
+    var currentDate = startDate;
+    while (currentDate <= stopDate) {
+        dateArray.push( new Date (currentDate) )
+        currentDate = currentDate.addDays(1);
+    }
+    return dateArray;
+}
+/////
+function createEventTimes(dateArray, times){
+	time_example = {'day': day, 'startHour': startHour,'startMinute': startMinute, 'endHour':endHour,'endMinute':endMinute}
+	daysOfWeek= []
+	eventTimes = []
+	for (var i = 0; i < times.length; i++){
+		daysOfWeek.push(times[i].getDay())
+	}
+	for(var i = 0; i < dateArray.length; i++){
+		var day_index = daysOfWeek.indexOf(dateArray[i].getDay())
+		if(day_index > -1){
+			var year = dateArray[i].getYear() + 1900
+			var month = dateArray[i].getMonth()
+			var date = dateArray[i].getDate()
+			var day = dateArray[i].getDay()
+			var startDate = new Date(year, month, date, times[day_index]['startHour'], times[day_index]['startMinute'])
+			var endDate = new Date(year, month, date, times[day_index]['endHour'], times[day_index]['endMinute'])
+			eventTimes.push([startDate, endDate])
+		}
+	}
+	return eventTimes
+
+}
+
+Template.eventDateAndTime.onRendered(function(){
+	Session.set('selectedYear', new Date().getYear())
+	Session.set('selectedMonth', new Date().getMonth())
+})
+
 Template.eventDateAndTime.helpers({
 	myLocation: function () {
 		// return 0, 0 if the location isn't ready
@@ -9,16 +53,29 @@ Template.eventDateAndTime.helpers({
 		// console.log(Geolocation.latLng())
 		return Geolocation.latLng() || { lat: 0, lng: 0 };
 	},
-	dayOption :function(){
+	dayOption : function(){
+
+		var selectedYear = Session.get('selectedYear')
+		var selectedMonth = Session.get('selectedMonth')
 		var days = []
-		var thisDay = new Date().getDate()
-		for (var i = 1; i <= 31; i++){
-			var day = {'index': i}
-			if(i == thisDay){
-				day['selected'] = true
+
+		if ((selectedMonth==new Date().getMonth()) && (selectedYear==new Date().getYear())) {			
+			var thisDay = new Date()
+			var numDaysInMonth = new Date(thisDay.getYear(), thisDay.getMonth()+1, 0).getDate();
+ 			for (var i = 1; i <= numDaysInMonth; i++){
+				var day = {'index': i}
+				if(i == thisDay.getDate()){
+					day['selected'] = true
+				}
+				days.push(day)
 			}
-			days.push(day)
-		} 
+		} else {
+			var numDaysInMonth = new Date(selectedYear, selectedMonth+1, 0).getDate();
+ 			for (var i = 1; i <= numDaysInMonth; i++){
+				var day = {'index': i}
+				days.push(day)
+			}
+		}
 		return days
 	},
 	monthOption : function(){
@@ -109,6 +166,14 @@ Template.eventDateAndTime.events({
 		eventSession['eventTimes'] = [[startDate,endDate]]
 		Session.set('eventSession', eventSession)
 		Router.go('eventLocation');
+	},
+	'change #month': function(event){
+		var month = Number(event.target.value) - 1
+		Session.set('selectedMonth', month)
+	},
+	'change #year': function(event){
+		var year = Number(event.target.value)
+		Session.set('selectedYear', year)
 	},
 	'click #back':function(){
 		Router.go('eventTitle')

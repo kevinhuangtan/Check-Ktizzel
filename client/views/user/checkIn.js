@@ -66,30 +66,50 @@ Template.checkIn.helpers({
 		return Session.get('past')
 	},
 	eventsYoureAt : function(){
-		var locations = checkEvents.find().fetch(); 
+		var events = checkEvents.find().fetch(); 
 		var myGeolocation = Geolocation.latLng() || Meteor.user().profile.geoLocation;
-		var nearbyLocations = []
+		var nearbyEvents = []
 		var atEvent = false
 		var currentDate = new Date();
 		// console.log(locations)
-		for (var i = 0; i < locations.length; i++ ){
-			var locGeolocation = locations[i].geoLocation || {'lat':0, 'lng':0}
-			locations[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);
+		// for (var i = 0; i < locations.length; i++ ){
+		// 	var locGeolocation = locations[i].geoLocation || {'lat':0, 'lng':0}
+		// 	locations[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);
+		// console.log(events)
+		for (var i = 0; i < events.length; i++ ){
+			var locGeolocation = events[i].geoLocation || {'lat':0, 'lng':0}
+			events[i].distance = distance(myGeolocation.lng, myGeolocation.lat, locGeolocation.lng, locGeolocation.lat);
 
+			myEvent = events[i]
 			// nearby events
-			if(locations[i].distance < eventYoureAtDistance){
+			if(myEvent < eventYoureAtDistance){
 			
-				if(locations[i].attending.indexOf(Meteor.userId()) > -1 ){
-						locations[i]['checkedIn'] = true
+				eventTimes = myEvent['eventTimes']
+
+				for (var j = 0; j < eventTimes.length; j++) {
+					if(j > 0) {
+						if((eventTimes[j][1] > currentDate) && (eventTimes[j-1][2] < currentDate)) {
+							nextStartDate = eventTimes[j][1];
+							nextEndDate = eventTimes[j][2];
+						}
+					}
+					else {
+						nextStartDate = eventTimes[0][1];
+						nextEndDate = eventTimes[0][2];
+					}
+				}
+
+				if(events[i].attending.indexOf(Meteor.userId()) > -1 ){
+					events[i]['checkedIn'] = true
 				}
 				else{
-					locations[i]['checkedIn'] = false
+					events[i]['checkedIn'] = false
 				}
 
-				if( (locations[i].endDate - new Date()) >  -timeBufferMilliseconds && (new Date() - locations[i].startDate) >  -timeBufferMilliseconds){
-					nearbyLocations.push(locations[i]);
-					if(locations[i].distance < eventYoureAtDistance){
-						Session.set('eventYoureAt', locations[i])
+				if((currentDate - nextEndDate) > timeBufferMilliseconds && (nextStartDate - currentDate) > timeBufferMilliseconds){
+					nearbyEvents.push(events[i]);
+					if(events[i].distance < eventYoureAtDistance){
+						Session.set('eventYoureAt', events[i])
 						atEvent = true
 					}
 				}
@@ -98,7 +118,7 @@ Template.checkIn.helpers({
 		if(!atEvent){
 			delete Session.keys['eventYoureAt']
 		}
-		return nearbyLocations; 
+		return nearbyEvents; 
 	},
 	myCity : function(){
 		var js;

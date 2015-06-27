@@ -10,7 +10,7 @@
                 <div class="panel-body">
                    	<p class="entry-title" style="font: sans-serif">Date</p>
                    	<div class="entry-request">
-						<select class="newcol-xs-3 eventOption" value="3" name="month">
+						<select id="month" class="newcol-xs-3 eventOption" value="3" name="month">
 							{{#each monthOption}}
 								{{#if selected}}
 									<option selected="selected">{{index}}</option>
@@ -30,7 +30,7 @@
 
 							{{/each}}
 						</select>
-						<select class="newcol-xs-5" name="year">
+						<select id="year" class="newcol-xs-5" name="year">
 							<option>2015</option>
 							<option>2016</option>
 							<option>2017</option>
