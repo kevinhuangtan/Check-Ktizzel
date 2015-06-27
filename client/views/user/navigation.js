@@ -15,8 +15,14 @@ Template.checkNavigation.helpers({
 	checkIn:function(){
 		return (Session.get('currentPage')=='checkIn')
 	},
+	more:function(){
+		return Session.get('more')
+	}
 
 
+})
+Template.checkNavigation.onRendered(function(){
+	Session.set('more', false)
 })
 
 Template.checkNavigation.events({
@@ -41,5 +47,9 @@ Template.checkNavigation.events({
 			Session.set('userMode', 'attendee')
 			Router.go('/')
 		}
+	},
+	'click .more-btn' : function(event){
+
+		Session.set('more', !Session.get('more'));
 	}
 })

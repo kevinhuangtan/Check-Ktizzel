@@ -1,4 +1,4 @@
-function distance(lon1, lat1, lon2, lat2) {
+distance = function(lon1, lat1, lon2, lat2) {
   var R = 6371; // Radius of the earth in km
   var dLat = (lat2-lat1).toRad();  // Javascript functions in radians
   var dLon = (lon2-lon1).toRad(); 
@@ -18,3 +18,47 @@ if (typeof(Number.prototype.toRad) === "undefined") {
   }
 }
 
+
+parseDate = function (startDate,endDate){
+    var WEEKDAY = new Array(7);
+    WEEKDAY[0]=  "SUN";
+    WEEKDAY[1] = "MON";
+    WEEKDAY[2] = "TUE";
+    WEEKDAY[3] = "WED";
+    WEEKDAY[4] = "THU";
+    WEEKDAY[5] = "FRI";
+    WEEKDAY[6] = "SAT";
+
+    var MONTH = new Array(12);
+    MONTH[0] = "JAN"
+    MONTH[1] = "FEB"
+    MONTH[2] = "MAR"
+    MONTH[3] = "APR"
+    MONTH[4] = "MAY"
+    MONTH[5] = "JUN"
+    MONTH[6] = "JUL"
+    MONTH[7] = "AUG"
+    MONTH[8] = "SEP"
+    MONTH[9] = "OCT"
+    MONTH[10] = "NOV"
+    MONTH[11] = "DEC"
+    
+    var month = startDate.getMonth() - 1
+    var date = startDate.getDate()
+    var date2 = endDate.getDate()
+    ///parsing
+    var weekday =  startDate.getDay()
+    var options = {hour:'2-digit', minute:'2-digit' };
+    var startTime = startDate.toLocaleTimeString('en-US',options).toString();
+    var endTime = endDate.toLocaleTimeString('en-US',options).toString();
+    
+    if(date == date2){ //same day
+      var dateParsed = WEEKDAY[weekday] + ', ' + MONTH[month] + ' '+ date + ', ' + startTime + ' - ' + endTime
+    }
+    else{
+      var endDay = weekday[endDate.getDay()]
+      var dateParsed = WEEKDAY[weekday] + ', ' + MONTH[month] + ' '+ date + ', ' + startTime + ' - ' + endDay + ' ' + endTime
+    }
+
+    return dateParsed
+}

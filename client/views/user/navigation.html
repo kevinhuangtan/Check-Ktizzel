@@ -1,77 +1,79 @@
 <template name="checkNavigation">
 	<div class="navigation-bar">
-	<ul>
-		<a href="/createEvent">
-			<li>
-				{{#if createEvent}}
-					<img src="check_green.png"/>
-				{{else}}
-					<img src="check.png"/>
-				{{/if}}
-				<p>Create</p>
-			</li>
-		</a>
+		<ul>
+			<a href="/createEvent">
+				<li>
+					{{#if createEvent}}
+						<img src="check_green.png"/>
+					{{else}}
+						<img src="check.png"/>
+					{{/if}}
+					<p>Create</p>
+				</li>
+			</a>
 
-		
-		<a href="/events">
-			<li>
-				{{#if events}}
-					<img src="events_green.png"/>
-				{{else}}
-					<img src="events.png"/>
-				{{/if}}
-				<p>Events</p>
-			</li>
-		</a>
+			
+			<a href="/events">
+				<li>
+					{{#if events}}
+						<img src="events_green.png"/>
+					{{else}}
+						<img src="events.png"/>
+					{{/if}}
+					<p>Events</p>
+				</li>
+			</a>
 
-		<a href="/">
+			<a href="/">
+				<li>
+					{{#if checkIn}}
+						<img src="switch_green.png"/>
+					{{else}}
+						<img src="switch.png"/>
+					{{/if}}
+					<p>Check In</p>
+				</li>
+			</a>
+			<a>
+				<li class="more-btn">
+					<img src="more.png"/>
+					<p>More</p>
+				</li>
+			</a>
+		</ul>
+    </div>
+    {{#if more}}
+    <div class="more">
+    	<a href="/profile">
 			<li>
-				{{#if checkIn}}
-					<img src="switch_green.png"/>
-				{{else}}
-					<img src="switch.png"/>
-				{{/if}}
-				<p>Check In</p>
-			</li>
-		</a>
-
-		<a href="/profile">
-			<li>
-				{{#if profile}}
+		<!-- 		{{#if profile}}
 					<img src="profile_green.png"/>
 				{{else}}
 					<img src="profile.png"/>
-				{{/if}}
+				{{/if}} -->
 				<p>Profile</p>
 			</li>
 		</a>
-		
+
+
 		<a href="/nearby">
 			<li>
-				{{#if nearby}}
+<!-- 				{{#if nearby}}
 					<img src="nearby_green.png"/>
 				{{else}}
 					<img src="nearby.png"/>
-				{{/if}}
+				{{/if}} -->
 				<p>Nearby</p>
 			</li>
 		</a>
-			
-<!-- 		<a  href="/createEvent">
-			<li>
-				<img src="more.png"/>
-				<p>More</p>
-			</li>
-		</a> -->
-
 		<a  class="signout">
 			<li>
-				<img src="Delete Sign-50.png"/>
+				<!-- <img src="Delete Sign-50.png"/> -->
 				<p>Signout</p>
 			</li>
 		</a>
-		
-	</ul>
+
     </div>
+   {{/if}}
 </template>
 

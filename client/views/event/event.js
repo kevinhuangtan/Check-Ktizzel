@@ -1,25 +1,3 @@
-
-function distance(lon1, lat1, lon2, lat2) {
-  var R = 6371; // Radius of the earth in km
-  var dLat = (lat2-lat1).toRad();  // Javascript functions in radians
-  var dLon = (lon2-lon1).toRad(); 
-  var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-          Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * 
-          Math.sin(dLon/2) * Math.sin(dLon/2); 
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-  var d = R * c; // Distance in km
-  d = d*.62137 //to miles
-  return d.toFixed(1);
-}
-
-/** Converts numeric degrees to radians */
-if (typeof(Number.prototype.toRad) === "undefined") {
-  Number.prototype.toRad = function() {
-    return this * Math.PI / 180;
-  }
-}
-
-
 Template.event.onRendered(function(){
 	var result = checkEvents.findOne({_id: Session.get("currentEvent")})
 	var map;
@@ -76,11 +54,20 @@ Template.event.helpers({
 		// console.log(Session.get('currentEventHost'))
 		return Session.get('currentEventHost')
 	},
+	isHost : function(){
+		if (Meteor.userId() == Session.get('currentEventHost')._id){
+			return true
+		}
+		else{
+			return false
+		}
+	},
 	currentEvent : function(){
 		var id = Session.get("currentEvent")
 
 		var result = checkEvents.findOne({_id: Session.get("currentEvent")})
 		document.title = result.name;
+		result['dateParsed'] = parseDate(result['eventTimes'][0][0],result['eventTimes'][0][1])
 		return result		
 	},
 	address : function(){
@@ -128,6 +115,9 @@ Template.event.events({
 		Router.go('/')
 	},
 	'click .learn-more' : function(){
+		if(Meteor.userId() == Session.get('currentEventHost')){
+			console.log('edit description')
+		}
 
 	},
 	'click #back':function(){
@@ -135,7 +125,11 @@ Template.event.events({
 	},
 	'click .morefacts-btn':function(){
 		Router.go('attendeeList')
-	}
+	},
 })
+
+
+
+
 
 

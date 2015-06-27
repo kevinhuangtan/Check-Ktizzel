@@ -1,42 +1,3 @@
-Date.prototype.addDays = function(days) {
-    var dat = new Date(this.valueOf())
-    dat.setDate(dat.getDate() + days);
-    return dat;
-}
-
-function getDates(startDate, stopDate) {
-    var dateArray = new Array();
-    var currentDate = startDate;
-    while (currentDate <= stopDate) {
-        dateArray.push( new Date (currentDate) )
-        currentDate = currentDate.addDays(1);
-    }
-    return dateArray;
-}
-/////
-function createEventTimes(dateArray, times){
-	time_example = {'day': day, 'startHour': startHour,'startMinute': startMinute, 'endHour':endHour,'endMinute':endMinute}
-	daysOfWeek= []
-	eventTimes = []
-	for (var i = 0; i < times.length; i++){
-		daysOfWeek.push(times[i].getDay())
-	}
-	for(var i = 0; i < dateArray.length, i++){
-		var day_index = daysOfWeek.indexOf(dateArray[i].getDay())
-		if(day_index > -1){
-			var year = dateArray[i].getYear() + 1900
-			var month = dateArray[i].getMonth()
-			var date = dateArray[i].getDate()
-			var day = dateArray[i].getDay()
-			var startDate = new Date(year, month, date, times[day_index]['startHour'], times[day_index]['startMinute'])
-			var endDate = new Date(year, month, date, times[day_index]['endHour'], times[day_index]['endMinute'])
-			eventTimes.push([startDate, endDate])
-		}
-	}
-	return eventTimes
-
-}
-
 Template.eventDateAndTime.helpers({
 	myLocation: function () {
 		// return 0, 0 if the location isn't ready
@@ -144,34 +105,16 @@ Template.eventDateAndTime.events({
 		var endDate = new Date(target.year.value, month, date, Number(target.endHour.value) + endPM, target.endMinute.value);
 		var eventSession = Session.get('eventSession');
 
-		///parsing
-		var weekday = startDate.getDay()
-		var options = {hour:'2-digit', minute:'2-digit' };
-		var startTime = startDate.toLocaleTimeString('en-US',options).toString();
-		var endTime = endDate.toLocaleTimeString('en-US',options).toString();
-		
 
-		var startDateParse = startDate.toLocaleDateString();
-		var endDateParse = endDate.toLocaleDateString();
-		if(startDateParse = endDateParse){
-			eventSession['dateParsed'] = WEEKDAY[weekday] + ', ' + MONTH[month] + ' '+ date + ', ' + startTime + ' - ' + endTime
-		}
-		else{
-			var endDay = weekday[eventSession.endDate.getDay()]
-			eventSession['dateParsed'] = WEEKDAY[weekday] + ', ' + MONTH[month] + ' '+ date + ', ' + startTime + ' - ' + endDay + ' ' + endTime
-		}
-
-
-		eventSession['startDate'] = startDate;
-		eventSession['endDate'] = endDate;
+		eventSession['eventTimes'] = [[startDate,endDate]]
 		Session.set('eventSession', eventSession)
 		Router.go('eventLocation');
 	},
 	'click #back':function(){
 		Router.go('eventTitle')
-	}
-	,
+	},
 	'click #next':function(){
 		Router.go('eventLocation')
 	}
 });
+

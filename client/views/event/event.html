@@ -1,7 +1,7 @@
 <!-- View Event Page -->
 <template name = "event">
     <div class="upper-bar">
-        <!-- <img id="back" src="back.png"> -->
+        <img id= "back" src="back.png">
         <p>{{currentEvent.name}}</p>
         
     </div>
@@ -27,7 +27,11 @@
         <div class="panel-body event-description">
                 {{currentEvent.description}}
             <hr>
+            {{#if isHost}}
+            <p class="learn-more">Edit Description</p>
+            {{else}}
             <p class="learn-more">Learn More</p>
+            {{/if}}
         </div>
     </div>
     <div id="map-canvas" class="map-event map-container"></div>

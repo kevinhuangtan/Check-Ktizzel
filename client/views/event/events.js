@@ -39,6 +39,7 @@ Template.events.helpers({
 		var hostedEvents = []
 		for (var i = 0; i < events.length; i++ ){
 			if(events[i].host == Meteor.userId()){
+				events[i]['dateParsed'] = parseDate(events[i]['eventTimes'][0][0], events[i]['eventTimes'][0][1] )
 				hostedEvents.push(events[i]);
 			}
 		}

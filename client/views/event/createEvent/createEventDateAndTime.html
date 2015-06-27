@@ -1,31 +1,3 @@
-<template name="eventTitle">
-	{{#if currentUser}}
-	<p class="hidden">{{myLocation}}</p>
-	<div class="upper-bar">
-			<img id="delete" src="Delete-50.png"/>
-			<img id="next" src="next.png"/>
-			<p class="page-title">New Event</p>
-	</div>
-
-		<form class="new-event">
-            <div class="panel panel-default create-field">
-                <div class="panel-body">
-                    <p class="entry-title" style="font: sans-serif">Event Name</p>
-                    <input class="entry-request detail-entry" type="text" name="eventName" placeholder="e.g Intro to Economics">
-                    <hr style="width: 100%">
-                    <p class="entry-title" style="font: sans-serif">Description   </p>
-                    <input class="entry-request detail-entry" type="text" name="description" placeholder="Add more info..">
-                </div>
-            </div>
-            <br>
-			<button type="submit" class="btn next-button create-field next-button-1st">Next</button>
-			<br>
-		</form>
-	{{else}}
-	{{>signin}}
-	{{/if}}
-</template>
-
 <template name="eventDateAndTime">
 	<p class="hidden">{{myLocation}}</p>
 	<div class="upper-bar">
@@ -141,46 +113,11 @@
 					</div>
                 </div>
             </div>
+            {{#if recurring}}
+            
+            {{/if}}
 			<br>
 			<button type="submit" class="btn next-button create-field next-button-1st">Next</button>
 		</form>
 </template>
 
-<template name="eventLocation">
-	<p class="hidden">{{myLocation}}</p>
-	<div class="upper-bar">
-			<img id="back" src="back.png"/>
-			<p class="page-title" >Location</p>
-	</div>
-	<div class="map-container">
-		<!--<div id="map-canvas">-->
-		    {{> googleMap name="exampleMap" options=exampleMapOptions}}
-		<!--</div>-->
-  	</div>
-
-	<form class="new-event">
-
-		<div class="panel panel-eventLocation panel-default">
-            <div class="panel-body building-panel">
-            	<p class="entry-title col-xs-6">Building & Room  </p>
-            	<div id="locationField">
-	            	<input class="entry-request" id='autocomplete' type="text" style="width: 50%" name="eventPlace" placeholder="e.g (Woolsey Hall)">
-	            </div>
-			</div>
-			<div class="divider"></div>
-			<div class="panel-body">
-            	<p class="entry-title col-xs-6">Address</p>
-	            <input disabled class="entry-request" type="text" style="width: 50%" placeholder={{address}} >
-			</div>
-		</div>
-		
-		<div class="development hidden">
-			<p>Development only (invisible in shipped version):</p>
-               	<input style="width: 40%" class="latlng" name = "latFld" type="text" id="latFld">
-				<input style="width: 40%" class="latlng" name = "lngFld" type="text" id="lngFld">
-		</div>
-		
-		<button type="submit" class = "create-button">CREATE</button>
-
-	</form>
-</template>

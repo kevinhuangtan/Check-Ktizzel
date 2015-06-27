@@ -1,0 +1,177 @@
+<template name="eventDateAndTimeRecurring">
+	<p class="hidden">{{myLocation}}</p>
+	<div class="upper-bar">
+			<a href="/createEvent"><img id="back" src="back.png"/></a>
+			<a href="/eventLocation"><img id="next" src="next.png"/></a>
+			<p class="page-title" >Date & Time</p>
+	</div>
+		<form class="new-event">
+			<div class="panel panel-event panel-default create-field">
+                <div class="panel-body">
+                   	<p class="entry-title" style="font: sans-serif">Start Date</p>
+                   	<div class="entry-request">
+						<select class="newcol-xs-3 eventOption" value="3" name="startMonth">
+							{{#each monthOption}}
+								{{#if selected}}
+									<option selected="selected">{{index}}</option>
+								{{else}}
+									<option>{{index}}</option>
+								{{/if}}
+
+							{{/each}}
+						</select>
+						<select class="newcol-xs-3 eventOption" name="startDate">
+							{{#each dayOption}}
+								{{#if selected}}
+									<option selected="selected">{{index}}</option>
+								{{else}}
+									<option>{{index}}</option>
+								{{/if}}
+
+							{{/each}}
+						</select>
+						<select class="newcol-xs-5" name="startYear">
+							<option>2015</option>
+							<option>2016</option>
+							<option>2017</option>
+							<option>2018</option>
+							<option>2019</option>
+						</select>
+					</div>
+					<hr style="position:relative; width: 100%">
+					<p class="entry-title" style="font: sans-serif">End Date</p>
+                   	<div class="entry-request">
+						<select class="newcol-xs-3 eventOption" value="3" name="endMonth">
+							{{#each monthOption}}
+								{{#if selected}}
+									<option selected="selected">{{index}}</option>
+								{{else}}
+									<option>{{index}}</option>
+								{{/if}}
+
+							{{/each}}
+						</select>
+						<select class="newcol-xs-3 eventOption" name="endDate">
+							{{#each dayOption}}
+								{{#if selected}}
+									<option selected="selected">{{index}}</option>
+								{{else}}
+									<option>{{index}}</option>
+								{{/if}}
+
+							{{/each}}
+						</select>
+						<select class="newcol-xs-5" name="endYear">
+							<option>2015</option>
+							<option>2016</option>
+							<option>2017</option>
+							<option>2018</option>
+							<option>2019</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-event panel-default create-field">
+				<div class="panel-body">
+				 	{{#each timeParsed}}
+					<p class="entry-title" style="font: sans-serif">Timeslot</p>
+                   	<div class="entry-request">
+                   		{{this}}
+					</div>
+					<hr style="position:relative; width: 100%">
+				 	{{/each}}
+				</div>
+			</div>
+			<div class="panel panel-event panel-default create-field">	 	
+				 <div class="panel-body">
+				 <p class="entry-title" style="font: sans-serif">Start Time   </p>
+					<div class="entry-request">
+						<select class="newcol-xs-3 timeslot" id="dayOfWeek" name="day">
+							<option>SUN</option>
+							<option>MON</option>
+							<option>TUE</option>
+							<option>WED</option>
+							<option>THU</option>
+							<option>FRI</option>
+							<option>SAT</option>
+						</select>
+						<select class="newcol-xs-3 timeslot" id="startHour" name="startHour">
+							{{#each hourOption}}
+								{{#if selected}}
+									<option selected="selected">{{index}}</option>
+								{{else}}
+									<option>{{index}}</option>
+								{{/if}}
+							{{/each}}
+						</select>
+						<select class="newcol-xs-4 timeslot" id="startMinute" name="startMinute">
+							<option>00</option>
+							<option>05</option>
+							<option>10</option>
+							<option>15</option>
+							<option>20</option>
+							<option>25</option>
+							<option>30</option>
+							<option>35</option>
+							<option>40</option>
+							<option>45</option>
+							<option>50</option>
+							<option>55</option>
+						</select>
+						<select class="newcol-xs-5 timeslot" id="startAmpm" name="startAmpm">
+							{{#each amOption}}
+								{{#if selected}}
+									<option selected="selected">{{value}}</option>
+								{{else}}
+									<option>{{value}}</option>
+								{{/if}}
+							{{/each}}
+						</select>
+					</div>
+					<hr style="position:relative; width: 100%">
+					<p class="entry-title" style="font: sans-serif">End Time</p>
+					<div class="entry-request">
+						<select class="newcol-xs-3 timeslot" id="endHour" name="startHour">
+							{{#each endHourOption}}
+								{{#if selected}}
+									<option selected="selected">{{index}}</option>
+								{{else}}
+									<option>{{index}}</option>
+								{{/if}}
+							{{/each}}
+						</select>
+						<select class="newcol-xs-4 timeslot" id="endMinute" name="endMinute">
+							<option>00</option>
+							<option>05</option>
+							<option>10</option>
+							<option>15</option>
+							<option>20</option>
+							<option>25</option>
+							<option>30</option>
+							<option>35</option>
+							<option>40</option>
+							<option>45</option>
+							<option>50</option>
+							<option>55</option>
+						</select>
+						<select class="newcol-xs-5 timeslot" id="endAmpm" name="endAmpm">
+							{{#each amOption}}
+								{{#if selected}}
+									<option selected="selected">{{value}}</option>
+								{{else}}
+									<option>{{value}}</option>
+								{{/if}}
+							{{/each}}
+						</select>
+					</div>
+				</div>
+			</div>
+
+
+            {{#if recurring}}
+
+            {{/if}}
+			<br>
+			<button type="submit" class="btn next-button create-field next-button-1st">Next</button>
+		</form>
+</template>
