@@ -4,9 +4,12 @@ var colorIndex = 0;
 Template.events.onRendered(function(){
 	Session.set('userMode', 'host');
 	Session.set('currentPage', 'events')
+	Session.set('haveCheckedIn', true)
+	Session.set('haveHosted', true)
 })
 
 Template.events.helpers({
+
 	myLocation: function () {
 		geoLocation = Geolocation.latLng()
 		if(geoLocation){
@@ -38,11 +41,14 @@ Template.events.helpers({
 		var events = checkEvents.find().fetch(); 
 		var hostedEvents = []
 		for (var i = 0; i < events.length; i++ ){
+			var nextDates = nextStartEndDates(events[i]['eventTimes'])
 			if(events[i].host == Meteor.userId()){
-				events[i]['dateParsed'] = parseDate(events[i]['eventTimes'][0][0], events[i]['eventTimes'][0][1] )
+				events[i]['dateParsed'] = parseDate(nextDates[0], nextDates[1])
 				hostedEvents.push(events[i]);
 			}
 		}
+		console.log(hostedEvents)
+		Session.set('haveHosted', (hostedEvents.length > 0))
 		return hostedEvents
 	},
 	today : function(){
@@ -52,11 +58,22 @@ Template.events.helpers({
 		var events = checkEvents.find().fetch(); 
 		var checkedInEvents = []
 		for (var i = 0; i < events.length; i++ ){
+			var eventTimes = events[i]['eventTimes']
+			var nextDates = nextStartEndDates(eventTimes)
 			if(events[i].attending.indexOf(Meteor.userId())> -1 && events[i].host != Meteor.userId()){
+				events[i]['dateParsed'] = parseDate(nextDates[0], nextDates[1])
 				checkedInEvents.push(events[i]);
 			}
 		}
+		Session.set('haveCheckedIn', (checkedInEvents.length > 0))
 		return checkedInEvents
+	},
+	noHostedEvents : function() {
+		return !Session.get('haveHosted')
+	},
+	noCheckedInEvents : function() {
+		console.log(!Session.get('haveCheckedIn'))
+		return !Session.get('haveCheckedIn')
 	}
 });
 

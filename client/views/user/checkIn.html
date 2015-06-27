@@ -8,24 +8,30 @@
 
 		<div class="events-container">
 			<p class="hidden"></p>
-			{{#each eventsYoureAt}}
-			<div class="panel panel-user panel-default" style="border-left-color: {{borderColor}}">
-	            <div class="panel-body">
-	            	{{#if checkedIn}}
-	            	{{else}}
-	            		<div class="checkin-box">check</div>
-	            	{{/if}}
-	                <!-- <li class="distance">{{distance}} mi</li> -->
-	                <li class="event-name">{{name}}</li>
-		       		<ul>
-		       			<!-- <li><img src="time.png"> &nbsp;&nbsp;{{dateParsed}}</li> -->
-	       				<!-- <li><img src="venue.png"> &nbsp;&nbsp;{{place}}</li> -->
-	       				
-		       		</ul>
-		       		
-	            </div>
-	        </div>
-			{{/each}}
+			{{#if atEvent}}
+				{{#each eventsYoureAt}}
+				<div class="panel panel-user panel-default" style="border-left-color: {{borderColor}}">
+		            <div class="panel-body">
+		            	{{#if checkedIn}}
+		            	{{else}}
+		            		<div class="checkin-box">check</div>
+		            	{{/if}}
+		                <li class="distance">{{distance}} mi</li>
+		                <li class="event-name">{{name}}</li>
+			       		<ul>
+			       			<li><img src="time.png"> &nbsp;&nbsp;{{dateParsed}}</li>
+		       				<li><img src="venue.png"> &nbsp;&nbsp;{{place}}</li>
+		       				
+			       		</ul>
+			       		
+		            </div>
+		        </div>
+				{{/each}}
+			{{else}}
+				<div class="panel-body">
+					<p>There are no events nearby.</p>
+				</div>
+			{{/if}}
        </div>     		
 
  		{{>checkNavigation}}

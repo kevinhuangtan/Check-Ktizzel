@@ -13,12 +13,22 @@
 	            <div class="panel-body">
 	                <li class="event-name">{{name}}</li>
 		       		<ul>
-		       			<li><img src="time.png"> &nbsp;&nbsp;{{dateParsed}}</li>
+		       			{{#if recurring}}
+		       				<p>yeyeye</p>
+		       				<li><img src="time.png"> &nbsp;&nbsp;Next meeting: {{dateParsed}} (Recurring)</li>
+		       			{{else}}
+		       				<li><img src="time.png"> &nbsp;&nbsp;{{dateParsed}}</li>
+		       			{{/if}}
 	       				<li><img src="venue.png"> &nbsp;&nbsp;{{place}}</li>
 		       		</ul>
 	            </div>
 	        </div>
 			{{/each}}
+			{{#if noHostedEvents}}
+				<div class="panel-body">
+					<p>You haven't hosted any events. <a href="/createEvent">Create an event.</a></p>
+				</div>
+			{{/if}}
 			<p>Checked In</p>
 			{{#each myCheckedInEvents}}
 			<div class="panel panel-user panel-default" style="border-left-color: {{borderColor}}">
@@ -31,6 +41,11 @@
 	            </div>
 	        </div>
 			{{/each}}
+			{{#if noCheckedInEvents}}
+				<div class="panel-body">
+					<p>You haven't checked in at any events. <a href="/">Check in at an event.</a></p>
+				</div>
+			{{/if}}
        </div>     		
 
 

@@ -48,6 +48,7 @@ Template.checkIn.onRendered(function(){
 	document.title = "Home";
 	Session.set('past', false);
 	Session.set('currentPage', 'checkIn')
+	Session.set('atEvent', true)
 })
 
 Template.checkIn.helpers({
@@ -75,6 +76,7 @@ Template.checkIn.helpers({
 		var nearbyEvents = []
 		var atEvent = false
 		var currentDate = new Date();
+		Session.set('atEvent', false)
 
 		for (var i = 0; i < events.length; i++ ){
 			var locGeolocation = events[i].geoLocation ||  Meteor.user().profile.geoLocation
@@ -93,16 +95,16 @@ Template.checkIn.helpers({
 
 				if(events[i].attending.indexOf(Meteor.userId()) > -1 ){
 					events[i]['checkedIn'] = true
-				}
-				else{
+				} else {
 					events[i]['checkedIn'] = false
 				}
 
 				if((currentDate < nextEndDate) && (nextStartDate - currentDate) < timeBufferMilliseconds){
-					nearbyEvents.push(events[i]);
+					myEvent['dateParsed'] = parseDate(nextStartDate, nextEndDate)
+					nearbyEvents.push(myEvent);
 					if(events[i].distance < eventYoureAtDistance){
 						Session.set('eventYoureAt', events[i])
-						atEvent = true
+						Session.set('atEvent', true)
 					}
 				}
 			}
@@ -112,6 +114,9 @@ Template.checkIn.helpers({
 		// }
 		console.log(nearbyEvents)
 		return nearbyEvents; 
+	},
+	atEvent : function(){
+		return Session.get('atEvent')
 	},
 	myCity : function(){
 		var js;
