@@ -30,12 +30,11 @@ function createEventTimes(dateArray, times){
 	for (var i = 0; i < times.length; i++){
 		daysOfWeek.push(WEEKDAY_DICT[times[i]['dayOfWeek']])
 	}
-	console.log(daysOfWeek)
+	// console.log(dateArray)
 	for(var i = 0; i < dateArray.length; i++){
 		var day_index = daysOfWeek.indexOf(dateArray[i].getDay())
 		
 		if(day_index > -1){
-			console.log(dateArray[i])
 			// console.log(times)
 			var year = dateArray[i].getYear() + 1900
 			var month = dateArray[i].getMonth() - 1
@@ -90,28 +89,24 @@ Template.eventDateAndTimeRecurring.events({
 		event.preventDefault()
 		var timeSlots = Session.get('timeSlots')
 		// console.log(timeSlots)
-		var startDate = new Date(event.target.startYear.value, event.target.startMonth.value,event.target.startDate.value)
-		var endDate = new Date(event.target.endYear.value,event.target.endMonth.value,event.target.endDate.value)
+		var startMonth1 = Number(event.target.startMonth.value) - 1
+		var endMonth1 = Number(event.target.endMonth.value) - 1
+		var startDate = new Date(event.target.startYear.value, startMonth1, event.target.startDate.value)
+		var endDate = new Date(event.target.endYear.value, endMonth1, event.target.endDate.value)
+		// console.log(startDate)
+		// console.log(endDate)
 		var dateArray = getDates(startDate, endDate)
 
-		// var times
-
-		// for(var i = 0; i < timeSlots.length; i++){
-		// 	var time = {'day': timeSlots[i].day, 'startHour': timeSlots[i].startHour,'startMinute': timeSlots[i].startMinute, 'endHour': timeSlots[i].endHour,'endMinute':timeSlots[i].endMinute}
-		// 	times.push(time)
-		// }
-		// console.log(time1)
-		// var times = [time1]
 
 		var eventTimes = createEventTimes(dateArray, timeSlots)
-		// for(var i = 0; i < eventTimes.length; i++){
-		// 	// console.log(eventTimes[i])
-		// }
+		for(var i = 0; i < eventTimes.length; i++){
+			console.log(eventTimes[i])
+		}
 
-		var eventSession = Session.get('eventSession');
-		eventSession['eventTimes'] = eventTimes
-		Session.set('eventSession', eventSession)
-		Router.go('eventLocation');
+		// var eventSession = Session.get('eventSession');
+		// eventSession['eventTimes'] = eventTimes
+		// Session.set('eventSession', eventSession)
+		// Router.go('eventLocation');
 	},
 	'change .timeslot' : function(){
 
