@@ -21,7 +21,7 @@ function createEventTimes(dateArray, times){
 	for (var i = 0; i < times.length; i++){
 		daysOfWeek.push(times[i].getDay())
 	}
-	for(var i = 0; i < dateArray.length, i++){
+	for(var i = 0; i < dateArray.length; i++){
 		var day_index = daysOfWeek.indexOf(dateArray[i].getDay())
 		if(day_index > -1){
 			var year = dateArray[i].getYear() + 1900
@@ -37,6 +37,11 @@ function createEventTimes(dateArray, times){
 
 }
 
+Template.eventDateAndTime.onRendered(function(){
+	Session.set('selectedYear', new Date().getYear())
+	Session.set('selectedMonth', new Date().getMonth())
+})
+
 Template.eventDateAndTime.helpers({
 	myLocation: function () {
 		// return 0, 0 if the location isn't ready
@@ -48,16 +53,29 @@ Template.eventDateAndTime.helpers({
 		// console.log(Geolocation.latLng())
 		return Geolocation.latLng() || { lat: 0, lng: 0 };
 	},
-	dayOption :function(){
+	dayOption : function(){
+
+		var selectedYear = Session.get('selectedYear')
+		var selectedMonth = Session.get('selectedMonth')
 		var days = []
-		var thisDay = new Date().getDate()
-		for (var i = 1; i <= 31; i++){
-			var day = {'index': i}
-			if(i == thisDay){
-				day['selected'] = true
+
+		if ((selectedMonth==new Date().getMonth()) && (selectedYear==new Date().getYear())) {			
+			var thisDay = new Date()
+			var numDaysInMonth = new Date(thisDay.getYear(), thisDay.getMonth()+1, 0).getDate();
+ 			for (var i = 1; i <= numDaysInMonth; i++){
+				var day = {'index': i}
+				if(i == thisDay.getDate()){
+					day['selected'] = true
+				}
+				days.push(day)
 			}
-			days.push(day)
-		} 
+		} else {
+			var numDaysInMonth = new Date(selectedYear, selectedMonth+1, 0).getDate();
+ 			for (var i = 1; i <= numDaysInMonth; i++){
+				var day = {'index': i}
+				days.push(day)
+			}
+		}
 		return days
 	},
 	monthOption : function(){
@@ -167,10 +185,17 @@ Template.eventDateAndTime.events({
 		Session.set('eventSession', eventSession)
 		Router.go('eventLocation');
 	},
+	'change #month': function(event){
+		var month = Number(event.target.value) - 1
+		Session.set('selectedMonth', month)
+	},
+	'change #year': function(event){
+		var year = Number(event.target.value)
+		Session.set('selectedYear', year)
+	},
 	'click #back':function(){
 		Router.go('eventTitle')
-	}
-	,
+	},
 	'click #next':function(){
 		Router.go('eventLocation')
 	}
