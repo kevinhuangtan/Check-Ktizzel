@@ -103,10 +103,10 @@ Template.eventDateAndTimeRecurring.events({
 			console.log(eventTimes[i])
 		}
 
-		// var eventSession = Session.get('eventSession');
-		// eventSession['eventTimes'] = eventTimes
-		// Session.set('eventSession', eventSession)
-		// Router.go('eventLocation');
+		var eventSession = Session.get('eventSession');
+		eventSession['eventTimes'] = eventTimes
+		Session.set('eventSession', eventSession)
+		Router.go('eventLocation');
 	},
 	'change .timeslot' : function(){
 
