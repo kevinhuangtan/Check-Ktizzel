@@ -4,8 +4,6 @@ var colorIndex = 0;
 Template.events.onRendered(function(){
 	Session.set('userMode', 'host');
 	Session.set('currentPage', 'events')
-	Session.set('haveCheckedIn', false)
-	Session.set('haveHosted', false)
 })
 
 Template.events.helpers({
