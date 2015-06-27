@@ -65,24 +65,6 @@ Template.checkIn.helpers({
 				var nextStartDate = eventTimes[numTimes - 1][0]
 				var nextEndDate = eventTimes[numTimes - 1][1]
 
-				for (var j = 0; j < numTimes; j++) {
-					if(j > 0) {
-						if((eventTimes[j][0] > currentDate) && (eventTimes[j-1][1] < currentDate)) {
-							nextStartDate = eventTimes[j][0];
-							nextEndDate = eventTimes[j][1];
-						} else if((eventTimes[j][0] < currentDate) && (eventTimes[j][1] > currentDate)) {
-							nextStartDate = eventTimes[j][0];
-							nextEndDate = eventTimes[j][1];
-						}
-					} else if(eventTimes[0][1] > currentDate) {
-						nextStartDate = eventTimes[0][0];
-						nextEndDate = eventTimes[0][1];
-					}
-				}
-				nextDates = nextStartEndDates(eventTimes)
-				nextStartDate = nextDates[0]
-				nextEndDate = nextDates[1]
-
 				if(events[i].attending.indexOf(Meteor.userId()) > -1 ){
 					events[i]['checkedIn'] = true
 				} else {
