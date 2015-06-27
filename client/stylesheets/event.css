@@ -59,7 +59,8 @@
   background-color: rgba(208,2,27,.85);
   border: none;
   color:white;
-  font-family: HelveticaNeue-Light; 
+  /*font-family: HelveticaNeue-Light; */
+   font-family: 'Source Sans Pro', sans-serif;
   letter-spacing: .2em;
   font-weight: 450;
 }
